@@ -6,5 +6,5 @@ function init() {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
 
-    console.log('My movable object is', character);
+    console.log('Mein movable object is', character);
 }
