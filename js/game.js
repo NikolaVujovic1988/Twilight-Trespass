@@ -1,6 +1,6 @@
 let canvas;
 let ctx;
-let character = new movebleObjects();
+let character = new Character();
 
 function init() {
     canvas = document.getElementById('canvas');
