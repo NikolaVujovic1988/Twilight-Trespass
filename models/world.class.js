@@ -52,7 +52,16 @@ class World {
     }
 
     addToMap(moveble) {
+        if (moveble.otherDirection) {
+            this.ctx.save();
+            this.ctx.translate(moveble.width, 0);
+            this.ctx.scale(-1, 1);
+            moveble.x = moveble.x * -1;
+        }
         this.ctx.drawImage(moveble.img, moveble.x, moveble.y, moveble.width, moveble.height);
-
+        if (moveble.otherDirection) {
+            this.ctx.restore();
+            moveble.x = moveble.x * -1;
+        }
     }
 }
