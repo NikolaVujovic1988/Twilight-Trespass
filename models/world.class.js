@@ -30,7 +30,7 @@ class World {
         this.character.world = this;
     }
 
-    draw(){
+    draw() {
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -38,14 +38,14 @@ class World {
         this.addObjectsToMap(this.clouds);
         this.addObjectsToMap(this.enemies);
         this.addToMap(this.character);
-        
+
         let self = this;
-        requestAnimationFrame(function() {
+        requestAnimationFrame(function () {
             self.draw();
         });
     }
 
-    addObjectsToMap(objects){
+    addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
         });
@@ -53,15 +53,25 @@ class World {
 
     addToMap(moveble) {
         if (moveble.otherDirection) {
-            this.ctx.save();
-            this.ctx.translate(moveble.width, 0);
-            this.ctx.scale(-1, 1);
-            moveble.x = moveble.x * -1;
+            this.flipCharacter(moveble);
         }
+        
         this.ctx.drawImage(moveble.img, moveble.x, moveble.y, moveble.width, moveble.height);
+        
         if (moveble.otherDirection) {
-            this.ctx.restore();
-            moveble.x = moveble.x * -1;
+            this.flipCharacterBack(moveble);
         }
+    }
+
+    flipCharacter(moveble) {
+        this.ctx.save();
+        this.ctx.translate(moveble.width, 0);
+        this.ctx.scale(-1, 1);
+        moveble.x = moveble.x * -1;
+    }
+
+    flipCharacterBack(moveble) {
+        this.ctx.restore();
+        moveble.x = moveble.x * -1;
     }
 }
