@@ -46,13 +46,12 @@ class MovebleObjects {
     }
 
     moveRight() {
-
+        this.x += this.speed;
+        this.running_sound.play();
     }
 
-    moveLeft() {
-        setInterval(() => {
-            this.x -= this.speed;
-        }, 1000 / 60);
+    moveLeft() {   
+        this.x -= this.speed;
     }
 
     jump() {
