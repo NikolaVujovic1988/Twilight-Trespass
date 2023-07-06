@@ -46,10 +46,10 @@ class World {
         if (moveble.otherDirection) {
             this.flipCharacter(moveble);
         }
+        moveble.draw(this.ctx);
+        moveble.drawFrame(this.ctx);
 
-        this.ctx.drawImage(moveble.img, moveble.x, moveble.y, moveble.width, moveble.height);
-        
-        if (moveble.otherDirection) {
+        if(moveble.otherDirection) {
             this.flipCharacterBack(moveble);
         }
     }
