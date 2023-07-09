@@ -11,11 +11,22 @@ class World {
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.draw();
-        this.setWorld()
+        this.setWorld();
+        this.checkCollisions();
     }
 
     setWorld() {
         this.character.world = this;
+    }
+
+    checkCollisions() {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    console.log('collision with Character', enemy);
+                }
+            });
+        }, 1000);
     }
 
     draw() {
@@ -49,7 +60,7 @@ class World {
         moveble.draw(this.ctx);
         moveble.drawFrame(this.ctx);
 
-        if(moveble.otherDirection) {
+        if (moveble.otherDirection) {
             this.flipCharacterBack(moveble);
         }
     }
