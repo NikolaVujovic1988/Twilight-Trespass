@@ -26,7 +26,7 @@ class World {
                     console.log('collision with Character', enemy);
                 }
             });
-        }, 1000);
+        }, 200);
     }
 
     draw() {
