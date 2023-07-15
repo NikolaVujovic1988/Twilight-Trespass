@@ -15,6 +15,16 @@ class MovebleObjects extends DrawableObject {
         }, 1000 / 25);
     }
 
+    drawFrame(ctx) {
+        if (this instanceof Character || this instanceof Chicken) {
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = 'blue';
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
+    }
+
     isAboveGround() {
         return this.y < 150;
     }
