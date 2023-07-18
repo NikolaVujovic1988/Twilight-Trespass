@@ -6,6 +6,7 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
+    trowableObjects = [];
 
 
     constructor(canvas) {
@@ -15,21 +16,34 @@ class World {
         this.draw();
         this.setWorld();
         this.checkCollisions();
+        this.run();
     }
 
     setWorld() {
         this.character.world = this;
     }
 
-    checkCollisions() {
+    run() {
         setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
-                    this.character.hit();
-                    this.statusbar.setPercentage(this.character.energy);
-                }
-            });
-        }, 200);
+            this.checkCollisions();
+            this.checkTrowObjects();
+        }, 150);
+    }
+
+    checkCollisions() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                this.character.hit();
+                this.statusbar.setPercentage(this.character.energy);
+            }
+        });
+    }
+
+    checkTrowObjects() {
+        if (this.keyboard.D) {
+            let bottle = new TrowableObject(this.character.x + 60, this.character.y + 100);
+            this.trowableObjects.push(bottle);
+        }
     }
 
     draw() {
@@ -47,6 +61,7 @@ class World {
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
+        this.addObjectsToMap(this.trowableObjects);
 
         this.ctx.translate(-this.camera_x, 0);
 
