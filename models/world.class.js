@@ -1,7 +1,8 @@
 class World {
     character = new Character();
     statusbar = new Statusbar();
-    coins = new Coins();
+    coins = new Coinsbar();
+    bottlesBar = new BottleStatusbar();
     level = level1;
     canvas;
     ctx;
@@ -53,11 +54,13 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.clouds);
 
         this.ctx.translate(-this.camera_x, 0);
         // ------ space for fixed objects -------------
         this.addToMap(this.statusbar);
         this.addToMap(this.coins);
+        this.addToMap(this.bottlesBar);
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.clouds);

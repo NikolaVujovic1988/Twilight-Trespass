@@ -1,4 +1,4 @@
-class Coins extends DrawableObject {
+class Coinsbar extends DrawableObject {
     IMAGES = [
         'img/7_statusbars/1_statusbar/1_statusbar_coin/green/0.png',
         'img/7_statusbars/1_statusbar/1_statusbar_coin/green/20.png',
@@ -12,7 +12,7 @@ class Coins extends DrawableObject {
         super();
         this.loadImages(this.IMAGES);
         this.x = 40;
-        this.y = 30;
+        this.y = 40;
         this.width = 170;
         this.height = 40;
         this.setPercentage(0);
