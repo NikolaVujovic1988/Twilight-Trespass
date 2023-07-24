@@ -16,8 +16,7 @@ body {
 }
 
 canvas {
-    width: 720px;
-    height: 480px;
+    display: block;
     border: 2px solid rgba(255, 255, 255, 0.3);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
@@ -29,4 +28,26 @@ h1 {
     letter-spacing: 4px;
     color: rgb(225, 102, 50);
     text-shadow: 2px 2px 4px rgba(225, 102, 50, 0.7);
+}
+
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+        border: none;
+        box-shadow: none;
+    }
+
+    h1 {
+        display: none;
+    }
+}
+
+@media only screen and (max-height: 480px) {
+    canvas {
+        height: 100vh;
+    }
+
+    h1 {
+        display: none;
+    }
 }
