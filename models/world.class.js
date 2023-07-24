@@ -10,6 +10,7 @@ class World {
     camera_x = 0;
     trowableObjects = [];
     coin = [];
+    bottle = [];
 
 
     constructor(canvas) {
@@ -20,7 +21,8 @@ class World {
         this.setWorld();
         this.checkCollisions();
         this.run();
-        this.generateCoins();
+        this.generateObjects(this.coin, Coin, 200, 1900, 100, 200);
+        this.generateObjects(this.bottle, Bottle, 200, 1900, 100, 200);
     }
 
     setWorld() {
@@ -34,40 +36,34 @@ class World {
         }, 150);
     }
 
-    // Function to generate a single coin
-generateCoin(xCenter, yCenter, radius, angle) {
-    const x = xCenter + radius * Math.cos(angle);
-    const y = yCenter - radius * Math.sin(angle);
-    return new Coin(x, y);
-}
-
-// Function to generate a semi-circle arc of coins
-generateArc(xCenter, yCenter, radius, coinsPerArc) {
-    const coins = [];
-    for(let i = 0; i < coinsPerArc; i++) {
-        const angle = Math.PI * i / (coinsPerArc - 1);
-        coins.push(this.generateCoin(xCenter, yCenter, radius, angle));
+    generateBottles() {
+        this.generateObjects(this.bottle, Bottle, 200, 1900, 100, 200);
     }
-    return coins;
-}
 
-// Function to generate all the arcs of coins
-generateCoins() {
-    const numArcs = 4;
-    const radius = 100;
-    const minYCenter = 100;
-    const maxYCenter = 300;
-    let xCenter = 400;
-    const xStep = 400;
-
-    for(let i = 0; i < numArcs; i++) {
-        const coinsPerArc = Math.floor(Math.random() * 3) + 3;
-        const yCenter = Math.random() * (maxYCenter - minYCenter) + minYCenter;
-        const arcCoins = this.generateArc(xCenter, yCenter, radius, coinsPerArc);
-        this.coin = this.coin.concat(arcCoins);
-        xCenter += xStep;
+    generateObjects(objects, objectClass, xStart, xRange, yStart, yRange) {
+        const arcCount = 5;
+        for (let i = 0; i < arcCount; i++) {
+            this.generateArc(objects, objectClass, xStart, xRange, yStart, yRange);
+        }
     }
-}
+
+    generateArc(objects, objectClass, xStart, xRange, yStart, yRange) {
+        const arcSize = this.getRandomInt(3, 6);
+        const arcHeight = this.getRandomInt(100, 300);
+        const arcWidth = this.getRandomInt(100, 300);
+        const arcXStart = xStart + Math.random() * xRange;
+        const arcYStart = yStart + Math.random() * yRange;
+        for (let i = 0; i < arcSize; i++) {
+            const x = arcXStart + arcWidth * Math.cos((i / arcSize) * Math.PI);
+            const y = arcYStart + arcHeight * Math.sin((i / arcSize) * Math.PI);
+            const newObject = new objectClass(x, y);
+            objects.push(newObject);
+        }
+    }
+
+    getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
 
 
     checkCollisions() {
@@ -95,6 +91,7 @@ generateCoins() {
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.coin);
+        this.addObjectsToMap(this.bottle);
 
         this.ctx.translate(-this.camera_x, 0);
         // ------ space for fixed objects -------------
