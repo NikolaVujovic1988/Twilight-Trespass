@@ -21,8 +21,8 @@ class World {
         this.setWorld();
         this.checkCollisions();
         this.run();
-        this.generateObjects(this.coin, Coin, 200, 1900, 100, 200);
-        this.generateObjects(this.bottle, Bottle, 200, 1900, 100, 200);
+        this.generateObjects(this.coin, Coin, 120, 350);
+        this.generateObjects(this.bottle, Bottle, 120, 350);
     }
 
     setWorld() {
@@ -36,33 +36,39 @@ class World {
         }, 150);
     }
 
-    generateBottles() {
-        this.generateObjects(this.bottle, Bottle, 200, 1900, 100, 200);
+    
+
+    // Function to generate a single object (Coin or Bottle)
+    generateObject(objClass, xCenter, yCenter, radius, angle) {
+        const x = xCenter + radius * Math.cos(angle);
+        const y = yCenter - radius * Math.sin(angle);
+        return new objClass(x, y);
     }
 
-    generateObjects(objects, objectClass, xStart, xRange, yStart, yRange) {
-        const arcCount = 5;
-        for (let i = 0; i < arcCount; i++) {
-            this.generateArc(objects, objectClass, xStart, xRange, yStart, yRange);
+    // Function to generate a semi-circle arc of objects (Coins or Bottles)
+    generateArc(objClass, xCenter, yCenter, radius, objectsPerArc) {
+        const objects = [];
+        for (let i = 0; i < objectsPerArc; i++) {
+            const angle = Math.PI * i / (objectsPerArc - 1);
+            objects.push(this.generateObject(objClass, xCenter, yCenter, radius, angle));
         }
+        return objects;
     }
 
-    generateArc(objects, objectClass, xStart, xRange, yStart, yRange) {
-        const arcSize = this.getRandomInt(3, 6);
-        const arcHeight = this.getRandomInt(100, 300);
-        const arcWidth = this.getRandomInt(100, 300);
-        const arcXStart = xStart + Math.random() * xRange;
-        const arcYStart = yStart + Math.random() * yRange;
-        for (let i = 0; i < arcSize; i++) {
-            const x = arcXStart + arcWidth * Math.cos((i / arcSize) * Math.PI);
-            const y = arcYStart + arcHeight * Math.sin((i / arcSize) * Math.PI);
-            const newObject = new objectClass(x, y);
-            objects.push(newObject);
+    // Function to generate all the arcs of objects (Coins or Bottles)
+    generateObjects(objectArray, objClass, minYCenter, maxYCenter) {
+        const numArcs = 4;
+        const radius = 100;
+        let xCenter = 400;
+        const xStep = 400;
+
+        for (let i = 0; i < numArcs; i++) {
+            const objectsPerArc = Math.floor(Math.random() * 3) + 3;
+            const yCenter = Math.random() * (maxYCenter - minYCenter) + minYCenter;
+            const arcObjects = this.generateArc(objClass, xCenter, yCenter, radius, objectsPerArc);
+            objectArray.push(...arcObjects);
+            xCenter += xStep;
         }
-    }
-
-    getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
 
