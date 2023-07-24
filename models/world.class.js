@@ -34,14 +34,41 @@ class World {
         }, 150);
     }
 
-    generateCoins() {
-        for(let i = 0; i < 10; i++) {
-            let x = 200 + Math.random() * 1800; 
-            let y = 100 + Math.random() * 200;
-            let coin = new Coin(x, y);
-            this.coin.push(coin);
-        }
+    // Function to generate a single coin
+generateCoin(xCenter, yCenter, radius, angle) {
+    const x = xCenter + radius * Math.cos(angle);
+    const y = yCenter - radius * Math.sin(angle);
+    return new Coin(x, y);
+}
+
+// Function to generate a semi-circle arc of coins
+generateArc(xCenter, yCenter, radius, coinsPerArc) {
+    const coins = [];
+    for(let i = 0; i < coinsPerArc; i++) {
+        const angle = Math.PI * i / (coinsPerArc - 1);
+        coins.push(this.generateCoin(xCenter, yCenter, radius, angle));
     }
+    return coins;
+}
+
+// Function to generate all the arcs of coins
+generateCoins() {
+    const numArcs = 4;
+    const radius = 100;
+    const minYCenter = 100;
+    const maxYCenter = 300;
+    let xCenter = 400;
+    const xStep = 400;
+
+    for(let i = 0; i < numArcs; i++) {
+        const coinsPerArc = Math.floor(Math.random() * 3) + 3;
+        const yCenter = Math.random() * (maxYCenter - minYCenter) + minYCenter;
+        const arcCoins = this.generateArc(xCenter, yCenter, radius, coinsPerArc);
+        this.coin = this.coin.concat(arcCoins);
+        xCenter += xStep;
+    }
+}
+
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
@@ -68,7 +95,6 @@ class World {
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.coin);
-
 
         this.ctx.translate(-this.camera_x, 0);
         // ------ space for fixed objects -------------
