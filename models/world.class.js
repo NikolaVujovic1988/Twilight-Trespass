@@ -9,6 +9,7 @@ class World {
     keyboard;
     camera_x = 0;
     trowableObjects = [];
+    coin = [];
 
 
     constructor(canvas) {
@@ -19,6 +20,7 @@ class World {
         this.setWorld();
         this.checkCollisions();
         this.run();
+        this.generateCoins();
     }
 
     setWorld() {
@@ -30,6 +32,15 @@ class World {
             this.checkCollisions();
             this.checkTrowObjects();
         }, 150);
+    }
+
+    generateCoins() {
+        for(let i = 0; i < 10; i++) {
+            let x = 200 + Math.random() * 1800; 
+            let y = 100 + Math.random() * 200;
+            let coin = new Coin(x, y);
+            this.coin.push(coin);
+        }
     }
 
     checkCollisions() {
@@ -56,12 +67,17 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.coin);
+
 
         this.ctx.translate(-this.camera_x, 0);
         // ------ space for fixed objects -------------
         this.addToMap(this.statusbar);
         this.addToMap(this.coins);
         this.addToMap(this.bottlesBar);
+
+        // ------ space for fixed objects -------------
+
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.enemies);
