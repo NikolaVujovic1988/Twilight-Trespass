@@ -8,6 +8,7 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
+    isFullScreen = false;
     trowableObjects = [];
     coin = [];
     bottle = [];
@@ -23,6 +24,8 @@ class World {
         this.run();
         this.generateObjects(this.coin, Coin, 120, 350);
         this.generateObjects(this.bottle, Bottle, 120, 350);
+        this.setupEventListeners();
+        this.setupFullScreenChangeHandler();
     }
 
     setWorld() {
@@ -116,6 +119,7 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
 
         this.showIcons();
+
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
@@ -141,10 +145,11 @@ class World {
     }
 
     showIcons() {
-        let imgFullScreen = new Image();
+
         let imgVolume = new Image();
-        imgFullScreen.src = "img/icons/fullscreen.png"; 
-        imgVolume.src = "img/icons/medium-volume.png"; 
+        let imgFullScreen = new Image();
+        imgFullScreen.src = this.isFullScreen ? "img/icons/close.png" : "img/icons/fullscreen.png";
+        imgVolume.src = "img/icons/medium-volume.png";
         this.ctx.drawImage(imgFullScreen, this.canvas.width - 50, this.canvas.height - 50, 20, 20);
         this.ctx.drawImage(imgVolume, this.canvas.width - 90, this.canvas.height - 50, 20, 20);
     }
@@ -160,4 +165,36 @@ class World {
         this.ctx.restore();
         moveble.x = moveble.x * -1;
     }
+
+    setupFullScreenChangeHandler() {
+        const handler = () => {
+            this.isFullScreen = document.fullscreenElement == this.canvas;
+        };
+    
+        document.addEventListener('fullscreenchange', handler);
+    }    
+
+    setupEventListeners() {
+        this.canvas.addEventListener('click', (event) => {
+            let rect = this.canvas.getBoundingClientRect();
+            let x = event.clientX - rect.left;
+            let y = event.clientY - rect.top;
+            if (x >= this.canvas.width - 50 && x <= this.canvas.width - 30 &&
+                y >= this.canvas.height - 50 && y <= this.canvas.height - 30) {
+                this.openFullscreen();
+            }
+            if (x >= this.canvas.width - 70 && x <= this.canvas.width - 50 &&
+                y >= this.canvas.height - 50 && y <= this.canvas.height - 30) {
+                this.increaseVolume();
+            }
+        });
+    }
+
+    openFullscreen() {
+        if (!this.isFullScreen) {
+            this.canvas.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }   
 }
