@@ -36,7 +36,7 @@ class World {
         }, 150);
     }
 
-    
+
 
     // Function to generate a single object (Coin or Bottle)
     generateObject(objClass, xCenter, yCenter, radius, angle) {
@@ -115,6 +115,7 @@ class World {
 
         this.ctx.translate(-this.camera_x, 0);
 
+        this.showIcons();
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
@@ -137,6 +138,15 @@ class World {
         if (moveble.otherDirection) {
             this.flipCharacterBack(moveble);
         }
+    }
+
+    showIcons() {
+        let imgFullScreen = new Image();
+        let imgVolume = new Image();
+        imgFullScreen.src = "img/icons/fullscreen.png"; 
+        imgVolume.src = "img/icons/medium-volume.png"; 
+        this.ctx.drawImage(imgFullScreen, this.canvas.width - 50, this.canvas.height - 50, 20, 20);
+        this.ctx.drawImage(imgVolume, this.canvas.width - 90, this.canvas.height - 50, 20, 20);
     }
 
     flipCharacter(moveble) {
