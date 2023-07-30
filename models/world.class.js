@@ -76,18 +76,22 @@ class World {
 
 
     checkCollisions() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.statusbar.setPercentage(this.character.energy);
+        for (let i = 0; i < this.bottle.length; i++) {
+            if (this.character.isColliding(this.bottle[i])) {
+                this.character.bottles++;
+                this.bottlesBar.setPercentage(this.character.bottles * 20);
+                this.bottle.splice(i, 1);
+                i--;
             }
-        });
+        }
     }
 
     checkTrowObjects() {
-        if (this.keyboard.D) {
+        if (this.keyboard.D && this.character.bottles > 0) {
             let bottle = new TrowableObject(this.character.x + 60, this.character.y + 100);
             this.trowableObjects.push(bottle);
+            this.character.bottles--;
+            this.bottlesBar.setPercentage(this.character.bottles * 20);
         }
     }
 
@@ -118,6 +122,7 @@ class World {
 
         this.ctx.translate(-this.camera_x, 0);
 
+        this.bottlesBar.setPercentage(this.character.bottles * 20);
         this.showIcons();
 
         let self = this;
@@ -169,10 +174,12 @@ class World {
     setupFullScreenChangeHandler() {
         const handler = () => {
             this.isFullScreen = document.fullscreenElement == this.canvas;
+            this.draw();  // Force a redraw to refresh the fullscreen icon immediately.
         };
     
         document.addEventListener('fullscreenchange', handler);
-    }    
+    }
+    
 
     setupEventListeners() {
         this.canvas.addEventListener('click', (event) => {
