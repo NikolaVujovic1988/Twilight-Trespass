@@ -43,6 +43,7 @@ class Character extends MovebleObjects {
     running_sound = new Audio('./audio/running.mp3');
     speed = 5;
     bottles = 0;
+    coinCount = 0;
 
     constructor() {
         super().loadImage('../img/2_character_pepe/2_walk/W-21.png');
@@ -89,5 +90,9 @@ class Character extends MovebleObjects {
                 }
             }
         }, 50);
+    }
+
+    collectCoin() {
+        this.coinCount += 1;
     }
 }

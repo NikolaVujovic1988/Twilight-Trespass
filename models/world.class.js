@@ -84,6 +84,17 @@ class World {
                 i--;
             }
         }
+        for (let i = this.coin.length - 1; i >= 0; i--) {
+            let percentage = this.character.coinCount * 20;
+            if (percentage > 100) {
+                percentage = 100;
+            }
+            if (this.character.isColliding(this.coin[i])) {
+                this.character.collectCoin();
+                this.coins.setPercentage(percentage);
+                this.coin.splice(i, 1);
+            }
+        }
     }
 
     checkTrowObjects() {
@@ -176,10 +187,10 @@ class World {
             this.isFullScreen = document.fullscreenElement == this.canvas;
             this.draw();  // Force a redraw to refresh the fullscreen icon immediately.
         };
-    
+
         document.addEventListener('fullscreenchange', handler);
     }
-    
+
 
     setupEventListeners() {
         this.canvas.addEventListener('click', (event) => {
@@ -203,5 +214,5 @@ class World {
         } else {
             document.exitFullscreen();
         }
-    }   
+    }
 }
