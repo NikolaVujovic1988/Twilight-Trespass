@@ -14,7 +14,11 @@ class TrowableObject extends MovebleObjects {
         this.speedY = 30;
         this.applyGravity();
         setInterval(() => {
-            this.x += 10;
+            if (this.direction === 'right') {
+                this.x += 10;
+            } else {
+                this.x -= 10;
+            }
         }, 25);
     }
 

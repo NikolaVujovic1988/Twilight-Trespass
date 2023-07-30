@@ -100,6 +100,7 @@ class World {
     checkTrowObjects() {
         if (this.keyboard.D && this.character.bottles > 0) {
             let bottle = new TrowableObject(this.character.x + 60, this.character.y + 100);
+            bottle.direction = this.character.lastDirection;
             this.trowableObjects.push(bottle);
             this.character.bottles--;
             this.bottlesBar.setPercentage(this.character.bottles * 20);
