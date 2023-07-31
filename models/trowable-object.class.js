@@ -18,6 +18,7 @@ class TrowableObject extends MovebleObjects {
                 this.x += 10;
             } else {
                 this.x -= 10;
+                console.log('poz')
             }
         }, 25);
     }
