@@ -76,6 +76,13 @@ class World {
 
 
     checkCollisions() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                this.character.hit();
+                this.statusbar.setPercentage(this.character.energy);
+            }
+        });
+    
         for (let i = 0; i < this.bottle.length; i++) {
             if (this.character.isColliding(this.bottle[i])) {
                 this.character.bottles++;
@@ -113,8 +120,8 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.level.clouds);
-        this.addObjectsToMap(this.level.clouds);
+        // this.addObjectsToMap(this.level.clouds);
+        // this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.coin);
         this.addObjectsToMap(this.bottle);
 
