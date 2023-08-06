@@ -1,7 +1,7 @@
 class Character extends MovebleObjects {
 
     height = 150;
-    y = 30;
+    y = 220;
     IMAGES_WALKING = [
         'img/png/Run (1).png',
         'img/png/Run (2).png',
