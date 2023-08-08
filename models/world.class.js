@@ -106,7 +106,7 @@ class World {
 
     checkTrowObjects() {
         if (this.keyboard.D && this.character.bottles > 0) {
-            let bottle = new TrowableObject(this.character.x + 60, this.character.y + 100);
+            let bottle = new TrowableObject(this.character.x + 30, this.character.y + 30);
             bottle.direction = this.character.lastDirection;
             this.trowableObjects.push(bottle);
             this.character.bottles--;
