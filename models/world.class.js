@@ -74,14 +74,25 @@ class World {
         }
     }
 
-
     checkCollisions() {
-        this.level.enemies.forEach((enemy) => {
+        let enemiesToRemove = [];
+        this.level.enemies.forEach((enemy, i) => {
             if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.statusbar.setPercentage(this.character.energy);
+                // if character is over enemy and falling down
+                if (this.character.CharacterPreviousY <= enemy.y) {
+                    // mark enemy for removal
+                    enemiesToRemove.push(i);
+                } else {
+                    this.character.hit();
+                    this.statusbar.setPercentage(this.character.energy);
+                }
             }
         });
+        // Remove marked enemies
+        for (let i = enemiesToRemove.length - 1; i >= 0; i--) {
+            this.level.enemies.splice(enemiesToRemove[i], 1);
+        }
+    
     
         for (let i = 0; i < this.bottle.length; i++) {
             if (this.character.isColliding(this.bottle[i])) {

@@ -5,12 +5,15 @@ class MovebleObjects extends DrawableObject {
     acceleration = 2;
     energy = 100;
     lastHit = 0;
+    CharacterPreviousY = 291;
 
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
+                this.CharacterPreviousY = this.y + 101;
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
+                console.log(this.CharacterPreviousY);
             }
         }, 1000 / 25);
     }
@@ -46,7 +49,7 @@ class MovebleObjects extends DrawableObject {
     isColliding(mo) {
         return this.x + this.width > mo.x &&
             this.y + this.height > mo.y &&
-            this.x < mo.x &&
+            this.x < mo.x + mo.width &&
             this.y < mo.y + mo.height;
     }
 
