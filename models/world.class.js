@@ -75,23 +75,20 @@ class World {
     }
 
     checkCollisions() {
-        let enemiesToRemove = [];
-        this.level.enemies.forEach((enemy, i) => {
+        for (let i = this.level.enemies.length - 1; i >= 0; i--) {
+            let enemy = this.level.enemies[i];
+            
             if (this.character.isColliding(enemy)) {
-                // if character is over enemy and falling down
-                if (this.character.CharacterPreviousY <= enemy.y) {
-                    // mark enemy for removal
-                    enemiesToRemove.push(i);
+                if (this.character.y + this.character.height - 30 <= enemy.y + (enemy.height / 2)) {
+                    // remove the enemy directly if character is over the top half of the enemy
+                    this.level.enemies.splice(i, 1);
                 } else {
                     this.character.hit();
                     this.statusbar.setPercentage(this.character.energy);
                 }
             }
-        });
-        // Remove marked enemies
-        for (let i = enemiesToRemove.length - 1; i >= 0; i--) {
-            this.level.enemies.splice(enemiesToRemove[i], 1);
         }
+        
     
     
         for (let i = 0; i < this.bottle.length; i++) {
