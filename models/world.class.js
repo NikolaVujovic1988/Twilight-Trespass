@@ -80,8 +80,11 @@ class World {
         for (let i = this.level.enemies.length - 1; i >= 0; i--) {
             let enemy = this.level.enemies[i];
 
+            if (enemy.isDead) continue;
+
             if (this.character.isColliding(enemy)) {
                 if (this.character.y + this.character.height - 30 <= enemy.y + (enemy.height / 1.5)) {
+                    enemy.isDead = true;
                     // remove the enemy directly if character is over the 75% of the enemy
                     this.enemiesToAnimateDeath.push(enemy);                    //this.level.enemies.splice(i, 1);
                 } else {
@@ -134,7 +137,7 @@ class World {
                 enemy.loadImage(deathAnimationFrames[currentAnimationFrame]);
                 currentAnimationFrame++;
             }
-        }, 1000); // Change 100ms if you want to adjust the speed of animation
+        }, 500); 
     }
 
 

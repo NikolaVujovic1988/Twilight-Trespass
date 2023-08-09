@@ -13,7 +13,6 @@ class MovebleObjects extends DrawableObject {
                 this.CharacterPreviousY = this.y + 101;
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
-                console.log(this.CharacterPreviousY);
             }
         }, 1000 / 25);
     }
