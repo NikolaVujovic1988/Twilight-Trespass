@@ -12,6 +12,7 @@ class World {
     trowableObjects = [];
     coin = [];
     bottle = [];
+    enemiesToAnimateDeath = [];
 
 
     constructor(canvas) {
@@ -74,23 +75,32 @@ class World {
         }
     }
 
+    
     checkCollisions() {
         for (let i = this.level.enemies.length - 1; i >= 0; i--) {
             let enemy = this.level.enemies[i];
-            
+
             if (this.character.isColliding(enemy)) {
-                if (this.character.y + this.character.height - 30 <= enemy.y + (enemy.height / 2)) {
-                    // remove the enemy directly if character is over the top half of the enemy
-                    this.level.enemies.splice(i, 1);
+                if (this.character.y + this.character.height - 30 <= enemy.y + (enemy.height / 1.5)) {
+                    // remove the enemy directly if character is over the 75% of the enemy
+                    this.enemiesToAnimateDeath.push(enemy);                    //this.level.enemies.splice(i, 1);
                 } else {
                     this.character.hit();
                     this.statusbar.setPercentage(this.character.energy);
                 }
             }
         }
-        
-    
-    
+
+        // Animate the death of enemies and then remove them
+        this.enemiesToAnimateDeath.forEach(enemy => {
+            this.animateEnemyDeath(enemy, () => {
+                const index = this.level.enemies.indexOf(enemy);
+                if (index !== -1) this.level.enemies.splice(index, 1);
+            });
+        });
+
+
+
         for (let i = 0; i < this.bottle.length; i++) {
             if (this.character.isColliding(this.bottle[i])) {
                 this.character.bottles++;
@@ -111,6 +121,22 @@ class World {
             }
         }
     }
+
+    animateEnemyDeath(enemy, callback) {
+        let currentAnimationFrame = 0;
+        const deathAnimationFrames = ['img/3_enemies_chicken/chicken_normal/2_dead/dead.png'];
+    
+        const animationInterval = setInterval(() => {
+            if (currentAnimationFrame >= deathAnimationFrames.length) {
+                clearInterval(animationInterval);
+                callback(); // Callback to remove enemy from array after animation
+            } else {
+                enemy.loadImage(deathAnimationFrames[currentAnimationFrame]);
+                currentAnimationFrame++;
+            }
+        }, 1000); // Change 100ms if you want to adjust the speed of animation
+    }
+
 
     checkTrowObjects() {
         if (this.keyboard.D && this.character.bottles > 0) {
