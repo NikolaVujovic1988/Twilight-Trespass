@@ -1,47 +1,29 @@
 class Character extends MovebleObjects {
 
     height = 150;
-    y = 220;
+    y = 300;
     IMAGES_WALKING = [
-        'img/png/Run (1).png',
-        'img/png/Run (2).png',
-        'img/png/Run (3).png',
-        'img/png/Run (4).png',
-        'img/png/Run (5).png',
-        'img/png/Run (6).png',
-        'img/png/Run (7).png',
-        'img/png/Run (8).png'
+        'Files/png/1x/hero2/WalkRight (1).png',
+        'Files/png/1x/hero2/WalkRight (2).png',
+        'Files/png/1x/hero2/WalkRight (3).png',
+        'Files/png/1x/hero2/WalkRight (4).png'
     ];
 
     IMAGES_JUMPING = [
-        'img/png/Jump (1).png',
-        'img/png/Jump (2).png',
-        'img/png/Jump (3).png',
-        'img/png/Jump (4).png',
-        'img/png/Jump (5).png',
-        'img/png/Jump (6).png',
-        'img/png/Jump (7).png',
-        'img/png/Jump (8).png',
-        'img/png/Jump (9).png',
-        'img/png/Jump (10).png'
+        'Files/png/1x/hero2/WalkRight (1).png',
+        'Files/png/1x/hero2/WalkRight (2).png',
+        'Files/png/1x/hero2/WalkRight (3).png',
+        'Files/png/1x/hero2/WalkRight (4).png'
     ];
 
     IMAGES_DEAD = [
-        'img/png/Dead (1).png',
-        'img/png/Dead (2).png',
-        'img/png/Dead (3).png',
-        'img/png/Dead (4).png',
-        'img/png/Dead (5).png',
-        'img/png/Dead (6).png',
-        'img/png/Dead (7).png',
-        'img/png/Dead (8).png',
-        'img/png/Dead (9).png',
-        'img/png/Dead (10).png'
+        'Files/png/1x/hero2/DeadRight (1).png',
+        'Files/png/1x/hero2/DeadRight (2).png',
+        'Files/png/1x/hero2/DeadRight (3).png'
     ];
 
     IMAGES_HURT = [
-        'img/png/Dead (1).png',
-        'img/png/Dead (2).png'
+        'Files/png/1x/hero2/HurtRight.png'
     ];
 
     world;
@@ -51,7 +33,7 @@ class Character extends MovebleObjects {
     coinCount = 0;
 
     constructor() {
-        super().loadImage('img/png/Idle (1).png');
+        super().loadImage('Files/png/1x/hero2/IdleRight (1).png');
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_HURT);
