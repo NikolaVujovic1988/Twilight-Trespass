@@ -4,7 +4,7 @@ class Bottle extends DrawableObject {
     height = 60;
 
     IMAGES = [
-        'img/6_salsa_bottle/salsa_bottle.png'
+        'Files/png/1x/hero2/Arrow (1).png'
     ];
 
     constructor(x, y) {

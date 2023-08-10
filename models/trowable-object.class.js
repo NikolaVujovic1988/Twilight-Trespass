@@ -2,9 +2,9 @@ class TrowableObject extends MovebleObjects {
 
 
     constructor(x, y) {
-        super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
-        this.x = x;
-        this.y = y;
+        super().loadImage('Files/png/1x/hero2/Arrow (1).png');
+        this.x = x + 50;
+        this.y = y + 30;
         this.width = 50;
         this.height = 60;
         this.trow();
