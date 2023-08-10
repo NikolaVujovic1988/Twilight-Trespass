@@ -1,4 +1,4 @@
-class Chicken extends MovebleObjects {
+class Mushroom extends MovebleObjects {
 
     height = 70;
     width = 70;
@@ -8,13 +8,14 @@ class Chicken extends MovebleObjects {
 
 
     IMAGES_WALKING = [
-        '../img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
-        '../img/3_enemies_chicken/chicken_normal/1_walk/2_w.png',
-        '../img/3_enemies_chicken/chicken_normal/1_walk/3_w.png'
+        'Files/png/2x/shroom2/WalkLeft (1).png',
+        'Files/png/2x/shroom2/WalkLeft (2).png',
+        'Files/png/2x/shroom2/WalkLeft (3).png',
+        'Files/png/2x/shroom2/WalkLeft (4).png'
     ];
 
     constructor() {
-        super().loadImage('../img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
+        super().loadImage('Files/png/2x/shroom2/IdleLeft (1).png');
 
         this.x = 300 + Math.random() * 4500;
         this.speed = 0.15 + Math.random() * 0.5;

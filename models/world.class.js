@@ -127,7 +127,12 @@ class World {
 
     animateEnemyDeath(enemy, callback) {
         let currentAnimationFrame = 0;
-        const deathAnimationFrames = ['img/3_enemies_chicken/chicken_normal/2_dead/dead.png'];
+        const deathAnimationFrames = [
+            'Files/png/2x/shroom2/DeadLeft (1).png',
+            'Files/png/2x/shroom2/DeadLeft (2).png',
+            'Files/png/2x/shroom2/DeadLeft (3).png',
+            'Files/png/2x/shroom2/DeadLeft (4).png'
+        ];
     
         const animationInterval = setInterval(() => {
             if (currentAnimationFrame >= deathAnimationFrames.length) {
