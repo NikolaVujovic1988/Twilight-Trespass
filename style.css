@@ -11,7 +11,7 @@ body {
     align-items: center;
     justify-content: center;
     height: 100dvh;
-    background-image: url('img/Background/desert-g182fbc3d9_1920.png');
+    background-color: rgba(203, 87, 252, 0.3);
     background-position: center;
 }
 
@@ -26,7 +26,7 @@ h1 {
     font-family: 'zabars', Arial, Helvetica, sans-serif;
     font-size: 64px;
     letter-spacing: 4px;
-    color: rgb(225, 102, 50);
+    color: rgb(99, 88, 97);
     text-shadow: 2px 2px 4px rgba(225, 102, 50, 0.7);
 }
 

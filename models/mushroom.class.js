@@ -15,7 +15,7 @@ class Mushroom extends MovebleObjects {
     ];
 
     constructor() {
-        super().loadImage('Files/png/2x/shroom2/IdleLeft (1).png');
+        super().loadImage('Files/png/2x/shroom2/WalkLeft (1).png');
 
         this.x = 300 + Math.random() * 4500;
         this.speed = 0.15 + Math.random() * 0.5;
