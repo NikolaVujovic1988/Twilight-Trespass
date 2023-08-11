@@ -83,11 +83,14 @@ class World {
             if (enemy.isDead) continue;
 
             if (this.character.isColliding(enemy)) {
-                if (this.character.y + this.character.height - 30 <= enemy.y + (enemy.height / 1.5)) {
+                if (this.character.y + this.character.height - 10 <= enemy.y + (enemy.height / 2)) {
                     enemy.isDead = true;
-                    // remove the enemy directly if character is over the 75% of the enemy
-                    this.enemiesToAnimateDeath.push(enemy);                    //this.level.enemies.splice(i, 1);
+                    // remove the enemy directly if character is over the 50% of the enemy
+                    this.enemiesToAnimateDeath.push(enemy);
                 } else {
+                    console.log(this.character.y + this.character.height - 10);
+                    console.warn(enemy.y + (enemy.height / 2));
+
                     this.character.hit();
                     this.statusbar.setPercentage(this.character.energy);
                 }
@@ -127,13 +130,8 @@ class World {
 
     animateEnemyDeath(enemy, callback) {
         let currentAnimationFrame = 0;
-        const deathAnimationFrames = [
-            'Files/png/2x/shroom2/DeadLeft (1).png',
-            'Files/png/2x/shroom2/DeadLeft (2).png',
-            'Files/png/2x/shroom2/DeadLeft (3).png',
-            'Files/png/2x/shroom2/DeadLeft (4).png'
-        ];
-    
+        const deathAnimationFrames = enemy.IMAGES_DEAD;
+        
         const animationInterval = setInterval(() => {
             if (currentAnimationFrame >= deathAnimationFrames.length) {
                 clearInterval(animationInterval);
@@ -144,6 +142,7 @@ class World {
             }
         }, 500); 
     }
+    
 
 
     checkTrowObjects() {

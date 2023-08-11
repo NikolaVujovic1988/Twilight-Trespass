@@ -76,23 +76,6 @@ class Character extends MovebleObjects {
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
-            }
-            else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
-            } else if (this.world.keyboard.D && this.hasThrowableObjects()) {
-                this.throwObject();
-                this.playAnimation(this.IMAGES_SHOT);
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.playAnimation(this.IMAGES_WALKING);
-            }
-
-        }, 50);
-
-        setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
@@ -100,7 +83,7 @@ class Character extends MovebleObjects {
             } else if (this.world.keyboard.D && this.hasThrowableObjects()) {
                 this.throwObject();
                 this.playAnimation(this.IMAGES_SHOT);
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            } else if (!this.isAboveGround() && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 50);

@@ -16,6 +16,22 @@ const level1 = new Level(
         new Mushroom(),
         new Mushroom(),
 
+        new Slime(),
+        new Slime(),
+        new Slime(),
+        new Slime(),
+        new Slime(),
+        new Slime(),
+        new Slime(),
+        new Slime(),
+        new Slime(),
+        new Slime(),
+        new Slime(),
+        new Slime(),
+        new Slime(),
+        new Slime(),
+
+
         new Endboss()
     ],
     [
