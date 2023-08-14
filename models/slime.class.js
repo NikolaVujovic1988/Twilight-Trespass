@@ -25,7 +25,8 @@ class Slime extends MovebleObjects {
     constructor() {
         super().loadImage('Files/png/2x/slime1/WalkLeft (1).png');
 
-        this.x = 300 + Math.random() * 4500;
+        this.x = 500 + Math.random() * 4500;
+        this.y = 300 - Math.random() * 300;
         this.speed = 0.50 + Math.random() * 0.5;
         this.loadImages(this.IMAGES_WALKING);
         this.animate();
