@@ -19,6 +19,8 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.volume = 1; 
+        this.previousVolume = 0;
         this.draw();
         this.setWorld();
         this.checkCollisions();
@@ -210,15 +212,17 @@ class World {
     }
 
     showIcons() {
-
         let imgVolume = new Image();
         let imgFullScreen = new Image();
         imgFullScreen.src = this.isFullScreen ? "img/icons/close.png" : "img/icons/fullscreen.png";
-        imgVolume.src = "img/icons/medium-volume.png";
-        this.ctx.drawImage(imgFullScreen, this.canvas.width - 50, this.canvas.height - 50, 20, 20);
-        this.ctx.drawImage(imgVolume, this.canvas.width - 90, this.canvas.height - 50, 20, 20);
+        imgVolume.src = this.volume ? "img/icons/medium-volume.png" : "img/icons/mute (1).png";
+        const iconWidth = 20;
+        const iconSpacing = 10;
+        const totalWidth = 2 * iconWidth + iconSpacing;
+        this.ctx.drawImage(imgFullScreen, (this.canvas.width - totalWidth) / 2, 10, iconWidth, iconWidth);
+        this.ctx.drawImage(imgVolume, (this.canvas.width - totalWidth) / 2 + iconWidth + iconSpacing, 10, iconWidth, iconWidth);
     }
-
+    
     flipCharacter(moveble) {
         this.ctx.save();
         this.ctx.translate(moveble.width, 0);
@@ -246,13 +250,21 @@ class World {
             let rect = this.canvas.getBoundingClientRect();
             let x = event.clientX - rect.left;
             let y = event.clientY - rect.top;
-            if (x >= this.canvas.width - 50 && x <= this.canvas.width - 30 &&
-                y >= this.canvas.height - 50 && y <= this.canvas.height - 30) {
+            
+            const iconWidth = 20;
+            const iconSpacing = 10;
+            const totalWidth = 2 * iconWidth + iconSpacing;
+            const startFullScreenX = (this.canvas.width - totalWidth) / 2;
+            const startVolumeX = (this.canvas.width - totalWidth) / 2 + iconWidth + iconSpacing;
+    
+            if (x >= startFullScreenX && x <= startFullScreenX + iconWidth &&
+                y >= 10 && y <= 10 + iconWidth) {
                 this.openFullscreen();
             }
-            if (x >= this.canvas.width - 70 && x <= this.canvas.width - 50 &&
-                y >= this.canvas.height - 50 && y <= this.canvas.height - 30) {
-                this.increaseVolume();
+    
+            if (x >= startVolumeX && x <= startVolumeX + iconWidth &&
+                y >= 10 && y <= 10 + iconWidth) {
+                this.toggleVolume();  
             }
         });
     }
@@ -264,4 +276,15 @@ class World {
             document.exitFullscreen();
         }
     }
+
+    toggleVolume() {
+        if (this.volume) { 
+            this.previousVolume = this.volume; 
+            this.volume = 0; 
+            // Adjust the icon to indicate muted status
+        } else {
+            this.volume = this.previousVolume || 1;  // Adjust the icon back to indicate volume is on
+        }
+    }
+    
 }
