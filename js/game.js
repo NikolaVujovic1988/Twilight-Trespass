@@ -4,10 +4,15 @@ let keyboard = new Keyboard();
 
 function init() {
     canvas = document.getElementById('canvas');
-    canvas.width = 720; 
+    canvas.width = 720;
     canvas.height = 480;
-    world = new World(canvas, keyboard);
+
+    document.getElementById('startButton').addEventListener('click', function () {
+        document.getElementById('startScreen').style.display = 'none';
+        world = new World(canvas, keyboard);
+    });
 }
+
 
 window.addEventListener("keydown", (event) => {
     if (event.keyCode == 39) {
