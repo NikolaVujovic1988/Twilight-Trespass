@@ -9,8 +9,12 @@ function init() {
 
     document.getElementById('startButton').addEventListener('click', function () {
         document.getElementById('startScreen').style.display = 'none';
-        world = new World(canvas, keyboard);
+        startGame();
     });
+}
+
+function startGame() {
+    world = new World(canvas, keyboard);
 }
 
 
