@@ -12,7 +12,7 @@ class DrawableObject {
     }
 
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Mushroom || this instanceof Slime) {
+        if (this instanceof Character || this instanceof Mushroom || this instanceof Bug) {
             ctx.beginPath();
             ctx.lineWidth = '1';
             ctx.strokeStyle = 'blue';

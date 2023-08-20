@@ -16,20 +16,17 @@ const level1 = new Level(
         new Mushroom(),
         new Mushroom(),
 
-        new Slime(),
-        new Slime(),
-        new Slime(),
-        new Slime(),
-        new Slime(),
-        new Slime(),
-        new Slime(),
-        new Slime(),
-        new Slime(),
-        new Slime(),
-        new Slime(),
-        new Slime(),
-        new Slime(),
-        new Slime(),
+        new Bug(),
+        new Bug(),
+        new Bug(),
+        new Bug(),
+        new Bug(),
+        new Bug(),
+        new Bug(),
+        new Bug(),
+        new Bug(),
+        new Bug(),
+
 
 
         new Endboss()

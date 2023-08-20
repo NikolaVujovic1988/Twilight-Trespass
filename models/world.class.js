@@ -200,16 +200,17 @@ class World {
     }
 
     addToMap(moveble) {
-        if (moveble.otherDirection) {
+        if (moveble instanceof Bug || moveble.otherDirection) {
             this.flipCharacter(moveble);
         }
         moveble.draw(this.ctx);
         moveble.drawFrame(this.ctx);
-
-        if (moveble.otherDirection) {
+    
+        if (moveble instanceof Bug || moveble.otherDirection) {
             this.flipCharacterBack(moveble);
         }
     }
+    
 
     showIcons() {
         let imgVolume = new Image();
