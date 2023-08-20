@@ -99,6 +99,20 @@ class World {
             }
         }
 
+        for (let i = this.trowableObjects.length - 1; i >= 0; i--) {
+            let bottle = this.trowableObjects[i];
+            for (let j = this.level.enemies.length - 1; j >= 0; j--) {
+                let enemy = this.level.enemies[j];
+                
+                if (!enemy.isDead && bottle.isColliding(enemy)) {
+                    enemy.isDead = true;
+                    this.enemiesToAnimateDeath.push(enemy);
+                    this.trowableObjects.splice(i, 1);
+                    break; // A bottle can hit only one enemy, so we break out of the inner loop
+                }
+            }
+        }
+
         // Animate the death of enemies and then remove them
         this.enemiesToAnimateDeath.forEach(enemy => {
             this.animateEnemyDeath(enemy, () => {
