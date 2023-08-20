@@ -1,6 +1,7 @@
 class Character extends MovebleObjects {
 
     height = 150;
+    width = 200;
     y = 300;
     IMAGES_WALKING = [
         'Files/png/2x/hero2/WalkRight (1).png',
@@ -108,4 +109,20 @@ class Character extends MovebleObjects {
     collectCoin() {
         this.coinCount += 1;
     }
+
+    isCollidingCentral(object) {
+        const thisMiddle = this.x + this.width / 2;
+        const objectMiddle = object.x + object.width / 2;
+    
+        const thisRange = this.width * 0.25;
+        const objectRange = object.width * 0.25;
+    
+        if (thisMiddle + thisRange > objectMiddle - objectRange && thisMiddle - thisRange < objectMiddle + objectRange) {
+            if (this.y + this.height > object.y && this.y < object.y + object.height) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
 }

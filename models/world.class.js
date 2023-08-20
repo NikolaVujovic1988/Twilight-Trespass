@@ -84,7 +84,7 @@ class World {
 
             if (enemy.isDead) continue;
 
-            if (this.character.isColliding(enemy)) {
+            if (this.character.isCollidingCentral(enemy)) {
                 if (this.character.y + this.character.height - 10 <= enemy.y + (enemy.height / 2)) {
                     enemy.isDead = true;
                     // remove the enemy directly if character is over the 50% of the enemy
