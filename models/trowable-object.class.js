@@ -18,8 +18,15 @@ class TrowableObject extends MovebleObjects {
                 this.x += 10;
             } else {
                 this.x -= 10;
+                if(!this.otherDirection) {
+                    this.flipArrow();
+                }
             }
         }, 25);
+    }
+
+    flipArrow() {
+        this.otherDirection = true;
     }
 
 }

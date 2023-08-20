@@ -1,7 +1,7 @@
 class Bottle extends DrawableObject {
 
-    width = 50;
-    height = 60;
+    width = 80;
+    height = 70;
 
     IMAGES = [
         'Files/png/1x/hero2/Arrow (1).png'

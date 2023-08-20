@@ -200,16 +200,16 @@ class World {
     }
 
     addToMap(moveble) {
-        if (moveble instanceof Bug || moveble.otherDirection) {
+        if (moveble instanceof Bug || moveble.otherDirection || (moveble instanceof TrowableObject && moveble.direction === 'left')) {
             this.flipCharacter(moveble);
         }
         moveble.draw(this.ctx);
         moveble.drawFrame(this.ctx);
-    
-        if (moveble instanceof Bug || moveble.otherDirection) {
+        
+        if (moveble instanceof Bug || moveble.otherDirection || (moveble instanceof TrowableObject && moveble.direction === 'left')) {
             this.flipCharacterBack(moveble);
         }
-    }
+    }    
     
 
     showIcons() {
