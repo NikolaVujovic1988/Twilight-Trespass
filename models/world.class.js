@@ -19,7 +19,7 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.volume = 1; 
+        this.volume = 1;
         this.previousVolume = 0;
         this.draw();
         this.setWorld();
@@ -77,7 +77,7 @@ class World {
         }
     }
 
-    
+
     checkCollisions() {
         for (let i = this.level.enemies.length - 1; i >= 0; i--) {
             let enemy = this.level.enemies[i];
@@ -87,7 +87,8 @@ class World {
             if (this.character.isCollidingCentral(enemy)) {
                 if (this.character.y + this.character.height - 10 <= enemy.y + (enemy.height / 2)) {
                     enemy.isDead = true;
-                    // remove the enemy directly if character is over the 50% of the enemy
+
+
                     this.enemiesToAnimateDeath.push(enemy);
                 } else {
                     console.log(this.character.y + this.character.height - 10);
@@ -103,9 +104,10 @@ class World {
             let bottle = this.trowableObjects[i];
             for (let j = this.level.enemies.length - 1; j >= 0; j--) {
                 let enemy = this.level.enemies[j];
-                
+
                 if (!enemy.isDead && bottle.isColliding(enemy)) {
                     enemy.isDead = true;
+                    
                     this.enemiesToAnimateDeath.push(enemy);
                     this.trowableObjects.splice(i, 1);
                     break; // A bottle can hit only one enemy, so we break out of the inner loop
@@ -147,19 +149,19 @@ class World {
     animateEnemyDeath(enemy, callback) {
         let currentAnimationFrame = 0;
         const deathAnimationFrames = enemy.IMAGES_DEAD;
-        
+
         const animationInterval = setInterval(() => {
             if (currentAnimationFrame >= deathAnimationFrames.length) {
                 clearInterval(animationInterval);
-                callback(); // Callback to remove enemy from array after animation
+
+                // Remove enemy from the array after animation
+                callback();
             } else {
                 enemy.loadImage(deathAnimationFrames[currentAnimationFrame]);
                 currentAnimationFrame++;
             }
-        }, 500); 
+        }, 500);
     }
-    
-
 
     checkTrowObjects() {
         if (this.keyboard.D && this.character.hasThrowableObjects()) {
@@ -219,12 +221,12 @@ class World {
         }
         moveble.draw(this.ctx);
         moveble.drawFrame(this.ctx);
-        
+
         if (moveble instanceof Bug || moveble.otherDirection || (moveble instanceof TrowableObject && moveble.direction === 'left')) {
             this.flipCharacterBack(moveble);
         }
-    }    
-    
+    }
+
 
     showIcons() {
         let imgVolume = new Image();
@@ -237,7 +239,7 @@ class World {
         this.ctx.drawImage(imgFullScreen, (this.canvas.width - totalWidth) / 2, 10, iconWidth, iconWidth);
         this.ctx.drawImage(imgVolume, (this.canvas.width - totalWidth) / 2 + iconWidth + iconSpacing, 10, iconWidth, iconWidth);
     }
-    
+
     flipCharacter(moveble) {
         this.ctx.save();
         this.ctx.translate(moveble.width, 0);
@@ -265,21 +267,21 @@ class World {
             let rect = this.canvas.getBoundingClientRect();
             let x = event.clientX - rect.left;
             let y = event.clientY - rect.top;
-            
+
             const iconWidth = 20;
             const iconSpacing = 10;
             const totalWidth = 2 * iconWidth + iconSpacing;
             const startFullScreenX = (this.canvas.width - totalWidth) / 2;
             const startVolumeX = (this.canvas.width - totalWidth) / 2 + iconWidth + iconSpacing;
-    
+
             if (x >= startFullScreenX && x <= startFullScreenX + iconWidth &&
                 y >= 10 && y <= 10 + iconWidth) {
                 this.openFullscreen();
             }
-    
+
             if (x >= startVolumeX && x <= startVolumeX + iconWidth &&
                 y >= 10 && y <= 10 + iconWidth) {
-                this.toggleVolume();  
+                this.toggleVolume();
             }
         });
     }
@@ -293,13 +295,13 @@ class World {
     }
 
     toggleVolume() {
-        if (this.volume) { 
-            this.previousVolume = this.volume; 
-            this.volume = 0; 
+        if (this.volume) {
+            this.previousVolume = this.volume;
+            this.volume = 0;
             // Adjust the icon to indicate muted status
         } else {
             this.volume = this.previousVolume || 1;  // Adjust the icon back to indicate volume is on
         }
     }
-    
+
 }

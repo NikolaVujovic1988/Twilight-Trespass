@@ -35,7 +35,7 @@ class Character extends MovebleObjects {
     ]
 
     world;
-    running_sound = new Audio('./audio/running.mp3');
+    running_sound = new Audio('audio/walking.mp3');
     speed = 5;
     bottles = 0;
     coinCount = 0;

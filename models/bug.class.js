@@ -6,6 +6,9 @@ class Bug extends MovebleObjects {
 
     isDead = false;
 
+    gravity = 0.15;
+    velocityY = 0;
+
 
     IMAGES_WALKING = [
         'img/Purple Bug Sprites/png/skeleton-animation_00.png',
@@ -41,6 +44,20 @@ class Bug extends MovebleObjects {
         this.speed = 0.50 + Math.random() * 0.5;
         this.loadImages(this.IMAGES_WALKING);
         this.animate();
+        this.applyGravity();
+    }
+
+    applyGravity() {
+        setInterval(() => {
+            if (this.isDead) {
+                this.velocityY += this.gravity;
+                this.y += this.velocityY;
+                if (this.y > 375) {
+                    this.y = 375;
+                    this.velocityY = 0;
+                }
+            }
+        }, 1000 / 60);
     }
 
     animate() {
@@ -51,11 +68,12 @@ class Bug extends MovebleObjects {
         }, 1000 / 60);
         
         setInterval(() => {
-            if (!this.isDead) {
+            if (this.isDead) {
+                this.playAnimation(this.IMAGES_DEAD);
+            } else {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 150);
     }
-
 
 }
