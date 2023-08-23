@@ -76,4 +76,5 @@ class Bug extends MovebleObjects {
         }, 150);
     }
 
+
 }
