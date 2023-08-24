@@ -3,17 +3,18 @@ let world;
 let keyboard = new Keyboard();
 
 function init() {
+    document.getElementById('startScreen').style.display = 'none';
+
     canvas = document.getElementById('canvas');
     canvas.width = 720;
     canvas.height = 480;
 
-    document.getElementById('startButton').addEventListener('click', function () {
-        document.getElementById('startScreen').style.display = 'none';
-        startGame();
-    });
+
 }
 
 function startGame() {
+    init();
+    initLevel();
     world = new World(canvas, keyboard);
 }
 
