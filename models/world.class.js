@@ -116,11 +116,15 @@ class World {
         }
 
         // Animate the death of enemies and then remove them
-        this.enemiesToAnimateDeath.forEach(enemy => {
-            this.animateEnemyDeath(enemy, () => {
+        this.enemiesToAnimateDeath = this.enemiesToAnimateDeath.filter(enemy => {
+            if (enemy.shouldRemove) {
                 const index = this.level.enemies.indexOf(enemy);
                 if (index !== -1) this.level.enemies.splice(index, 1);
-            });
+                return false; // remove from the list of enemies to animate death
+            } else {
+                this.animateEnemyDeath(enemy);
+                return true;
+            }
         });
 
 
@@ -146,21 +150,23 @@ class World {
         }
     }
 
-    animateEnemyDeath(enemy, callback) {
+    animateEnemyDeath(enemy) {
+        if (enemy.animationInitialized) return; // ensures animation starts only once
+
+        enemy.animationInitialized = true; // flag to mark the animation started
         let currentAnimationFrame = 0;
         const deathAnimationFrames = enemy.IMAGES_DEAD;
 
         const animationInterval = setInterval(() => {
-            if (currentAnimationFrame >= deathAnimationFrames.length) {
+            if (currentAnimationFrame >= deathAnimationFrames.length - 1) {
+                enemy.loadImage(deathAnimationFrames[deathAnimationFrames.length - 1]); // Set to the last frame
                 clearInterval(animationInterval);
-
-                // Remove enemy from the array after animation
-                callback();
+                enemy.shouldRemove = true; // flag to mark the enemy to be removed
             } else {
                 enemy.loadImage(deathAnimationFrames[currentAnimationFrame]);
                 currentAnimationFrame++;
             }
-        }, 500);
+        }, 200);
     }
 
     checkTrowObjects() {

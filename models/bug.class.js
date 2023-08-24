@@ -6,7 +6,7 @@ class Bug extends MovebleObjects {
 
     isDead = false;
 
-    gravity = 0.15;
+    gravity = 0.25;
     velocityY = 0;
 
 
