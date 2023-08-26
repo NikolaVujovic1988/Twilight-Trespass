@@ -1,24 +1,31 @@
 class Endboss extends MovebleObjects {
 
-    height = 300;
-    width = 250;
-    y = 165;
+    height = 350;
+    width = 280;
+    y = 125;
 
 
     IMAGES_WALKING = [
-        'Files/png/1x/shroom1/WalkLeft (1).png',
-        'Files/png/2x/shroom1/WalkLeft (2).png',
-        'Files/png/2x/shroom1/WalkLeft (3).png',
-        'Files/png/2x/shroom1/WalkLeft (4).png',
-
+        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_walk_000.png',
+        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_walk_001.png',
+        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_walk_002.png',
+        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_walk_003.png',
+        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_walk_004.png',
+        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_walk_005.png',
+        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_walk_006.png',
+        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_walk_007.png'
     ];
 
 
-    constructor() {
-        super().loadImage('Files/png/1x/shroom1/IdleLeft (1).png');
+    constructor(character) {
+        super();
+        this.loadImage('img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_idle_000.png');
         this.loadImages(this.IMAGES_WALKING);
         this.x = 4650;
+        this.speed = 10;
+        this.character = character;
         this.animate();
+        this.huntCharacter();
     }
 
     animate() {
@@ -26,4 +33,11 @@ class Endboss extends MovebleObjects {
             this.playAnimation(this.IMAGES_WALKING);
         }, 200);
     }
+
+    huntCharacter() {
+        setInterval(() => {
+            this.moveLeft();
+        }, 150);
+    }
+
 }

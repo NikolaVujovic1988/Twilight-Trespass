@@ -2,6 +2,7 @@ class World {
     character = new Character();
     statusbar = new Statusbar();
     coins = new Coinsbar();
+    endboss = new Endboss(this.character);
     bottlesBar = new BottleStatusbar();
     level = level1;
     canvas;
@@ -107,7 +108,7 @@ class World {
 
                 if (!enemy.isDead && bottle.isColliding(enemy)) {
                     enemy.isDead = true;
-                    
+
                     this.enemiesToAnimateDeath.push(enemy);
                     this.trowableObjects.splice(i, 1);
                     break; // A bottle can hit only one enemy, so we break out of the inner loop
