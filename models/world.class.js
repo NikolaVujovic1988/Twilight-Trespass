@@ -2,7 +2,7 @@ class World {
     character = new Character();
     statusbar = new Statusbar();
     coins = new Coinsbar();
-    endboss = new Endboss(this.character);
+    //endboss = new Endboss(this.character);
     bottlesBar = new BottleStatusbar();
     level = level1;
     canvas;

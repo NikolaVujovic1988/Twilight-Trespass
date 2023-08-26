@@ -29,7 +29,7 @@ function initLevel() {
 
 
 
-            new Endboss()
+            new Endboss(Character)
         ],
         [
             new BackgroundObject('img/fairy-tale-game-backgrounds/_PNG/3/background.png', -719),

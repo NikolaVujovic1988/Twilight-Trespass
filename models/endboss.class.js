@@ -17,13 +17,12 @@ class Endboss extends MovebleObjects {
     ];
 
 
-    constructor(character) {
+    constructor() {
         super();
         this.loadImage('img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_idle_000.png');
         this.loadImages(this.IMAGES_WALKING);
         this.x = 4650;
         this.speed = 10;
-        this.character = character;
         this.animate();
         this.huntCharacter();
     }
@@ -36,7 +35,9 @@ class Endboss extends MovebleObjects {
 
     huntCharacter() {
         setInterval(() => {
-            this.moveLeft();
+            if (world.character.x >= 3500) {
+                this.moveLeft();
+            }
         }, 150);
     }
 
