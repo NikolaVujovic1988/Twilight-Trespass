@@ -2,7 +2,7 @@ class World {
     character = new Character();
     statusbar = new Statusbar();
     coins = new Coinsbar();
-    //endboss = new Endboss(this.character);
+    hyena = new Hyena();
     bottlesBar = new BottleStatusbar();
     level = level1;
     canvas;
@@ -89,13 +89,10 @@ class World {
                 if (this.character.y + this.character.height - 10 <= enemy.y + (enemy.height / 2)) {
                     enemy.isDead = true;
 
-
                     this.enemiesToAnimateDeath.push(enemy);
                 } else {
-                    console.log(this.character.y + this.character.height - 10);
-                    console.warn(enemy.y + (enemy.height / 2));
-
                     this.character.hit();
+                    this.hyena.playAttackAnimation();
                     this.statusbar.setPercentage(this.character.energy);
                 }
             }

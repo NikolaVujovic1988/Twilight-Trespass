@@ -52,7 +52,6 @@ class Character extends MovebleObjects {
     }
 
     animate() {
-
         setInterval(() => {
             this.running_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -66,29 +65,32 @@ class Character extends MovebleObjects {
                 this.running_sound.play();
                 this.lastDirection = 'left';
             }
-
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+    
+            // First, check if the character is on the ground and if the D key is pressed.
+            if (this.world.keyboard.D && this.hasThrowableObjects()) {
+                this.throwObject();
+            } else if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
             }
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
-
-
+    
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
+            } else if (this.world.keyboard.D && this.hasThrowableObjects()) {
+                // Play the shooting animation whether on the ground or above
+                this.playAnimation(this.IMAGES_SHOT);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
-            } else if (this.world.keyboard.D && this.hasThrowableObjects()) {
-                this.throwObject();
-                this.playAnimation(this.IMAGES_SHOT);
             } else if (!this.isAboveGround() && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 50);
     }
+    
 
     throwObject() {
         // Adjusting x and y to set the position from where the object will be thrown
