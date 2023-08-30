@@ -1,76 +1,81 @@
 class Hyena extends MovebleObjects {
-
     height = 140;
     width = 140;
     y = 315;
-
     isDead = false;
+    currentFrame = 0; // To store the current frame
+    currentState = 'walking'; // To store the current animation state
 
+    BASE_PATH = 'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/';
 
-    IMAGES_WALKING = [
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_walk_000.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_walk_001.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_walk_002.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_walk_003.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_walk_004.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_walk_005.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_walk_006.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_walk_007.png'
-    ];
-
-    IMAGES_DEAD = [
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_die_000.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_die_001.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_die_002.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_die_003.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_die_004.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_die_005.png'
-    ];
-
-    IMAGES_ATTACK = [
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_bite_000.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_bite_001.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_bite_002.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_bite_003.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_bite_004.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_bite_005.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_bite_006.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_bite_007.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_bite_008.png',
-        'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_bite_009.png'
-    ];
-
+    IMAGES_WALKING = this.generateImagePaths('__brown_hyena_walk_', 8);
+    IMAGES_DEAD = this.generateImagePaths('__brown_hyena_die_', 6);
+    IMAGES_ATTACK = this.generateImagePaths('__brown_hyena_bite_', 10);
 
     constructor() {
-        super().loadImage('img/gdm-animated-hyena-cartoon-game-sprite/keyframes/brown/__brown_hyena_idle_000.png');
+        super().loadImage(this.BASE_PATH + '__brown_hyena_idle_000.png');
 
         this.x = 300 + Math.random() * 4500;
-        this.speed = 0.15 + Math.random() * 0.5;
+        this.speed = 2 + Math.random();
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_ATTACK);
         this.animate();
     }
 
+    /**
+ * Generates an array of image paths based on a given base name and count.
+ * 
+ * @param {string} base - The base name of the image files.
+ * @param {number} count - The number of images that need to be generated using the base name.
+ * @returns {string[]} - An array of fully constructed image paths.
+ * 
+ * How it works:
+ * 1. An array of a specified length (`count`) is created using `Array.from`.
+ * 2. For each element in the array, a callback function is executed.
+ * 3. Inside the callback:
+ *     a. The `BASE_PATH` (a class property) is prefixed. This is the directory path where all images are stored.
+ *     b. The `base` parameter is added next. This is the common prefix for the set of images being generated.
+ *     c. The index `i` is converted to a string and padded with zeroes to the left, ensuring it's always three characters long. 
+ *        This is because the image names have a format like "001", "002", and so on.
+ *     d. The file extension ".png" is suffixed.
+ * 4. The end result is an array of image paths, ready to be used elsewhere in the code.
+ */
+generateImagePaths(base, count) {
+    return Array.from({ length: count }, (_, i) => `${this.BASE_PATH}${base}${String(i).padStart(3, '0')}.png`);
+}
+
+
     animate() {
         setInterval(() => {
             if (!this.isDead) {
                 this.moveLeft();
-            }
-        }, 1000 / 60);
 
-        setInterval(() => {
-            if (!this.isDead) {
-                this.playAnimation(this.IMAGES_WALKING);
+                if (this.isCharacterClose()) {
+                    if (this.currentState !== 'attacking') {
+                        this.currentState = 'attacking';
+                        this.currentFrame = 0; // Reset frame
+                    }
+                    this.playAnimation(this.IMAGES_ATTACK);
+                } else {
+                    if (this.currentState !== 'walking') {
+                        this.currentState = 'walking';
+                        this.currentFrame = 0; // Reset frame
+                    }
+                    this.playAnimation(this.IMAGES_WALKING);
+                }
+
+                this.currentFrame++;
             }
-        }, 150);
+        }, 1000 / 25);
     }
 
-    playAttackAnimation() {
-        console.log('ide animacija, gaaaassss');
-        setInterval(() => {
-            this.playAnimation(this.IMAGES_ATTACK);
-        }, 150);
+    playAnimation(images) {
+        if (this.currentFrame >= images.length) this.currentFrame = 0; // Reset if we've passed the end
+        super.loadImage(images[this.currentFrame]);
     }
 
+    isCharacterClose() {
+        return Math.abs(this.x - world.character.x) < 150;
+    }
 }

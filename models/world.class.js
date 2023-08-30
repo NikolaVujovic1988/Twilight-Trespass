@@ -92,7 +92,6 @@ class World {
                     this.enemiesToAnimateDeath.push(enemy);
                 } else {
                     this.character.hit();
-                    this.hyena.playAttackAnimation();
                     this.statusbar.setPercentage(this.character.energy);
                 }
             }
