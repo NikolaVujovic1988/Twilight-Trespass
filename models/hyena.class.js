@@ -15,7 +15,7 @@ class Hyena extends MovebleObjects {
     constructor() {
         super().loadImage(this.BASE_PATH + '__brown_hyena_idle_000.png');
 
-        this.x = 300 + Math.random() * 4500;
+        this.x = 700 + Math.random() * 5000;
         this.speed = 2 + Math.random();
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);

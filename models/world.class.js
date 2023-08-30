@@ -86,9 +86,8 @@ class World {
             if (enemy.isDead) continue;
 
             if (this.character.isCollidingCentral(enemy)) {
-                if (this.character.y + this.character.height - 10 <= enemy.y + (enemy.height / 2)) {
+                if (enemy instanceof Endboss || this.character.y + this.character.height - 10 <= enemy.y + (enemy.height / 2)) {                    
                     enemy.isDead = true;
-
                     this.enemiesToAnimateDeath.push(enemy);
                 } else {
                     this.character.hit();
@@ -197,9 +196,9 @@ class World {
 
         this.ctx.translate(this.camera_x, 0);
 
+        this.addObjectsToMap(this.trowableObjects);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
-        this.addObjectsToMap(this.trowableObjects);
 
         this.ctx.translate(-this.camera_x, 0);
 

@@ -1,8 +1,8 @@
 class Endboss extends MovebleObjects {
 
-    height = 350;
-    width = 280;
-    y = 125;
+    height = 550;
+    width = 430;
+    y = -60;
 
 
     IMAGES_WALKING = [
@@ -34,11 +34,18 @@ class Endboss extends MovebleObjects {
     }
 
     huntCharacter() {
+        let characterPassedLimit = false;
+    
         setInterval(() => {
             if (world.character.x >= 3500) {
+                characterPassedLimit = true;
+            }
+    
+            if (characterPassedLimit) {
                 this.moveLeft();
             }
         }, 150);
     }
+    
 
 }
