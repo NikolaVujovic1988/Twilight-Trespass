@@ -12,7 +12,7 @@ class DrawableObject {
     }
 
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Hyena || this instanceof Bug) {
+        if (this instanceof Character || this instanceof Hyena || this instanceof Bug || this instanceof Endboss) {
             ctx.beginPath();
             ctx.lineWidth = '1';
             ctx.strokeStyle = 'blue';

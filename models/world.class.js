@@ -5,6 +5,7 @@ class World {
     hyena = new Hyena();
     bottlesBar = new BottleStatusbar();
     level = level1;
+    endboss;
     canvas;
     ctx;
     keyboard;
@@ -62,7 +63,7 @@ class World {
         return objects;
     }
 
-    // Function to generate all the arcs of objects (Coins or Bottles)
+    // Function to generate all the arcs of objects (Coins or Arrows)
     generateObjects(objectArray, objClass, minYCenter, maxYCenter) {
         const numArcs = 4;
         const radius = 100;
@@ -86,7 +87,7 @@ class World {
             if (enemy.isDead) continue;
 
             if (this.character.isCollidingCentral(enemy)) {
-                if (enemy instanceof Endboss || this.character.y + this.character.height - 10 <= enemy.y + (enemy.height / 2)) {                    
+                if (this.character.y + this.character.height - 10 <= enemy.y + (enemy.height / 2)) {
                     enemy.isDead = true;
                     this.enemiesToAnimateDeath.push(enemy);
                 } else {
@@ -96,17 +97,29 @@ class World {
             }
         }
 
+        this.level.enemies.forEach((enemy) => {
+            if (enemy instanceof Endboss && this.character.isColliding(enemy)) {
+                this.character.hit();
+                this.statusbar.setPercentage(this.character.energy);
+            }
+        });
+
         for (let i = this.trowableObjects.length - 1; i >= 0; i--) {
-            let bottle = this.trowableObjects[i];
+            let arrow = this.trowableObjects[i];
             for (let j = this.level.enemies.length - 1; j >= 0; j--) {
                 let enemy = this.level.enemies[j];
 
-                if (!enemy.isDead && bottle.isColliding(enemy)) {
+                if (!enemy.isDead && arrow.isColliding(enemy)) {
                     enemy.isDead = true;
 
                     this.enemiesToAnimateDeath.push(enemy);
                     this.trowableObjects.splice(i, 1);
-                    break; // A bottle can hit only one enemy, so we break out of the inner loop
+                    break; // An arrow can hit only one enemy, so we break out of the inner loop
+                }
+                if (enemy instanceof Endboss && arrow.isColliding(enemy)) {
+                    console.warn('sta je pickooooo');
+                    this.trowableObjects.splice(i, 1);
+                    break; // An arrow can hit only one enemy, so we break out of the inner loop
                 }
             }
         }
