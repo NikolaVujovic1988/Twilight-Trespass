@@ -44,8 +44,6 @@ class World {
         }, 150);
     }
 
-
-
     // Function to generate a single object (Coin or Bottle)
     generateObject(objClass, xCenter, yCenter, radius, angle) {
         const x = xCenter + radius * Math.cos(angle);
@@ -79,65 +77,99 @@ class World {
         }
     }
 
-
-    checkCollisions() {
+    // Check collision with regular enemies
+    checkEnemyCollisions() {
         for (let i = this.level.enemies.length - 1; i >= 0; i--) {
             let enemy = this.level.enemies[i];
-
-            if (enemy.isDead) continue;
-
-            if (this.character.isCollidingCentral(enemy)) {
-                if (this.character.y + this.character.height - 10 <= enemy.y + (enemy.height / 2)) {
-                    enemy.isDead = true;
-                    this.enemiesToAnimateDeath.push(enemy);
-                } else {
-                    this.character.hit();
-                    this.statusbar.setPercentage(this.character.energy);
-                }
+            if (!enemy.isDead && this.character.isCollidingCentral(enemy)) {
+                this.handleEnemyCollision(enemy);
             }
         }
+    }
 
+    // Handle actions after colliding with an enemy
+    handleEnemyCollision(enemy) {
+        if (this.character.y + this.character.height - 10 <= enemy.y + (enemy.height / 2)) {
+            enemy.isDead = true;
+            this.enemiesToAnimateDeath.push(enemy);
+        } else {
+            this.character.hit();
+            this.statusbar.setPercentage(this.character.energy);
+        }
+    }
+
+    // Check collision with end bosses
+    checkEndbossCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (enemy instanceof Endboss && this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusbar.setPercentage(this.character.energy);
             }
         });
+    }
 
+    // Check collisions of arrows with regular enemies
+    checkArrowRegularEnemyCollisions() {
         for (let i = this.trowableObjects.length - 1; i >= 0; i--) {
-            let arrow = this.trowableObjects[i];
             for (let j = this.level.enemies.length - 1; j >= 0; j--) {
                 let enemy = this.level.enemies[j];
+                let arrow = this.trowableObjects[i];
 
                 if (!enemy.isDead && arrow.isColliding(enemy)) {
-                    enemy.isDead = true;
-
-                    this.enemiesToAnimateDeath.push(enemy);
-                    this.trowableObjects.splice(i, 1);
-                    break; // An arrow can hit only one enemy, so we break out of the inner loop
-                }
-                if (enemy instanceof Endboss && arrow.isColliding(enemy)) {
-                    console.warn('sta je pickooooo');
-                    this.trowableObjects.splice(i, 1);
-                    break; // An arrow can hit only one enemy, so we break out of the inner loop
+                    this.handleArrowHit(enemy, i);
+                    break;
                 }
             }
         }
+    }
 
-        // Animate the death of enemies and then remove them
+    // Check collisions of arrows with Endboss instances
+    checkArrowEndbossCollisions() {
+        for (let i = this.trowableObjects.length - 1; i >= 0; i--) {
+            for (let j = this.level.enemies.length - 1; j >= 0; j--) {
+                let enemy = this.level.enemies[j];
+                let arrow = this.trowableObjects[i];
+
+                if (enemy instanceof Endboss && arrow.isColliding(enemy)) {
+                    console.warn('sta je pickooooo');
+                    this.trowableObjects.splice(i, 1);
+                    break;
+                }
+            }
+        }
+    }
+
+    // Main function to call Collisions between enemies and arrows
+    checkArrowEnemyCollisions() {
+        this.checkArrowRegularEnemyCollisions();
+        this.checkArrowEndbossCollisions();
+    }
+    
+
+
+    // Handle arrow hitting an enemy
+    handleArrowHit(enemy, arrowIndex) {
+        enemy.isDead = true;
+        this.enemiesToAnimateDeath.push(enemy);
+        this.trowableObjects.splice(arrowIndex, 1);
+    }
+
+    // Animate the death of enemies and remove if needed
+    checkAnimateAndRemoveEnemies() {
         this.enemiesToAnimateDeath = this.enemiesToAnimateDeath.filter(enemy => {
             if (enemy.shouldRemove) {
                 const index = this.level.enemies.indexOf(enemy);
                 if (index !== -1) this.level.enemies.splice(index, 1);
-                return false; // remove from the list of enemies to animate death
+                return false;
             } else {
                 this.animateEnemyDeath(enemy);
                 return true;
             }
         });
+    }
 
-
-
+    // Check collision with bottles
+    checkBottleCollisions() {
         for (let i = 0; i < this.bottle.length; i++) {
             if (this.character.isColliding(this.bottle[i])) {
                 this.character.bottles++;
@@ -146,6 +178,10 @@ class World {
                 i--;
             }
         }
+    }
+
+    // Check collision with coins and update the coin count
+    checkCoinCollisions() {
         for (let i = this.coin.length - 1; i >= 0; i--) {
             let percentage = this.character.coinCount * 20;
             if (percentage > 100) {
@@ -157,6 +193,16 @@ class World {
                 this.coin.splice(i, 1);
             }
         }
+    }
+
+    // Main function to call the broken down functions
+    checkCollisions() {
+        this.checkEnemyCollisions();
+        this.checkEndbossCollisions();
+        this.checkArrowEnemyCollisions();
+        this.checkAnimateAndRemoveEnemies();
+        this.checkBottleCollisions();
+        this.checkCoinCollisions();
     }
 
     animateEnemyDeath(enemy) {
