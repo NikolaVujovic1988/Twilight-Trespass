@@ -103,6 +103,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (enemy instanceof Endboss && this.character.isColliding(enemy)) {
                 this.character.hit();
+                console.log('endboss je picka!!!')
                 this.statusbar.setPercentage(this.character.energy);
             }
         });
