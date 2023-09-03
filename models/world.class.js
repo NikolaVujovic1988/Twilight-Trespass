@@ -132,9 +132,10 @@ class World {
                 let arrow = this.trowableObjects[i];
     
                 if (enemy instanceof Endboss && arrow.isColliding(enemy)) {
-                    enemy.hit(20); // smanjujemo energetski nivo endboss-a za 20%
-                    this.endbossStatusbar.setPercentage(enemy.energy); // ažuriramo vizualni prikaz endboss-ovog energetskog nivoa
-                    console.warn(enemy.energy); // ili neki drugi tekst za debug
+                    this.enemy.energy -= 20;
+                    enemy.hit(); 
+                    this.endbossStatusbar.setPercentage(enemy.energy); 
+                    console.warn(enemy.energy);
                     this.trowableObjects.splice(i, 1);
                     break;
                 }

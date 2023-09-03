@@ -52,16 +52,15 @@ class MovebleObjects extends DrawableObject {
             this.y < mo.y + mo.height;
     }
 
-    hit(damage = 5) {
-        this.energy -= damage;
-        
+    hit() {
+        this.energy -= 5;
         if (this.energy < 20) {
             this.energy = 0;
         }
         else {
             this.lastHit = new Date().getTime();
         }
-    }    
+    }
 
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit; // Difference in ms

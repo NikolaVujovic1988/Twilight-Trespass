@@ -16,6 +16,5 @@ class EndbossStatusbar extends Statusbar {
         this.loadImages(this.IMAGES);
         this.x = 500;  // promenite ovo prema potrebi
         this.setPercentage(100);
-        this.resolveIndexOfStatusbarImage();
     }
 }
