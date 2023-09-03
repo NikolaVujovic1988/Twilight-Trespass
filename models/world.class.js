@@ -4,6 +4,7 @@ class World {
     coins = new Coinsbar();
     hyena = new Hyena();
     bottlesBar = new BottleStatusbar();
+    endbossStatusbar = new EndbossStatusbar();
     level = level1;
     endboss;
     canvas;
@@ -103,7 +104,6 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (enemy instanceof Endboss && this.character.isColliding(enemy)) {
                 this.character.hit();
-                console.log('endboss je picka!!!')
                 this.statusbar.setPercentage(this.character.energy);
             }
         });
@@ -130,16 +130,18 @@ class World {
             for (let j = this.level.enemies.length - 1; j >= 0; j--) {
                 let enemy = this.level.enemies[j];
                 let arrow = this.trowableObjects[i];
-
+    
                 if (enemy instanceof Endboss && arrow.isColliding(enemy)) {
-                    console.warn('sta je pickooooo');
+                    enemy.hit(20); // smanjujemo energetski nivo endboss-a za 20%
+                    this.endbossStatusbar.setPercentage(enemy.energy); // ažuriramo vizualni prikaz endboss-ovog energetskog nivoa
+                    console.warn(enemy.energy); // ili neki drugi tekst za debug
                     this.trowableObjects.splice(i, 1);
                     break;
                 }
             }
         }
-    }
-
+    }    
+    
     // Main function to call Collisions between enemies and arrows
     checkArrowEnemyCollisions() {
         this.checkArrowRegularEnemyCollisions();
@@ -249,6 +251,7 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
         // ------ space for fixed objects -------------
         this.addToMap(this.statusbar);
+        this.addToMap(this.endbossStatusbar);
         this.addToMap(this.coins);
         this.addToMap(this.bottlesBar);
 
