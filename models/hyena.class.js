@@ -12,6 +12,13 @@ class Hyena extends MovebleObjects {
     IMAGES_DEAD = this.generateImagePaths('__brown_hyena_die_', 6);
     IMAGES_ATTACK = this.generateImagePaths('__brown_hyena_bite_', 10);
 
+    offset = {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+    };
+
     constructor() {
         super().loadImage(this.BASE_PATH + '__brown_hyena_idle_000.png');
 

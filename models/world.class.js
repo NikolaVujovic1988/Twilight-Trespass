@@ -82,7 +82,7 @@ class World {
     checkEnemyCollisions() {
         for (let i = this.level.enemies.length - 1; i >= 0; i--) {
             let enemy = this.level.enemies[i];
-            if (!enemy.isDead && this.character.isCollidingCentral(enemy)) {
+            if (enemy && !enemy.isDead && this.character.isColliding(enemy)) {
                 this.handleEnemyCollision(enemy);
             }
         }
@@ -90,7 +90,7 @@ class World {
 
     // Handle actions after colliding with an enemy
     handleEnemyCollision(enemy) {
-        if (this.character.y + this.character.height - 10 <= enemy.y + (enemy.height / 2)) {
+        if (this.character.y + this.character.height <= enemy.y + enemy.height) {
             enemy.isDead = true;
             this.enemiesToAnimateDeath.push(enemy);
         } else {
@@ -102,7 +102,7 @@ class World {
     // Check collision with end bosses
     checkEndbossCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (enemy instanceof Endboss && this.character.isColliding(enemy)) {
+            if (enemy && enemy instanceof Endboss && this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusbar.setPercentage(this.character.energy);
             }
@@ -115,8 +115,8 @@ class World {
             for (let j = this.level.enemies.length - 1; j >= 0; j--) {
                 let enemy = this.level.enemies[j];
                 let arrow = this.trowableObjects[i];
-
-                if (!enemy.isDead && arrow.isColliding(enemy)) {
+    
+                if (enemy && !enemy.isDead && arrow && arrow.isColliding(enemy)) {
                     this.handleArrowHit(enemy, i);
                     break;
                 }
@@ -130,9 +130,8 @@ class World {
             for (let j = this.level.enemies.length - 1; j >= 0; j--) {
                 let enemy = this.level.enemies[j];
                 let arrow = this.trowableObjects[i];
-    
-                if (enemy instanceof Endboss && arrow.isColliding(enemy)) {
-                    this.enemy.energy -= 20;
+        
+                if (enemy instanceof Endboss && arrow && arrow.isColliding(enemy)) {
                     enemy.hit(); 
                     this.endbossStatusbar.setPercentage(enemy.energy); 
                     console.warn(enemy.energy);
@@ -141,7 +140,7 @@ class World {
                 }
             }
         }
-    }    
+    }   
     
     // Main function to call Collisions between enemies and arrows
     checkArrowEnemyCollisions() {
@@ -161,7 +160,7 @@ class World {
     // Animate the death of enemies and remove if needed
     checkAnimateAndRemoveEnemies() {
         this.enemiesToAnimateDeath = this.enemiesToAnimateDeath.filter(enemy => {
-            if (enemy.shouldRemove) {
+            if (enemy && enemy.shouldRemove) {
                 const index = this.level.enemies.indexOf(enemy);
                 if (index !== -1) this.level.enemies.splice(index, 1);
                 return false;
@@ -175,7 +174,8 @@ class World {
     // Check collision with bottles
     checkBottleCollisions() {
         for (let i = 0; i < this.bottle.length; i++) {
-            if (this.character.isColliding(this.bottle[i])) {
+            // Ensure the bottle exists before checking collision
+            if (this.bottle[i] && this.character.isColliding(this.bottle[i])) {
                 this.character.bottles++;
                 this.bottlesBar.setPercentage(this.character.bottles * 20);
                 this.bottle.splice(i, 1);
@@ -183,6 +183,7 @@ class World {
             }
         }
     }
+    
 
     // Check collision with coins and update the coin count
     checkCoinCollisions() {
@@ -191,7 +192,7 @@ class World {
             if (percentage > 100) {
                 percentage = 100;
             }
-            if (this.character.isColliding(this.coin[i])) {
+            if (this.coin[i] && this.character.isColliding(this.coin[i])) {
                 this.character.collectCoin();
                 this.coins.setPercentage(percentage);
                 this.coin.splice(i, 1);
@@ -205,8 +206,12 @@ class World {
         this.checkEndbossCollisions();
         this.checkArrowEnemyCollisions();
         this.checkAnimateAndRemoveEnemies();
-        this.checkBottleCollisions();
-        this.checkCoinCollisions();
+        if (this.bottle) { // Adding a check for bottle array existence before calling its collision check
+            this.checkBottleCollisions();
+        }
+        if (this.coin) { // Adding a check for coin array existence before calling its collision check
+            this.checkCoinCollisions();
+        }
     }
 
     animateEnemyDeath(enemy) {

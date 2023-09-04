@@ -7,6 +7,13 @@ class MovebleObjects extends DrawableObject {
     lastHit = 0;
     CharacterPreviousY = 291;
 
+    offset = {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+    };
+
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -30,7 +37,7 @@ class MovebleObjects extends DrawableObject {
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
-    }    
+    }
 
     moveRight() {
         this.x += this.speed;
@@ -46,12 +53,18 @@ class MovebleObjects extends DrawableObject {
     }
 
     isColliding(mo) {
-        return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x + mo.width &&
-            this.y < mo.y + mo.height;
+        if (!mo || !mo.offset) {
+            console.warn("Undefined object or offset encountered in isColliding method.");
+            return false;
+        }
+    
+        return (this.x + this.width - (this.offset?.right || 0)) >= mo.x + (mo.offset.left || 0) &&
+               this.x + (this.offset?.left || 0) <= (mo.x + mo.width - (mo.offset.right || 0)) &&
+               (this.y + this.height - (this.offset?.bottom || 0)) >= mo.y + (mo.offset.top || 0) &&
+               this.y + (this.offset?.top || 0) <= (mo.y + mo.height - (mo.offset.bottom || 0));
     }
-
+    
+    
     hit() {
         this.energy -= 5;
         if (this.energy < 20) {

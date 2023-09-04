@@ -50,7 +50,7 @@ class Character extends MovebleObjects {
         this.animate();
         this.applyGravity();
     }
-
+    // TO DO!!! Splice animate() function on clean code principe!!!
     animate() {
         setInterval(() => {
             this.running_sound.pause();
@@ -112,19 +112,19 @@ class Character extends MovebleObjects {
         this.coinCount += 1;
     }
 
-    isCollidingCentral(object) {
-        const thisMiddle = this.x + this.width / 2;
-        const objectMiddle = object.x + object.width / 2;
+    // isCollidingCentral(object) {
+    //     const thisMiddle = this.x + this.width / 2;
+    //     const objectMiddle = object.x + object.width / 2;
     
-        const thisRange = this.width * 0.25;
-        const objectRange = object.width * 0.25;
+    //     const thisRange = this.width * 0.25;
+    //     const objectRange = object.width * 0.25;
     
-        if (thisMiddle + thisRange > objectMiddle - objectRange && thisMiddle - thisRange < objectMiddle + objectRange) {
-            if (this.y + this.height > object.y && this.y < object.y + object.height) {
-                return true;
-            }
-        }
-        return false;
-    }
+    //     if (thisMiddle + thisRange > objectMiddle - objectRange && thisMiddle - thisRange < objectMiddle + objectRange) {
+    //         if (this.y + this.height > object.y && this.y < object.y + object.height) {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
     
 }

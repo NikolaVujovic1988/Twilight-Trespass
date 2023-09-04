@@ -4,6 +4,13 @@ class Endboss extends MovebleObjects {
     width = 430;
     y = -60;
 
+    offset = {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+    };
+
 
     IMAGES_WALKING = [
         'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_walk_000.png',
