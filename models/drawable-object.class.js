@@ -16,10 +16,16 @@ class DrawableObject {
             ctx.beginPath();
             ctx.lineWidth = '1';
             ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width, this.height);
+            
+            const effectiveX = this.x + this.offset.left;
+            const effectiveY = this.y + this.offset.top;
+            const effectiveWidth = this.width - this.offset.left - this.offset.right;
+            const effectiveHeight = this.height - this.offset.top - this.offset.bottom;
+    
+            ctx.rect(effectiveX, effectiveY, effectiveWidth, effectiveHeight);
             ctx.stroke();
         }
-    }
+    }    
 
     loadImage(path) {
         this.img = new Image();

@@ -90,10 +90,13 @@ class World {
 
     // Handle actions after colliding with an enemy
     handleEnemyCollision(enemy) {
-        if (this.character.y + this.character.height <= enemy.y + enemy.height) {
+        // Check if the bottom of the character is above the top of the enemy
+        if (this.character.y + this.character.height/2 <= enemy.y + enemy.offset.top) {
+            console.warn('enemy is on', enemy.y, 'character is on', this.character.y + this.character.height);
             enemy.isDead = true;
             this.enemiesToAnimateDeath.push(enemy);
         } else {
+            console.log('enemy is on', enemy.y, 'character is on', this.character.y + this.character.height);
             this.character.hit();
             this.statusbar.setPercentage(this.character.energy);
         }
@@ -115,7 +118,7 @@ class World {
             for (let j = this.level.enemies.length - 1; j >= 0; j--) {
                 let enemy = this.level.enemies[j];
                 let arrow = this.trowableObjects[i];
-    
+
                 if (enemy && !enemy.isDead && arrow && arrow.isColliding(enemy)) {
                     this.handleArrowHit(enemy, i);
                     break;
@@ -130,24 +133,24 @@ class World {
             for (let j = this.level.enemies.length - 1; j >= 0; j--) {
                 let enemy = this.level.enemies[j];
                 let arrow = this.trowableObjects[i];
-        
+
                 if (enemy instanceof Endboss && arrow && arrow.isColliding(enemy)) {
-                    enemy.hit(); 
-                    this.endbossStatusbar.setPercentage(enemy.energy); 
+                    enemy.hit();
+                    this.endbossStatusbar.setPercentage(enemy.energy);
                     console.warn(enemy.energy);
                     this.trowableObjects.splice(i, 1);
                     break;
                 }
             }
         }
-    }   
-    
+    }
+
     // Main function to call Collisions between enemies and arrows
     checkArrowEnemyCollisions() {
         this.checkArrowRegularEnemyCollisions();
         this.checkArrowEndbossCollisions();
     }
-    
+
 
 
     // Handle arrow hitting an enemy
@@ -183,7 +186,7 @@ class World {
             }
         }
     }
-    
+
 
     // Check collision with coins and update the coin count
     checkCoinCollisions() {

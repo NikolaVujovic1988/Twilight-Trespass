@@ -1,13 +1,13 @@
 class Character extends MovebleObjects {
 
-    height = 150;
-    width = 200;
-    y = 290;
+    height = 140;
+    width = 220;
+    y = 315;
 
     offset = {
-        top: 0,
-        left: 100,
-        right: 100,
+        top: 20,
+        left: 55,
+        right: 55,
         bottom: 0
     };
 

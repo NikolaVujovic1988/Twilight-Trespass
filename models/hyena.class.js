@@ -13,9 +13,9 @@ class Hyena extends MovebleObjects {
     IMAGES_ATTACK = this.generateImagePaths('__brown_hyena_bite_', 10);
 
     offset = {
-        top: 0,
-        left: 0,
-        right: 0,
+        top: 40,
+        left: 20,
+        right: 20,
         bottom: 0
     };
 
