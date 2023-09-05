@@ -5,6 +5,8 @@ class World {
     hyena = new Hyena();
     bottlesBar = new BottleStatusbar();
     endbossStatusbar = new EndbossStatusbar();
+    character_hurt = new Audio('audio/character-hit.mp3');
+    coin_collected = new Audio('audio/coin.mp3');
     level = level1;
     endboss;
     canvas;
@@ -98,6 +100,7 @@ class World {
         } else {
             console.log('enemy is on', enemy.y, 'character is on', this.character.y + this.character.height);
             this.character.hit();
+            this.character_hurt.play();
             this.statusbar.setPercentage(this.character.energy);
         }
     }
@@ -197,6 +200,7 @@ class World {
             }
             if (this.coin[i] && this.character.isColliding(this.coin[i])) {
                 this.character.collectCoin();
+                this.coin_collected.play();
                 this.coins.setPercentage(percentage);
                 this.coin.splice(i, 1);
             }

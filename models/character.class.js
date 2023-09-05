@@ -43,7 +43,10 @@ class Character extends MovebleObjects {
     ]
 
     world;
-    running_sound = new Audio('audio/walking.mp3');
+    running_sound = new Audio('audio/running.mp3');
+    trown_arrow = new Audio('audio/thrown-arrow.mp3');
+    coin_collected = new Audio('audio/coin.mp3');
+    jump_sound = new Audio('audio/jumping.mp3')
     speed = 5;
     bottles = 0;
     coinCount = 0;
@@ -79,6 +82,7 @@ class Character extends MovebleObjects {
                 this.throwObject();
             } else if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
+                this.jump_sound.play();
             }
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
@@ -110,6 +114,7 @@ class Character extends MovebleObjects {
     
         let throwable = new TrowableObject(throwX, throwY);
         throwable.direction = this.lastDirection;
+        this.trown_arrow.play();
     }
 
     hasThrowableObjects() {
@@ -118,21 +123,7 @@ class Character extends MovebleObjects {
 
     collectCoin() {
         this.coinCount += 1;
+        this.coin_collected.play();
     }
-
-    // isCollidingCentral(object) {
-    //     const thisMiddle = this.x + this.width / 2;
-    //     const objectMiddle = object.x + object.width / 2;
-    
-    //     const thisRange = this.width * 0.25;
-    //     const objectRange = object.width * 0.25;
-    
-    //     if (thisMiddle + thisRange > objectMiddle - objectRange && thisMiddle - thisRange < objectMiddle + objectRange) {
-    //         if (this.y + this.height > object.y && this.y < object.y + object.height) {
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
     
 }
