@@ -145,7 +145,7 @@ class World {
                 if (enemy instanceof Endboss && arrow && arrow.isColliding(enemy)) {
                     enemy.hit();
                     
-                    this.hyena_hurt.play();
+                    this.sounds.enemyHurtSounds();
                     this.endbossStatusbar.setPercentage(enemy.energy);
                     console.warn(enemy.energy);
                     this.trowableObjects.splice(i, 1);
