@@ -1,8 +1,14 @@
-class Sounds extends World {
+class Sounds extends MovebleObjects {
 
-    character_hurt = new Audio('audio/character-hit.mp3');
+    hyena_hurt = new Audio('audio/hyena-hurt.mp3');
 
-    constructor() {
-        super();
+
+    // constructor() {
+    //     super();
+    // }
+
+    enemyHurtSounds() {
+        this.hyena_hurt.currentTime = 0;
+        this.hyena_hurt.play();
     }
 }

@@ -5,8 +5,10 @@ class World {
     hyena = new Hyena();
     bottlesBar = new BottleStatusbar();
     endbossStatusbar = new EndbossStatusbar();
-    character_hurt = new Audio('audio/character-hit.mp3');
-    coin_collected = new Audio('audio/coin.mp3');
+    sounds = new Sounds();
+    character_hurt = new Audio('audio/pain.mp3');
+    hyena_hurt = new Audio('audio/hyena-hurt.mp3');
+    arrow_collected = new Audio('audio/arrow-collected.mp3');
     level = level1;
     endboss;
     canvas;
@@ -96,6 +98,8 @@ class World {
         if (this.character.y + this.character.height/2 <= enemy.y + enemy.offset.top) {
             console.warn('enemy is on', enemy.y, 'character is on', this.character.y + this.character.height);
             enemy.isDead = true;
+            this.sounds.enemyHurtSounds();
+
             this.enemiesToAnimateDeath.push(enemy);
         } else {
             console.log('enemy is on', enemy.y, 'character is on', this.character.y + this.character.height);
@@ -110,6 +114,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (enemy && enemy instanceof Endboss && this.character.isColliding(enemy)) {
                 this.character.hit();
+                this.character_hurt.play();
                 this.statusbar.setPercentage(this.character.energy);
             }
         });
@@ -139,6 +144,8 @@ class World {
 
                 if (enemy instanceof Endboss && arrow && arrow.isColliding(enemy)) {
                     enemy.hit();
+                    
+                    this.hyena_hurt.play();
                     this.endbossStatusbar.setPercentage(enemy.energy);
                     console.warn(enemy.energy);
                     this.trowableObjects.splice(i, 1);
@@ -180,9 +187,10 @@ class World {
     // Check collision with bottles
     checkBottleCollisions() {
         for (let i = 0; i < this.bottle.length; i++) {
-            // Ensure the bottle exists before checking collision
             if (this.bottle[i] && this.character.isColliding(this.bottle[i])) {
                 this.character.bottles++;
+                this.arrow_collected.currentTime = 0;
+                this.arrow_collected.play();
                 this.bottlesBar.setPercentage(this.character.bottles * 20);
                 this.bottle.splice(i, 1);
                 i--;
@@ -200,7 +208,6 @@ class World {
             }
             if (this.coin[i] && this.character.isColliding(this.coin[i])) {
                 this.character.collectCoin();
-                this.coin_collected.play();
                 this.coins.setPercentage(percentage);
                 this.coin.splice(i, 1);
             }

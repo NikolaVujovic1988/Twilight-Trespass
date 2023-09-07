@@ -114,6 +114,7 @@ class Character extends MovebleObjects {
     
         let throwable = new TrowableObject(throwX, throwY);
         throwable.direction = this.lastDirection;
+        this.trown_arrow.currentTime = 0;
         this.trown_arrow.play();
     }
 
@@ -123,6 +124,7 @@ class Character extends MovebleObjects {
 
     collectCoin() {
         this.coinCount += 1;
+        this.coin_collected.currentTime = 0;
         this.coin_collected.play();
     }
     
