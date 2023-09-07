@@ -7,7 +7,6 @@ class World {
     endbossStatusbar = new EndbossStatusbar();
     sounds = new Sounds();
     character_hurt = new Audio('audio/pain.mp3');
-    hyena_hurt = new Audio('audio/hyena-hurt.mp3');
     arrow_collected = new Audio('audio/arrow-collected.mp3');
     level = level1;
     endboss;
@@ -98,7 +97,7 @@ class World {
         if (this.character.y + this.character.height/2 <= enemy.y + enemy.offset.top) {
             console.warn('enemy is on', enemy.y, 'character is on', this.character.y + this.character.height);
             enemy.isDead = true;
-            this.sounds.enemyHurtSounds();
+            this.sounds.enemyHurtSounds(enemy);
 
             this.enemiesToAnimateDeath.push(enemy);
         } else {
@@ -145,7 +144,7 @@ class World {
                 if (enemy instanceof Endboss && arrow && arrow.isColliding(enemy)) {
                     enemy.hit();
                     
-                    this.sounds.enemyHurtSounds();
+                    this.sounds.enemyHurtSounds(enemy);
                     this.endbossStatusbar.setPercentage(enemy.energy);
                     console.warn(enemy.energy);
                     this.trowableObjects.splice(i, 1);
@@ -165,6 +164,7 @@ class World {
 
     // Handle arrow hitting an enemy
     handleArrowHit(enemy, arrowIndex) {
+        this.sounds.enemyHurtSounds(enemy);
         enemy.isDead = true;
         this.enemiesToAnimateDeath.push(enemy);
         this.trowableObjects.splice(arrowIndex, 1);
