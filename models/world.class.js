@@ -6,8 +6,7 @@ class World {
     bottlesBar = new BottleStatusbar();
     endbossStatusbar = new EndbossStatusbar();
     sounds = new Sounds();
-    character_hurt = new Audio('audio/pain.mp3');
-    arrow_collected = new Audio('audio/arrow-collected.mp3');
+
     level = level1;
     endboss;
     canvas;
@@ -103,7 +102,7 @@ class World {
         } else {
             console.log('enemy is on', enemy.y, 'character is on', this.character.y + this.character.height);
             this.character.hit();
-            this.character_hurt.play();
+            this.sounds.character_hurt.play();
             this.statusbar.setPercentage(this.character.energy);
         }
     }
@@ -113,7 +112,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (enemy && enemy instanceof Endboss && this.character.isColliding(enemy)) {
                 this.character.hit();
-                this.character_hurt.play();
+                this.sounds.character_hurt.play();
                 this.statusbar.setPercentage(this.character.energy);
             }
         });
@@ -189,8 +188,8 @@ class World {
         for (let i = 0; i < this.bottle.length; i++) {
             if (this.bottle[i] && this.character.isColliding(this.bottle[i])) {
                 this.character.bottles++;
-                this.arrow_collected.currentTime = 0;
-                this.arrow_collected.play();
+                this.sounds.arrow_collected.currentTime = 0;
+                this.sounds.arrow_collected.play();
                 this.bottlesBar.setPercentage(this.character.bottles * 20);
                 this.bottle.splice(i, 1);
                 i--;

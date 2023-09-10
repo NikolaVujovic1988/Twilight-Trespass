@@ -43,10 +43,7 @@ class Character extends MovebleObjects {
     ]
 
     world;
-    running_sound = new Audio('audio/running.mp3');
-    trown_arrow = new Audio('audio/thrown-arrow.mp3');
-    coin_collected = new Audio('audio/coin.mp3');
-    jump_sound = new Audio('audio/jumping.mp3')
+    sounds = new Sounds();
     speed = 5;
     bottles = 0;
     coinCount = 0;
@@ -64,7 +61,7 @@ class Character extends MovebleObjects {
     // TO DO!!! Splice animate() function on clean code principe!!!
     animate() {
         setInterval(() => {
-            this.running_sound.pause();
+            this.sounds.running_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
@@ -73,7 +70,7 @@ class Character extends MovebleObjects {
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true;
-                this.running_sound.play();
+                this.sounds.running_sound.play();
                 this.lastDirection = 'left';
             }
     
@@ -82,7 +79,7 @@ class Character extends MovebleObjects {
                 this.throwObject();
             } else if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
-                this.jump_sound.play();
+                this.sounds.jump_sound.play();
             }
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
@@ -114,8 +111,8 @@ class Character extends MovebleObjects {
     
         let throwable = new TrowableObject(throwX, throwY);
         throwable.direction = this.lastDirection;
-        this.trown_arrow.currentTime = 0;
-        this.trown_arrow.play();
+        this.sounds.trown_arrow.currentTime = 0;
+        this.sounds.trown_arrow.play();
     }
 
     hasThrowableObjects() {
@@ -124,8 +121,8 @@ class Character extends MovebleObjects {
 
     collectCoin() {
         this.coinCount += 1;
-        this.coin_collected.currentTime = 0;
-        this.coin_collected.play();
+        this.sounds.coin_collected.currentTime = 0;
+        this.sounds.coin_collected.play();
     }
     
 }
