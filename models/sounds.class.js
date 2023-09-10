@@ -8,6 +8,7 @@ class Sounds extends MovebleObjects {
     jump_sound = new Audio('audio/jumping.mp3');
     character_hurt = new Audio('audio/female-pain.mp3');
     arrow_collected = new Audio('audio/arrow-collected.mp3');
+    endboss_dead = new Audio('audio/endboss-dead.mp3');
 
 
 

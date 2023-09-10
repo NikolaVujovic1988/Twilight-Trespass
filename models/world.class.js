@@ -95,7 +95,7 @@ class World {
     // Handle actions after colliding with an enemy
     handleEnemyCollision(enemy) {
         // Check if the bottom of the character is above the top of the enemy
-        if (this.character.y + this.character.height/2 <= enemy.y + enemy.offset.top) {
+        if (this.character.y + this.character.height / 2 <= enemy.y + enemy.offset.top) {
             console.warn('enemy is on', enemy.y, 'character is on', this.character.y + this.character.height);
             enemy.isDead = true;
             this.sounds.enemyHurtSounds(enemy);
@@ -143,11 +143,7 @@ class World {
                 let arrow = this.trowableObjects[i];
 
                 if (enemy instanceof Endboss && arrow && arrow.isColliding(enemy)) {
-                    enemy.hit();
-                    
-                    this.sounds.enemyHurtSounds(enemy);
-                    this.endbossStatusbar.setPercentage(enemy.energy);
-                    console.warn(enemy.energy);
+                    this.handleEndbossDamage(enemy);
                     this.trowableObjects.splice(i, 1);
                     break;
                 }
@@ -160,8 +156,6 @@ class World {
         this.checkArrowRegularEnemyCollisions();
         this.checkArrowEndbossCollisions();
     }
-
-
 
     // Handle arrow hitting an enemy
     handleArrowHit(enemy, arrowIndex) {
@@ -227,6 +221,13 @@ class World {
         if (this.coin) { // Adding a check for coin array existence before calling its collision check
             this.checkCoinCollisions();
         }
+    }
+    
+    handleEndbossDamage(enemy) {
+        enemy.hit(20);
+        this.sounds.enemyHurtSounds(enemy);
+        this.endbossStatusbar.setPercentage(enemy.energy);
+        console.warn(enemy.energy);
     }
 
     animateEnemyDeath(enemy) {
