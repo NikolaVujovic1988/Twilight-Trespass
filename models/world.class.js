@@ -4,9 +4,11 @@ class World {
     coins = new Coinsbar();
     hyena = new Hyena();
     bottlesBar = new BottleStatusbar();
+    endboss = new Endboss();
     endbossStatusbar = new EndbossStatusbar();
     sounds = new Sounds();
 
+    characterPassedLimit = false;
     level = level1;
     endboss;
     canvas;
@@ -270,9 +272,11 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
         // ------ space for fixed objects -------------
         this.addToMap(this.statusbar);
-        this.addToMap(this.endbossStatusbar);
         this.addToMap(this.coins);
         this.addToMap(this.bottlesBar);
+        if (this.characterPassedLimit) {
+            this.addToMap(this.endbossStatusbar);
+        }
 
         // ------ space for fixed objects -------------
 

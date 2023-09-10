@@ -31,6 +31,7 @@ class Endboss extends MovebleObjects {
         this.x = 4650;
         this.speed = 10;
         this.animate();
+        this.world = world;
         this.huntCharacter();
     }
 
@@ -40,19 +41,16 @@ class Endboss extends MovebleObjects {
         }, 200);
     }
 
-    huntCharacter() {
-        let characterPassedLimit = false;
-    
+    huntCharacter() {    
         setInterval(() => {
             if (world.character.x >= 3500) {
-                characterPassedLimit = true;
+                world.characterPassedLimit = true;
             }
     
-            if (characterPassedLimit) {
+            if (world.characterPassedLimit) {
                 this.moveLeft();
             }
         }, 150);
     }
     
-
 }

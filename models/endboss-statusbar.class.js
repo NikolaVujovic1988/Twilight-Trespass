@@ -1,5 +1,7 @@
 class EndbossStatusbar extends Statusbar {
 
+    endboss = new Endboss();
+
     IMAGES = [
         'img/7_statusbars/1_statusbar/2_statusbar_health/blue/0.png',
         'img/7_statusbars/1_statusbar/2_statusbar_health/blue/20.png',
@@ -14,7 +16,7 @@ class EndbossStatusbar extends Statusbar {
     constructor() {
         super();
         this.loadImages(this.IMAGES);
-        this.x = 500;  // promenite ovo prema potrebi
+        this.x = 500;
         this.setPercentage(100);
     }
 }
