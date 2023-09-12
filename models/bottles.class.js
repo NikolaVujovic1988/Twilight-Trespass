@@ -11,7 +11,7 @@ class Bottle extends DrawableObject {
     };
 
     IMAGES = [
-        'Files/png/1x/hero2/Arrow (1).png'
+        'img/wand.png'
     ];
 
     constructor(x, y) {
