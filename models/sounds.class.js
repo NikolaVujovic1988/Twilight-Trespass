@@ -1,15 +1,34 @@
 class Sounds extends MovebleObjects {
+    allSounds = [];
 
-    hyena_hurt = new Audio('audio/hyena-hurt.mp3');
-    bug_hurt = new Audio('audio/bug-hurt.mp3');
-    coin_collected = new Audio('audio/coin.mp3');
-    running_sound = new Audio('audio/running.mp3');
-    trown_arrow = new Audio('audio/thrown-arrow.mp3');
-    jump_sound = new Audio('audio/jumping.mp3');
-    character_hurt = new Audio('audio/female-pain.mp3');
-    arrow_collected = new Audio('audio/arrow-collected.mp3');
-    endboss_dead = new Audio('audio/endboss-dead.mp3');
+    static instance = new Sounds();
 
+    constructor() {
+        super();
+        if (Sounds.instance) {
+            return Sounds.instance;
+        }
+        Sounds.instance = this;
+        this.initSounds();
+    }
+
+    initSounds() {
+        this.hyena_hurt = this.createSound('audio/hyena-hurt.mp3');
+        this.bug_hurt = this.createSound('audio/bug-hurt.mp3');
+        this.coin_collected = this.createSound('audio/coin.mp3');
+        this.running_sound = this.createSound('audio/running.mp3');
+        this.trown_arrow = this.createSound('audio/thrown-arrow.mp3');
+        this.jump_sound = this.createSound('audio/jumping.mp3');
+        this.character_hurt = this.createSound('audio/female-pain.mp3');
+        this.arrow_collected = this.createSound('audio/arrow-collected.mp3');
+        this.endboss_dead = this.createSound('audio/endboss-dead.mp3');
+    }
+
+    createSound(src) {
+        let sound = new Audio(src);
+        this.allSounds.push(sound);
+        return sound;
+    }
 
 
     enemyHurtSounds(enemy) {
@@ -21,4 +40,14 @@ class Sounds extends MovebleObjects {
             this.hyena_hurt.play();
         }
     }
+
+
+   updateVolume(newVolume) {
+        this.allSounds.forEach(sound => {
+            sound.volume = newVolume;
+            console.log(sound.src, sound.volume);
+        });
+    }
+
+
 }

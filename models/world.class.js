@@ -109,7 +109,7 @@ class World {
         }
     }
 
-    // Check collision with end bosses
+    // Check collision with endboss
     checkEndbossCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (enemy && enemy instanceof Endboss && this.character.isColliding(enemy)) {
@@ -222,7 +222,7 @@ class World {
             this.checkCoinCollisions();
         }
     }
-    
+
     handleEndbossDamage(enemy) {
         enemy.hit(20);
         this.sounds.enemyHurtSounds(enemy);
@@ -384,13 +384,15 @@ class World {
     }
 
     toggleVolume() {
-        if (this.volume) {
+        if (this.volume === 1) {
             this.previousVolume = this.volume;
             this.volume = 0;
-            // Adjust the icon to indicate muted status
         } else {
-            this.volume = this.previousVolume || 1;  // Adjust the icon back to indicate volume is on
+            this.volume = this.previousVolume;
         }
-    }
+
+        this.sounds.updateVolume(this.volume);
+    }    
+   
 
 }
