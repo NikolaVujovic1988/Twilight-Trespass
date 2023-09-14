@@ -14,10 +14,45 @@ function init() {
 
 function startGame() {
     init();
+    checkWitchDevice();
     initLevel();
     world = new World(canvas, keyboard);
 }
 
+function checkWitchDevice() {
+    if (isMobileDevice()) {
+        forceLandscapeMode();
+        forceFullScreen();
+    }
+}
+
+function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent);
+}
+
+function forceLandscapeMode() {
+    window.addEventListener("orientationchange", function() {
+        if (window.orientation !== 90 && window.orientation !== -90) {
+            alert("Please use landscape mode!");
+        }
+    }, false);
+
+    if (window.orientation !== 90 && window.orientation !== -90) {
+        alert("Please switch to landscape mode to play the game!");
+    }
+}
+
+function forceFullScreen() {
+    if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+    } else if (document.documentElement.mozRequestFullScreen) {
+        document.documentElement.mozRequestFullScreen(); // Firefox
+    } else if (document.documentElement.webkitRequestFullscreen) {
+        document.documentElement.webkitRequestFullscreen(); // Chrome and Safari
+    } else if (document.documentElement.msRequestFullscreen) {
+        document.documentElement.msRequestFullscreen(); // IE
+    }
+}
 
 window.addEventListener("keydown", (event) => {
     if (event.keyCode == 39) {

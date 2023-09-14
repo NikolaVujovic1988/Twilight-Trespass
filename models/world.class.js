@@ -22,12 +22,14 @@ class World {
     enemiesToAnimateDeath = [];
 
 
-    constructor(canvas) {
+    constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.volume = 1;
         this.previousVolume = 0;
+        this.keyboard = keyboard;
+        this.mobileControls = new MobileControls(canvas, keyboard);
         this.draw();
         this.setWorld();
         this.checkCollisions();
@@ -292,6 +294,7 @@ class World {
         this.bottlesBar.setPercentage(this.character.bottles * 20);
         this.showIcons();
 
+        this.mobileControls.drawMobileControls();
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
@@ -392,7 +395,7 @@ class World {
         }
 
         this.sounds.updateVolume(this.volume);
-    }    
-   
+    }
+
 
 }
