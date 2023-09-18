@@ -17,14 +17,20 @@ function startGame() {
     checkWitchDevice();
     initLevel();
     world = new World(canvas, keyboard);
+    window.addEventListener('resize', () => {
+        world.setupMobileControls();
+    });
 }
+
 
 function checkWitchDevice() {
     if (isMobileDevice()) {
         forceLandscapeMode();
         forceFullScreen();
+        updateCanvasDimensions();
     }
 }
+
 
 function isMobileDevice() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent);
@@ -52,6 +58,11 @@ function forceFullScreen() {
     } else if (document.documentElement.msRequestFullscreen) {
         document.documentElement.msRequestFullscreen(); // IE
     }
+}
+
+function updateCanvasDimensions() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 }
 
 window.addEventListener("keydown", (event) => {

@@ -323,10 +323,10 @@ class World {
     showIcons() {
         let imgVolume = new Image();
         let imgFullScreen = new Image();
-        imgFullScreen.src = this.isFullScreen ? "img/icons/close.png" : "img/icons/fullscreen.png";
-        imgVolume.src = this.volume ? "img/icons/medium-volume.png" : "img/icons/mute (1).png";
-        const iconWidth = 20;
-        const iconSpacing = 10;
+        imgFullScreen.src = this.isFullScreen ? "img/icons/close-fullscreen.png" : "img/icons/open-fullscreen.png";
+        imgVolume.src = this.volume ? "img/icons/volume-up.png" : "img/icons/mute.png";
+        const iconWidth = 40;
+        const iconSpacing = 20;
         const totalWidth = 2 * iconWidth + iconSpacing;
         this.ctx.drawImage(imgFullScreen, (this.canvas.width - totalWidth) / 2, 10, iconWidth, iconWidth);
         this.ctx.drawImage(imgVolume, (this.canvas.width - totalWidth) / 2 + iconWidth + iconSpacing, 10, iconWidth, iconWidth);
@@ -360,8 +360,8 @@ class World {
             let x = event.clientX - rect.left;
             let y = event.clientY - rect.top;
 
-            const iconWidth = 20;
-            const iconSpacing = 10;
+            const iconWidth = 40;
+            const iconSpacing = 20;
             const totalWidth = 2 * iconWidth + iconSpacing;
             const startFullScreenX = (this.canvas.width - totalWidth) / 2;
             const startVolumeX = (this.canvas.width - totalWidth) / 2 + iconWidth + iconSpacing;
