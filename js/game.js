@@ -5,9 +5,10 @@ let keyboard = new Keyboard();
 function init() {
     document.getElementById('startScreen').style.display = 'none';
     canvas = document.getElementById('canvas');
-
     updateCanvasDimensions();
+    window.addEventListener('resize', updateCanvasDimensions); 
 }
+
 
 
 function startGame() {
@@ -24,7 +25,7 @@ function startGame() {
 function checkWitchDevice() {
     if (isMobileDevice()) {
         forceLandscapeMode();
-        //forceFullScreen();
+        forceFullScreen();
         updateCanvasDimensions();
     }
 }
@@ -46,17 +47,17 @@ function forceLandscapeMode() {
     }
 }
 
-// function forceFullScreen() {
-//     if (document.documentElement.requestFullscreen) {
-//         document.documentElement.requestFullscreen();
-//     } else if (document.documentElement.mozRequestFullScreen) {
-//         document.documentElement.mozRequestFullScreen(); // Firefox
-//     } else if (document.documentElement.webkitRequestFullscreen) {
-//         document.documentElement.webkitRequestFullscreen(); // Chrome and Safari
-//     } else if (document.documentElement.msRequestFullscreen) {
-//         document.documentElement.msRequestFullscreen(); // IE
-//     }
-// }
+function forceFullScreen() {
+    if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+    } else if (document.documentElement.mozRequestFullScreen) {
+        document.documentElement.mozRequestFullScreen(); // Firefox
+    } else if (document.documentElement.webkitRequestFullscreen) {
+        document.documentElement.webkitRequestFullscreen(); // Chrome and Safari
+    } else if (document.documentElement.msRequestFullscreen) {
+        document.documentElement.msRequestFullscreen(); // IE
+    }
+}
 
 function updateCanvasDimensions() {
     if (isMobileDevice()) {
@@ -67,8 +68,6 @@ function updateCanvasDimensions() {
         canvas.height = 480;
     }
 }
-
-window.addEventListener('resize', updateCanvasDimensions);
 
 window.addEventListener("keydown", (event) => {
     if (event.keyCode == 39) {
