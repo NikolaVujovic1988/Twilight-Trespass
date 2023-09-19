@@ -4,13 +4,11 @@ let keyboard = new Keyboard();
 
 function init() {
     document.getElementById('startScreen').style.display = 'none';
-
     canvas = document.getElementById('canvas');
-    canvas.width = 720;
-    canvas.height = 480;
 
-
+    updateCanvasDimensions();
 }
+
 
 function startGame() {
     init();
@@ -26,7 +24,7 @@ function startGame() {
 function checkWitchDevice() {
     if (isMobileDevice()) {
         forceLandscapeMode();
-        forceFullScreen();
+        //forceFullScreen();
         updateCanvasDimensions();
     }
 }
@@ -48,22 +46,29 @@ function forceLandscapeMode() {
     }
 }
 
-function forceFullScreen() {
-    if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen();
-    } else if (document.documentElement.mozRequestFullScreen) {
-        document.documentElement.mozRequestFullScreen(); // Firefox
-    } else if (document.documentElement.webkitRequestFullscreen) {
-        document.documentElement.webkitRequestFullscreen(); // Chrome and Safari
-    } else if (document.documentElement.msRequestFullscreen) {
-        document.documentElement.msRequestFullscreen(); // IE
+// function forceFullScreen() {
+//     if (document.documentElement.requestFullscreen) {
+//         document.documentElement.requestFullscreen();
+//     } else if (document.documentElement.mozRequestFullScreen) {
+//         document.documentElement.mozRequestFullScreen(); // Firefox
+//     } else if (document.documentElement.webkitRequestFullscreen) {
+//         document.documentElement.webkitRequestFullscreen(); // Chrome and Safari
+//     } else if (document.documentElement.msRequestFullscreen) {
+//         document.documentElement.msRequestFullscreen(); // IE
+//     }
+// }
+
+function updateCanvasDimensions() {
+    if (isMobileDevice()) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    } else {
+        canvas.width = 720;
+        canvas.height = 480;
     }
 }
 
-function updateCanvasDimensions() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
+window.addEventListener('resize', updateCanvasDimensions);
 
 window.addEventListener("keydown", (event) => {
     if (event.keyCode == 39) {
