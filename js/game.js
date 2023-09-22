@@ -3,30 +3,29 @@ let world;
 let keyboard = new Keyboard();
 
 function init() {
-    document.getElementById('startScreen').style.display = 'none';
+    document.getElementById('startButton').style.display = 'none';
+    document.getElementById('startScreen').style.backgroundImage = 'none';
     canvas = document.getElementById('canvas');
-    updateCanvasDimensions();
-    window.addEventListener('resize', updateCanvasDimensions); 
+    // updateCanvasDimensions();
+    // window.addEventListener('resize', updateCanvasDimensions); 
 }
 
 
 
 function startGame() {
     init();
-    checkWitchDevice();
+    // checkWitchDevice();
     initLevel();
     world = new World(canvas, keyboard);
-    window.addEventListener('resize', () => {
-        world.setupMobileControls();
-    });
+    // window.addEventListener('resize', () => {
+    //     world.setupMobileControls();
+    // });
 }
 
 
 function checkWitchDevice() {
     if (isMobileDevice()) {
         forceLandscapeMode();
-        forceFullScreen();
-        updateCanvasDimensions();
     }
 }
 
@@ -47,27 +46,17 @@ function forceLandscapeMode() {
     }
 }
 
-function forceFullScreen() {
-    if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen();
-    } else if (document.documentElement.mozRequestFullScreen) {
-        document.documentElement.mozRequestFullScreen(); // Firefox
-    } else if (document.documentElement.webkitRequestFullscreen) {
-        document.documentElement.webkitRequestFullscreen(); // Chrome and Safari
-    } else if (document.documentElement.msRequestFullscreen) {
-        document.documentElement.msRequestFullscreen(); // IE
-    }
-}
-
-function updateCanvasDimensions() {
-    if (isMobileDevice()) {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    } else {
-        canvas.width = 720;
-        canvas.height = 480;
-    }
-}
+// function updateCanvasDimensions() {
+//     if (isMobileDevice()) {
+//         canvas.style.width = '100%';
+//         canvas.style.height = '100vh';
+//         canvas.width = window.innerWidth;
+//         canvas.height = window.innerHeight;
+//     } else {
+//         canvas.width = 720;
+//         canvas.height = 480;
+//     }
+// }
 
 window.addEventListener("keydown", (event) => {
     if (event.keyCode == 39) {
@@ -75,12 +64,6 @@ window.addEventListener("keydown", (event) => {
     }
     if (event.keyCode == 37) {
         keyboard.LEFT = true;
-    }
-    if (event.keyCode == 38) {
-        keyboard.UP = true;
-    }
-    if (event.keyCode == 40) {
-        keyboard.DOWN = true;
     }
     if (event.keyCode == 32) {
         keyboard.SPACE = true;
@@ -96,12 +79,6 @@ window.addEventListener("keyup", (event) => {
     }
     if (event.keyCode == 37) {
         keyboard.LEFT = false;
-    }
-    if (event.keyCode == 38) {
-        keyboard.UP = false;
-    }
-    if (event.keyCode == 40) {
-        keyboard.DOWN = false;
     }
     if (event.keyCode == 32) {
         keyboard.SPACE = false;

@@ -29,7 +29,7 @@ class World {
         this.volume = 1;
         this.previousVolume = 0;
         this.keyboard = keyboard;
-        this.mobileControls = new MobileControls(canvas, keyboard);
+        // this.mobileControls = new MobileControls(canvas, keyboard);
         this.draw();
         this.setWorld();
         this.checkCollisions();
@@ -294,7 +294,7 @@ class World {
         this.bottlesBar.setPercentage(this.character.bottles * 20);
         this.showIcons();
 
-        this.mobileControls.drawMobileControls();
+        // this.mobileControls.drawMobileControls();
         let self = this;
         requestAnimationFrame(function () {
             self.draw();

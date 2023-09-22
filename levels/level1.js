@@ -32,22 +32,21 @@ function initLevel() {
             new Endboss()
         ],
         [   
-            
-            new BackgroundObject('img/fairy-tale-game-backgrounds/_PNG/3/background.png', -719),
+            new BackgroundObject('img/fairy-tale-game-backgrounds/_PNG/3/background.png', - canvas.width),
 
             new BackgroundObject('img/fairy-tale-game-backgrounds/_PNG/3/background.png', 0),
 
-            new BackgroundObject('img/fairy-tale-game-backgrounds/_PNG/3/background.png', 719),
+            new BackgroundObject('img/fairy-tale-game-backgrounds/_PNG/3/background.png', canvas.width * 1),
 
-            new BackgroundObject('img/fairy-tale-game-backgrounds/_PNG/3/background.png', 719 * 2),
+            new BackgroundObject('img/fairy-tale-game-backgrounds/_PNG/3/background.png', canvas.width * 2),
 
-            new BackgroundObject('img/fairy-tale-game-backgrounds/_PNG/3/background.png', 719 * 3),
+            new BackgroundObject('img/fairy-tale-game-backgrounds/_PNG/3/background.png', canvas.width * 3),
 
-            new BackgroundObject('img/fairy-tale-game-backgrounds/_PNG/3/background.png', 719 * 4),
+            new BackgroundObject('img/fairy-tale-game-backgrounds/_PNG/3/background.png', canvas.width * 4),
 
-            new BackgroundObject('img/fairy-tale-game-backgrounds/_PNG/3/background.png', 719 * 5),
+            new BackgroundObject('img/fairy-tale-game-backgrounds/_PNG/3/background.png', canvas.width * 5),
 
-            new BackgroundObject('img/fairy-tale-game-backgrounds/_PNG/3/background.png', 719 * 6),
+            new BackgroundObject('img/fairy-tale-game-backgrounds/_PNG/3/background.png', canvas.width * 6)
 
         ]
     )

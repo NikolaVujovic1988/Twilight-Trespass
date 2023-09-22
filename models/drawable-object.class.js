@@ -6,7 +6,7 @@ class DrawableObject {
     width = 180;
     imageCache = {};
     currentImage = 0;
-
+    
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }

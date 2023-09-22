@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shroom Shoot</title>
+    <title>Twilight Trespass</title>
     <link rel="icon" type="image/x-icon" href="img/7_statusbars/3_icons/icon_coin.png">
     <link rel="stylesheet" href="style.css">
     <script src="./models/drawable-object.class.js"></script>
@@ -33,12 +33,31 @@
 
 <body>
 
-    <h1>Shroom Shoot</h1>
+    <h1>Twilight Trespass</h1>
+    <div class="gamaContainer">
+        <div class="startScreen" id="startScreen">
+            <div class="overlay" id="overlay">
+                <div class="top">
+                    <!-- <button class="setting-buttons" onclick="startGame()"><img src="" alt=""></button> -->
+                </div>
+                <button id="startButton" onclick="startGame()">Start Game</button>
+                <div class="overlay-bottom d-none" id="overlay-bottom">
+                    <div class="control-buttons">
+                        <button id="btnLeft" class="setting-buttons"><img src="img/icons/left.png" alt="" class="img-settings-buttons"></button>
+                        <button id="btnRight" class="setting-buttons"><img src="img/icons/right.png" alt="" class="img-settings-buttons"></button>
+                    </div>
+                    <div class="action-buttons">
+                        <button id="btnUp" class="setting-buttons"><img src="img/icons/jump.png" alt="" class="img-settings-buttons"></button>
+                        <button id="btnThrow" class="setting-buttons"><img src="img/icons/throw.png" alt="" class="img-settings-buttons"></button>
+                    </div>
 
-    <div class="startScreen" id="startScreen">
-        <button id="startButton" onclick="startGame()">Start Game</button>
+                </div>
+            </div>
+        </div>
+        <canvas id="canvas" width="720px" height="480px">
+
+        </canvas>
     </div>
-    <canvas id="canvas"></canvas>
 </body>
 
 </html>
