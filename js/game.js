@@ -14,7 +14,7 @@ function init() {
 
 function startGame() {
     init();
-    // checkWitchDevice();
+    checkWitchDevice();
     initLevel();
     world = new World(canvas, keyboard);
     // window.addEventListener('resize', () => {
@@ -26,6 +26,7 @@ function startGame() {
 function checkWitchDevice() {
     if (isMobileDevice()) {
         forceLandscapeMode();
+        showActionIcons();
     }
 }
 
@@ -44,6 +45,10 @@ function forceLandscapeMode() {
     if (window.orientation !== 90 && window.orientation !== -90) {
         alert("Please switch to landscape mode to play the game!");
     }
+}
+
+function showActionIcons() {
+    document.getElementById('overlay-bottom').classList.remove('d-none');
 }
 
 // function updateCanvasDimensions() {
@@ -87,3 +92,38 @@ window.addEventListener("keyup", (event) => {
         keyboard.D = false;
     }
 });
+
+function loadMobileControlEvents() {
+    document.getElementById('btnRight').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = true;
+    });
+    document.getElementById('btnRight').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = false;
+    });
+    document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = true;
+    });
+    document.getElementById('btnLeft').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = false;
+    });
+    document.getElementById('btnUp').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.SPACE = true;
+    });
+    document.getElementById('btnUp').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.SPACE = false;
+    });
+    document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.D = true;
+    });
+    document.getElementById('btnThrow').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.D = false;
+    });
+}
