@@ -27,6 +27,7 @@ function checkWitchDevice() {
     if (isMobileDevice()) {
         forceLandscapeMode();
         showActionIcons();
+        changeStylesForMobileDevices();
     }
 }
 
@@ -49,6 +50,11 @@ function forceLandscapeMode() {
 
 function showActionIcons() {
     document.getElementById('overlay-bottom').classList.remove('d-none');
+}
+
+function changeStylesForMobileDevices() {
+    document.getElementById('startScreen').classList.add('height100');
+    document.getElementById('canvas').classList.add('height100');
 }
 
 // function updateCanvasDimensions() {
