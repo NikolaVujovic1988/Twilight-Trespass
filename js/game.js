@@ -1,27 +1,20 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let isInFullscreen = false;
 
 function init() {
     document.getElementById('startButton').style.display = 'none';
     document.getElementById('startScreen').style.backgroundImage = 'none';
     canvas = document.getElementById('canvas');
-    // updateCanvasDimensions();
-    // window.addEventListener('resize', updateCanvasDimensions); 
 }
-
-
 
 function startGame() {
     init();
     checkWitchDevice();
     initLevel();
     world = new World(canvas, keyboard);
-    // window.addEventListener('resize', () => {
-    //     world.setupMobileControls();
-    // });
 }
-
 
 function checkWitchDevice() {
     if (isMobileDevice()) {
@@ -30,7 +23,6 @@ function checkWitchDevice() {
         changeStylesForMobileDevices();
     }
 }
-
 
 function isMobileDevice() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent);
@@ -48,6 +40,37 @@ function forceLandscapeMode() {
     }
 }
 
+function toggleFullscreen() {
+    const fullscreenButton = document.getElementById('btnFullscreen');
+    isInFullscreen = !isInFullscreen;
+
+    if (isInFullscreen) {
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+            document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+            document.documentElement.webkitRequestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+            document.documentElement.msRequestFullscreen();
+        }
+
+        fullscreenButton.innerHTML = '<img src="img/icons/close-fullscreen.png" alt="" class="img-settings-buttons">';
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { // Firefox
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // IE/Edge
+            document.msExitFullscreen();
+        }
+
+        fullscreenButton.innerHTML = '<img src="img/icons/open-fullscreen.png" alt="" class="img-settings-buttons">';
+    }
+}
+
 function showActionIcons() {
     document.getElementById('overlay-bottom').classList.remove('d-none');
 }
@@ -56,18 +79,6 @@ function changeStylesForMobileDevices() {
     document.getElementById('startScreen').classList.add('height100');
     document.getElementById('canvas').classList.add('height100');
 }
-
-// function updateCanvasDimensions() {
-//     if (isMobileDevice()) {
-//         canvas.style.width = '100%';
-//         canvas.style.height = '100vh';
-//         canvas.width = window.innerWidth;
-//         canvas.height = window.innerHeight;
-//     } else {
-//         canvas.width = 720;
-//         canvas.height = 480;
-//     }
-// }
 
 window.addEventListener("keydown", (event) => {
     if (event.keyCode == 39) {
@@ -132,4 +143,5 @@ function loadMobileControlEvents() {
         e.preventDefault();
         keyboard.D = false;
     });
+    
 }
