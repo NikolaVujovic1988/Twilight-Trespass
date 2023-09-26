@@ -29,15 +29,12 @@ class World {
         this.volume = 1;
         this.previousVolume = 0;
         this.keyboard = keyboard;
-        // this.mobileControls = new MobileControls(canvas, keyboard);
         this.draw();
         this.setWorld();
         this.checkCollisions();
         this.run();
         this.generateObjects(this.coin, Coin, 120, 350);
         this.generateObjects(this.bottle, Bottle, 120, 350);
-        this.setupEventListeners();
-        this.setupFullScreenChangeHandler();
     }
 
     setWorld() {
@@ -292,9 +289,7 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
 
         this.bottlesBar.setPercentage(this.character.bottles * 20);
-        this.showIcons();
 
-        // this.mobileControls.drawMobileControls();
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
@@ -319,19 +314,6 @@ class World {
         }
     }
 
-
-    showIcons() {
-        let imgVolume = new Image();
-        let imgFullScreen = new Image();
-        imgFullScreen.src = this.isFullScreen ? "img/icons/close-fullscreen.png" : "img/icons/open-fullscreen.png";
-        imgVolume.src = this.volume ? "img/icons/volume-up.png" : "img/icons/mute.png";
-        const iconWidth = 40;
-        const iconSpacing = 20;
-        const totalWidth = 2 * iconWidth + iconSpacing;
-        this.ctx.drawImage(imgFullScreen, (this.canvas.width - totalWidth) / 2, 10, iconWidth, iconWidth);
-        this.ctx.drawImage(imgVolume, (this.canvas.width - totalWidth) / 2 + iconWidth + iconSpacing, 10, iconWidth, iconWidth);
-    }
-
     flipCharacter(moveble) {
         this.ctx.save();
         this.ctx.translate(moveble.width, 0);
@@ -343,59 +325,5 @@ class World {
         this.ctx.restore();
         moveble.x = moveble.x * -1;
     }
-
-    setupFullScreenChangeHandler() {
-        const handler = () => {
-            this.isFullScreen = document.fullscreenElement == this.canvas;
-            this.draw();  // Force a redraw to refresh the fullscreen icon immediately.
-        };
-
-        document.addEventListener('fullscreenchange', handler);
-    }
-
-
-    setupEventListeners() {
-        this.canvas.addEventListener('click', (event) => {
-            let rect = this.canvas.getBoundingClientRect();
-            let x = event.clientX - rect.left;
-            let y = event.clientY - rect.top;
-
-            const iconWidth = 40;
-            const iconSpacing = 20;
-            const totalWidth = 2 * iconWidth + iconSpacing;
-            const startFullScreenX = (this.canvas.width - totalWidth) / 2;
-            const startVolumeX = (this.canvas.width - totalWidth) / 2 + iconWidth + iconSpacing;
-
-            if (x >= startFullScreenX && x <= startFullScreenX + iconWidth &&
-                y >= 10 && y <= 10 + iconWidth) {
-                this.openFullscreen();
-            }
-
-            if (x >= startVolumeX && x <= startVolumeX + iconWidth &&
-                y >= 10 && y <= 10 + iconWidth) {
-                this.toggleVolume();
-            }
-        });
-    }
-
-    openFullscreen() {
-        if (!this.isFullScreen) {
-            this.canvas.requestFullscreen();
-        } else {
-            document.exitFullscreen();
-        }
-    }
-
-    toggleVolume() {
-        if (this.volume === 1) {
-            this.previousVolume = this.volume;
-            this.volume = 0;
-        } else {
-            this.volume = this.previousVolume;
-        }
-
-        this.sounds.updateVolume(this.volume);
-    }
-
 
 }

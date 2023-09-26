@@ -1,6 +1,8 @@
 class Sounds extends MovebleObjects {
     allSounds = [];
 
+    isMuted = false;
+
     static instance = new Sounds();
 
     constructor() {
@@ -42,12 +44,22 @@ class Sounds extends MovebleObjects {
     }
 
 
-   updateVolume(newVolume) {
-        this.allSounds.forEach(sound => {
-            sound.volume = newVolume;
-            console.log(sound.src, sound.volume);
-        });
+    gameVolume() {
+        const volumeButton = document.getElementById('btnVolume');
+        this.isMuted = !this.isMuted;
+        this.muteSounds(this.isMuted);
+
+        if (this.isMuted) {
+            volumeButton.innerHTML = '<img src="img/icons/mute.png" alt="" class="img-settings-buttons">';
+        } else {
+            volumeButton.innerHTML = '<img src="img/icons/volume-up.png" alt="" class="img-settings-buttons">';
+        }
     }
 
+    muteSounds(mute) {
+        this.allSounds.forEach(sound => {
+            sound.muted = mute;
+        });
+    }
 
 }
