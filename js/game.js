@@ -42,20 +42,19 @@ function forceLandscapeMode() {
 
 function toggleFullscreen() {
     const fullscreenButton = document.getElementById('btnFullscreen');
+    const canvas = document.getElementById('canvas');
     isInFullscreen = !isInFullscreen;
 
     if (isInFullscreen) {
-        if (document.documentElement.requestFullscreen) {
-            document.documentElement.requestFullscreen();
-        } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-            document.documentElement.mozRequestFullScreen();
-        } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-            document.documentElement.webkitRequestFullscreen();
-        } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-            document.documentElement.msRequestFullscreen();
+        if (canvas.requestFullscreen) {
+            canvas.requestFullscreen();
+        } else if (canvas.mozRequestFullScreen) { // Firefox
+            canvas.mozRequestFullScreen();
+        } else if (canvas.webkitRequestFullscreen) { // Chrome, Safari and Opera
+            canvas.webkitRequestFullscreen();
+        } else if (canvas.msRequestFullscreen) { // IE/Edge
+            canvas.msRequestFullscreen();
         }
-
-        fullscreenButton.innerHTML = '<img src="img/icons/close-fullscreen.png" alt="" class="img-settings-buttons">';
     } else {
         if (document.exitFullscreen) {
             document.exitFullscreen();
@@ -66,10 +65,17 @@ function toggleFullscreen() {
         } else if (document.msExitFullscreen) { // IE/Edge
             document.msExitFullscreen();
         }
-
-        fullscreenButton.innerHTML = '<img src="img/icons/open-fullscreen.png" alt="" class="img-settings-buttons">';
     }
 }
+
+document.addEventListener('fullscreenchange', function () {
+    const fullscreenButton = document.getElementById('btnFullscreen');
+    isInFullscreen = document.fullscreenElement != null;
+
+    fullscreenButton.innerHTML = isInFullscreen
+        ? '<img src="img/icons/close-fullscreen.png" alt="" class="img-settings-buttons">'
+        : '<img src="img/icons/open-fullscreen.png" alt="" class="img-settings-buttons">';
+});
 
 function showActionIcons() {
     document.getElementById('overlay-bottom').classList.remove('d-none');
