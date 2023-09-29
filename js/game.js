@@ -6,6 +6,8 @@ let isInFullscreen = false;
 function init() {
     document.getElementById('startButton').style.display = 'none';
     document.getElementById('startScreen').style.backgroundImage = 'none';
+    document.getElementById('overlay').classList.add('overlay');
+    document.getElementById('overlay').classList.remove('overlay-center');
     canvas = document.getElementById('canvas');
 }
 

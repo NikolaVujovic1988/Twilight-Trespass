@@ -36,14 +36,14 @@
     <h1>Twilight Trespass</h1>
     <div class="gamaContainer" id="gamaContainer">
         <div class="startScreen" id="startScreen">
-            <div class="overlay" id="overlay">
+            <div class="overlay-center" id="overlay">
                 <div class="overlay-top">
-                    <button onclick="toggleFullscreen()" id="btnFullscreen" class="setting-buttons"><img src="img/icons/open-fullscreen.png" alt="" class="img-settings-buttons"></button>
-                    <button onclick="Sounds.instance.gameVolume()" id="btnVolume" class="setting-buttons"><img src="img/icons/volume-up.png" alt="" class="img-settings-buttons"></button>
+                    <button onclick="toggleFullscreen()" id="btnFullscreen" class="setting-buttons pointer"><img src="img/icons/open-fullscreen.png" alt="" class="img-settings-buttons"></button>
+                    <button id="startButton" onclick="startGame()" class="pointer">Start Game</button>
+                    <button onclick="Sounds.instance.gameVolume()" id="btnVolume" class="setting-buttons pointer"><img src="img/icons/volume-up.png" alt="" class="img-settings-buttons"></button>
 
                     <!-- <button class="setting-buttons" onclick="startGame()"><img src="" alt=""></button> -->
                 </div>
-                <button id="startButton" onclick="startGame()">Start Game</button>
                 <div class="overlay-bottom d-none" id="overlay-bottom">
                     <div class="control-buttons">
                         <button onclick="loadMobileControlEvents()" id="btnLeft" class="setting-buttons"><img src="img/icons/left.png" alt="" class="img-settings-buttons"></button>
