@@ -3,8 +3,9 @@ class Endboss extends MovebleObjects {
     height = 550;
     width = 430;
     y = -60;
-    
+
     endbossIsDead = false;
+    deathAnimationInProgress = false;
 
     offset = {
         top: 200,
@@ -80,30 +81,52 @@ class Endboss extends MovebleObjects {
         setInterval(() => {
             if (this.isCharacterCloseToEndboss()) {
                 this.playAnimation(this.IMAGES_ATTACK);
-            } else if (this.energy === 0) {
-                this.playAnimation(this.IMAGES_DEAD);
-                this.endbossIsDead = true;
-            } else if (!this.endbossIsDead) {
+            } else if (this.energy === 0 && !this.deathAnimationInProgress) {
+                this.handleDeathAnimation();
+            } else if (!this.endbossIsDead && !this.deathAnimationInProgress) {
                 this.playAnimation(this.IMAGES_WALKING);
-            } 
-            
+            }
         }, 200);
     }
 
-    huntCharacter() {    
+    handleDeathAnimation() {
+        this.deathAnimationInProgress = true;
+        let currentFrame = 0;
+    
+        const deathAnimationInterval = setInterval(() => {
+            if (currentFrame >= this.IMAGES_DEAD.length) {
+                clearInterval(deathAnimationInterval);
+                this.endbossIsDead = true;
+                this.gameWon();  // Call the gameWon function after the animation completes.
+            } else {
+                this.img.src = this.IMAGES_DEAD[currentFrame];
+                currentFrame++;
+            }
+        }, 200);
+    }
+                    
+    huntCharacter() {
         setInterval(() => {
             if (world.character.x >= 3500) {
                 world.characterPassedLimit = true;
             }
-    
-            if (world.characterPassedLimit && !this.endbossIsDead) {
+            if (world.characterPassedLimit && !this.endbossIsDead && !this.deathAnimationInProgress) {
+                if (this.isCharacterCloseToEndboss()) {
+                    this.speed = 20;
+                } else {
+                    this.speed = 15;
+                }
                 this.moveLeft();
             }
         }, 150);
+    }
+    
+    gameWon() {
+        alert('YOU WON');
     }
 
     isCharacterCloseToEndboss() {
         return Math.abs(this.x - world.character.x) < 200;
     }
-    
+
 }
