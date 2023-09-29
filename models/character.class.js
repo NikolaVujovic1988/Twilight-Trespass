@@ -48,6 +48,9 @@ class Character extends MovebleObjects {
     bottles = 0;
     coinCount = 0;
 
+    characterIsDead = false;
+    deathAnimationInProgress = false;
+
     constructor() {
         super().loadImage('Files/png/2x/hero2/IdleRight (1).png');
         this.loadImages(this.IMAGES_WALKING);
@@ -61,7 +64,10 @@ class Character extends MovebleObjects {
     // TO DO!!! Splice animate() function on clean code principe!!!
     animate() {
         setInterval(() => {
-            this.sounds.running_sound.pause();
+            // this.sounds.running_sound.pause();
+            if (this.characterIsDead || this.deathAnimationInProgress) {
+                return;
+            }
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
@@ -73,8 +79,6 @@ class Character extends MovebleObjects {
                 this.sounds.running_sound.play();
                 this.lastDirection = 'left';
             }
-    
-            // First, check if the character is on the ground and if the D key is pressed.
             if (this.world.keyboard.D && this.hasThrowableObjects()) {
                 this.throwObject();
             } else if (this.world.keyboard.SPACE && !this.isAboveGround()) {
@@ -85,8 +89,10 @@ class Character extends MovebleObjects {
         }, 1000 / 60);
     
         setInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
+            if (this.characterIsDead || this.deathAnimationInProgress) {
+                return;
+            } else if (this.isDead()) {
+                this.handleDeathAnimation();
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.world.keyboard.D && this.hasThrowableObjects()) {
@@ -123,6 +129,26 @@ class Character extends MovebleObjects {
         this.coinCount += 1;
         this.sounds.coin_collected.currentTime = 0;
         this.sounds.coin_collected.play();
+    }
+
+    handleDeathAnimation() {
+        this.deathAnimationInProgress = true;
+        let currentFrame = 0;
+
+        const deathAnimationInterval = setInterval(() => {
+            if (currentFrame >= this.IMAGES_DEAD.length) {
+                clearInterval(deathAnimationInterval);
+                this.characterIsDead = true;
+                this.youLost();
+            } else {
+                this.img.src = this.IMAGES_DEAD[currentFrame];
+                currentFrame++;
+            }
+        }, 200);
+    }
+
+    youLost() {
+        alert('YOU LOST');
     }
     
 }
