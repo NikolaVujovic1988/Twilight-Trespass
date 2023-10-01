@@ -40,7 +40,14 @@ class Character extends MovebleObjects {
         'Files/png/2x/hero2/ShootRight (2).png',
         'Files/png/2x/hero2/ShootRight (3).png',
         'Files/png/2x/hero2/ShootRight (4).png'
-    ]
+    ];
+
+    IMAGES_IDLE = [
+        'Files/png/1x/hero2/IdleRight (1).png',
+        'Files/png/1x/hero2/IdleRight (2).png',
+        'Files/png/1x/hero2/IdleRight (3).png',
+        'Files/png/1x/hero2/IdleRight (4).png'
+    ];
 
     world;
     sounds = new Sounds();
@@ -58,6 +65,7 @@ class Character extends MovebleObjects {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_SHOT);
+        this.loadImages(this.IMAGES_IDLE);
         this.animate();
         this.applyGravity();
     }
@@ -102,8 +110,11 @@ class Character extends MovebleObjects {
                 this.playAnimation(this.IMAGES_JUMPING);
             } else if (!this.isAboveGround() && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) {
                 this.playAnimation(this.IMAGES_WALKING);
+            } else if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.isAboveGround() && !this.world.keyboard.SPACE && !this.world.keyboard.D) {
+                this.playAnimation(this.IMAGES_IDLE);
             }
-        }, 50);
+        }, 100);
+        
     }
     
 
