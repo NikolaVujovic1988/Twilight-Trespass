@@ -115,6 +115,54 @@ h1 {
     text-shadow: 2px 2px 4px rgba(13, 46, 63, 0.7);
 }
 
+.rotate-device-container {
+    position: absolute;
+    width: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.rotate-image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: rotateAnimation 4000ms infinite alternate;
+}
+
+.rotate-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: invert(1) brightness(2);
+}
+
+.image-description {
+    margin-top: 50px;
+    font-size: 32px;
+    color: white;
+    text-align: center;
+}
+
+@keyframes rotateAnimation {
+    0% {
+        transform: rotate(45deg);
+    }
+    50% {
+        transform: rotate(-45deg);
+    }
+    100% {
+        transform: rotate(-45deg);
+    }
+}
+
+
 .pointer:hover {
     scale: 1.2;
 }
@@ -127,9 +175,9 @@ h1 {
     display: none !important;
 }
 
-/* .height100 {
+.height100 {
     height: 100dvh;
-} */
+}
 
 @media only screen and (max-width: 1025px) {
     canvas {

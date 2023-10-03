@@ -32,14 +32,30 @@ function isMobileDevice() {
 }
 
 function forceLandscapeMode() {
-    window.addEventListener("orientationchange", function() {
+    window.addEventListener("orientationchange", function () {
         if (window.orientation !== 90 && window.orientation !== -90) {
-            alert("Please use landscape mode!");
+            forceLandscapeModeAnimation();
+        } else {
+            document.getElementById('rotate-device-container').classList.add('d-none');
+            toggleBlurOnStartscreen();
         }
     }, false);
 
     if (window.orientation !== 90 && window.orientation !== -90) {
-        alert("Please switch to landscape mode to play the game!");
+        forceLandscapeModeAnimation();
+    }
+}
+
+function forceLandscapeModeAnimation() {
+    document.getElementById('rotate-device-container').classList.remove('d-none');
+    toggleBlurOnStartscreen();
+}
+
+function toggleBlurOnStartscreen() {    
+    if (canvas.style.filter.includes('blur')) {
+        canvas.style.filter = '';
+    } else {
+        canvas.style.filter = 'blur(5px)';
     }
 }
 
@@ -85,7 +101,6 @@ function showActionIcons() {
 }
 
 function changeStylesForMobileDevices() {
-    document.getElementById('startScreen').classList.add('height100');
     document.getElementById('canvas').classList.add('height100');
 }
 
@@ -152,7 +167,7 @@ function loadMobileControlEvents() {
         e.preventDefault();
         keyboard.D = false;
     });
-    
+
 }
 
 function clearAllIntervals() {
