@@ -159,6 +159,7 @@ class Character extends MovebleObjects {
     }
 
     youLost() {
+        clearAllIntervals();
         alert('YOU LOST');
     }
     

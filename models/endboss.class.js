@@ -97,7 +97,7 @@ class Endboss extends MovebleObjects {
             if (currentFrame >= this.IMAGES_DEAD.length) {
                 clearInterval(deathAnimationInterval);
                 this.endbossIsDead = true;
-                this.gameWon();  // Call the gameWon function after the animation completes.
+                this.gameWon();
             } else {
                 this.img.src = this.IMAGES_DEAD[currentFrame];
                 currentFrame++;
@@ -122,6 +122,7 @@ class Endboss extends MovebleObjects {
     }
     
     gameWon() {
+        clearAllIntervals();
         alert('YOU WON');
     }
 
