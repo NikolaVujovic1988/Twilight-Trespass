@@ -4,12 +4,8 @@ let keyboard = new Keyboard();
 let isInFullscreen = false;
 
 function init() {
-    document.getElementById('startButton').style.display = 'none';
-    document.getElementById('startscreen-background').style.display = 'none';
-    document.getElementById('startScreen').style.backgroundImage = 'none';
-    document.getElementById('overlay').classList.add('overlay');
-    document.getElementById('overlay').classList.remove('overlay-center');
     canvas = document.getElementById('canvas');
+    addStartStyles();
 }
 
 function startGame() {
@@ -36,8 +32,8 @@ function forceLandscapeMode() {
         if (window.orientation !== 90 && window.orientation !== -90) {
             forceLandscapeModeAnimation();
         } else {
-            document.getElementById('rotate-device-container').classList.add('d-none');
             toggleBlurOnStartscreen();
+            forceLandscapeModeAnimationRemoveStyles();
         }
     }, false);
 
@@ -47,8 +43,8 @@ function forceLandscapeMode() {
 }
 
 function forceLandscapeModeAnimation() {
-    document.getElementById('rotate-device-container').classList.remove('d-none');
     toggleBlurOnStartscreen();
+    forceLandscapeModeAnimationAddStyles();
 }
 
 function toggleBlurOnStartscreen() {    
@@ -172,4 +168,24 @@ function loadMobileControlEvents() {
 
 function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
+}
+
+function forceLandscapeModeAnimationAddStyles() {
+    document.getElementById('control-buttons').classList.add('d-none');
+    document.getElementById('action-buttons').classList.add('d-none');
+    document.getElementById('rotate-device-container').classList.remove('d-none');
+}
+
+function forceLandscapeModeAnimationRemoveStyles() {
+    document.getElementById('rotate-device-container').classList.add('d-none');
+    document.getElementById('control-buttons').classList.remove('d-none');
+    document.getElementById('action-buttons').classList.remove('d-none');
+}
+
+function addStartStyles() {
+    document.getElementById('startButton').style.display = 'none';
+    document.getElementById('startscreen-background').style.display = 'none';
+    document.getElementById('startScreen').style.backgroundImage = 'none';
+    document.getElementById('overlay').classList.add('overlay');
+    document.getElementById('overlay').classList.remove('overlay-center');
 }

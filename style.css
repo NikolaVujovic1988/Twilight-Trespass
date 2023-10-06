@@ -13,7 +13,11 @@ body {
     height: 100dvh;
     background-image: url('img/forest-3394066_1280.jpg');
     background-size: cover;
-    background-color: rgba(115, 180, 230, 0.7)
+    background-color: rgba(115, 180, 230, 0.7);
+}
+
+body::before {
+    opacity: 0.1;
 
 }
 
