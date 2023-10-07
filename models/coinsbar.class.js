@@ -8,14 +8,23 @@ class Coinsbar extends DrawableObject {
         'img/7_statusbars/1_statusbar/1_statusbar_coin/green/100.png'
     ];
 
+    STAR = [
+        'img/progress-bars/star.png'
+    ];
+
     constructor() {
         super();
         this.loadImages(this.IMAGES);
-        this.x = 40;
-        this.y = 40;
-        this.width = 170;
+        this.loadImage(this.STAR);
+        this.star = this.imageCache[this.STAR[0]];
+        this.x = 35;
+        this.y = 50;
+        this.width = 175;
         this.height = 40;
         this.setPercentage(0);
+
+        this.star = new Image();
+        this.star.src = this.STAR[0];
     }
 
     setPercentage(percentage) {

@@ -1,11 +1,11 @@
 class Coin extends DrawableObject {
     
     IMAGES = [
-        'img/8_coin/coin_1.png'
+        'img/progress-bars/star.png'
     ];
 
-    width = 100;
-    height = 100;
+    width = 30;
+    height = 30;
 
     offset = {
         top: 0,
