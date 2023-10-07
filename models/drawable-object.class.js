@@ -31,19 +31,19 @@ class DrawableObject {
         }
     }
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Hyena || this instanceof Bug || this instanceof Endboss) {
-            ctx.beginPath();
-            ctx.lineWidth = '1';
-            ctx.strokeStyle = 'blue';
+        // if (this instanceof Character || this instanceof Hyena || this instanceof Bug || this instanceof Endboss) {
+        //     ctx.beginPath();
+        //     ctx.lineWidth = '1';
+        //     ctx.strokeStyle = 'blue';
 
-            const effectiveX = this.x + this.offset.left;
-            const effectiveY = this.y + this.offset.top;
-            const effectiveWidth = this.width - this.offset.left - this.offset.right;
-            const effectiveHeight = this.height - this.offset.top - this.offset.bottom;
+        //     const effectiveX = this.x + this.offset.left;
+        //     const effectiveY = this.y + this.offset.top;
+        //     const effectiveWidth = this.width - this.offset.left - this.offset.right;
+        //     const effectiveHeight = this.height - this.offset.top - this.offset.bottom;
 
-            ctx.rect(effectiveX, effectiveY, effectiveWidth, effectiveHeight);
-            ctx.stroke();
-        }
+        //     ctx.rect(effectiveX, effectiveY, effectiveWidth, effectiveHeight);
+        //     ctx.stroke();
+        // }
     }
 
     loadImage(path) {

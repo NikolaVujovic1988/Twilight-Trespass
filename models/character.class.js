@@ -159,8 +159,18 @@ class Character extends MovebleObjects {
     }
 
     youLost() {
+        document.getElementById('youLostScreen').classList.remove('d-none');
+        document.getElementById('youLostScreen').innerHTML = this.youLostScreenHTMLTemplate();
         clearAllIntervals();
-        alert('YOU LOST');
+    }
+
+    youLostScreenHTMLTemplate() {
+        return `
+        
+            <img class="youLostImg" src="img/you lost.png" alt="">
+            <button class="youLostBtn pointer" onclick="startGame()">PLAY AGAIN ?</button>
+        </div>
+        `;
     }
     
 }

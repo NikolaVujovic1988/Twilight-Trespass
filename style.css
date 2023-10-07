@@ -64,6 +64,7 @@ canvas {
     position: relative;
     top: 0;
     left: 0;
+    z-index: 4;
     width: 100%;
     /* height: 100%; */
     display: flex;
@@ -84,14 +85,14 @@ canvas {
 }
 
 .overlay-top {
-    z-index: 10;
+    z-index: 2;
 }
 
 .overlay-bottom {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    z-index: 10;
+    z-index: 2;
 }
 
 .setting-buttons {
@@ -150,6 +151,35 @@ h1 {
     font-size: 32px;
     color: white;
     text-align: center;
+}
+
+.youLostScreen {
+    width: 720px;
+    height: 480px;
+    z-index: 3;
+}
+
+.youLostImg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.youLostBtn {
+    position: relative;
+    left: 35%;
+    top: 2%;
+    width: 30%;
+    height: 15%;
+    border-radius: 50%;
+    color: white;
+    font-size: large;
+    border: none;
+    background-color: rgb(240 176 15);
+    box-shadow: rgba(154, 58, 23, 0.90) 2px 2px 2px;
 }
 
 @keyframes rotateAnimation {
