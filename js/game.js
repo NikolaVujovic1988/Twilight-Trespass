@@ -184,6 +184,7 @@ function forceLandscapeModeAnimationRemoveStyles() {
 
 function addStartStyles() {
     document.getElementById('youLostScreen').classList.add('d-none');
+    document.getElementById('youWonScreen').classList.add('d-none');
     document.getElementById('startButton').style.display = 'none';
     document.getElementById('startscreen-background').style.display = 'none';
     document.getElementById('startScreen').style.backgroundImage = 'none';

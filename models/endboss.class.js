@@ -122,8 +122,21 @@ class Endboss extends MovebleObjects {
     }
     
     gameWon() {
+        const youWonScreen = document.getElementById('youWonScreen');
+        youWonScreen.classList.remove('d-none');
+        youWonScreen.innerHTML = this.gameWonScreenHTMLTemplate();
         clearAllIntervals();
-        alert('YOU WON');
+    
+        setTimeout(() => {
+            youWonScreen.classList.add('EndScreen');
+        }, 300);
+    }
+
+    gameWonScreenHTMLTemplate() {
+        return `
+            <img class="youLostImg" src="img/you lost.png" alt="">
+            <button class="youLostBtn pointer" onclick="startGame()">PLAY AGAIN ?</button>
+        `;
     }
 
     isCharacterCloseToEndboss() {
