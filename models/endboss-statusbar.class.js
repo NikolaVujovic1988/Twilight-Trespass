@@ -22,9 +22,9 @@ class EndbossStatusbar extends DrawableObject {
         this.loadImages(this.IMAGES);
         this.loadImage(this.HEALTH_ENDBOSS);
         this.healthEndboss = this.imageCache[this.HEALTH_ENDBOSS[0]];
-        this.x = 500;
+        this.x = 480;
         this.y = 0;
-        this.width = 170;
+        this.width = 200;
         this.height = 40;
         this.setPercentage(this.percentage);
         this.energy -= 20;

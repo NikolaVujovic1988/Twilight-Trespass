@@ -47,11 +47,14 @@ function forceLandscapeModeAnimation() {
     forceLandscapeModeAnimationAddStyles();
 }
 
-function toggleBlurOnStartscreen() {    
-    if (canvas.style.filter.includes('blur')) {
-        canvas.style.filter = '';
-    } else {
-        canvas.style.filter = 'blur(5px)';
+function toggleBlurOnStartscreen() {
+    const canvas = document.getElementById('canvas'); 
+    if (canvas && canvas.style) {   
+        if (canvas.style.filter.includes('blur')) {
+            canvas.style.filter = '';
+        } else {
+            canvas.style.filter = 'blur(5px)';
+        }
     }
 }
 
