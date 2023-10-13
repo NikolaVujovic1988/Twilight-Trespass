@@ -24,6 +24,7 @@ class Sounds extends MovebleObjects {
         this.character_hurt = this.createSound('audio/female-pain.mp3');
         this.arrow_collected = this.createSound('audio/arrow-collected.mp3');
         this.endboss_dead = this.createSound('audio/endboss-dead.mp3');
+        this.game_won = this.createSound('audio/game-won.mp3');
     }
 
     createSound(src) {

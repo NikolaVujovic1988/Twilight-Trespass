@@ -6,6 +6,7 @@ class Endboss extends MovebleObjects {
 
     endbossIsDead = false;
     deathAnimationInProgress = false;
+    sound = new Sounds();
 
     offset = {
         top: 200,
@@ -126,6 +127,7 @@ class Endboss extends MovebleObjects {
         youWonScreen.classList.remove('d-none');
         youWonScreen.innerHTML = this.gameWonScreenHTMLTemplate();
         clearAllIntervals();
+        this.sound.game_won.play();
     
         setTimeout(() => {
             youWonScreen.classList.add('EndScreen');
@@ -134,8 +136,8 @@ class Endboss extends MovebleObjects {
 
     gameWonScreenHTMLTemplate() {
         return `
-            <img class="youLostImg" src="img/you lost.png" alt="">
-            <button class="youLostBtn pointer" onclick="startGame()">PLAY AGAIN ?</button>
+            <h2 class="h2Endscreen">You Won !!!</h2>
+            <button class="youLostBtn pointer" onclick="startGame()">Play Again ?</button>
         `;
     }
 

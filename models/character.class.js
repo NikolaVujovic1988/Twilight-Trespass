@@ -171,8 +171,8 @@ class Character extends MovebleObjects {
 
     youLostScreenHTMLTemplate() {
         return `
-            <img class="youLostImg" src="img/you lost.png" alt="">
-            <button class="youLostBtn pointer" onclick="startGame()">PLAY AGAIN ?</button>
+            <h2 class="h2Endscreen">You Lost !!!</h2>
+            <button class="youLostBtn pointer" onclick="startGame()">Play Again ?</button>
         `;
     }
     
