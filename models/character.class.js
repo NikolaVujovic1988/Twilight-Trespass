@@ -72,6 +72,7 @@ class Character extends MovebleObjects {
     // TO DO!!! Splice animate() function on clean code principe!!!
     animate() {
         setInterval(() => {
+            this.sounds.rain.play();
             if (this.characterIsDead || this.deathAnimationInProgress) {
                 return;
             }
