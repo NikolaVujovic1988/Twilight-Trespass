@@ -72,14 +72,14 @@ class Character extends MovebleObjects {
     // TO DO!!! Splice animate() function on clean code principe!!!
     animate() {
         setInterval(() => {
-            // this.sounds.running_sound.pause();
             if (this.characterIsDead || this.deathAnimationInProgress) {
                 return;
             }
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
-                this.lastDirection = 'right';
+                this.lastDirection = 'right';            
+                this.sounds.running_sound.play();
             }
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
@@ -163,6 +163,7 @@ class Character extends MovebleObjects {
         youLostScreen.classList.remove('d-none');
         youLostScreen.innerHTML = this.youLostScreenHTMLTemplate();
         clearAllIntervals();
+        this.sounds.game_over.play();
     
         setTimeout(() => {
             youLostScreen.classList.add('EndScreen');

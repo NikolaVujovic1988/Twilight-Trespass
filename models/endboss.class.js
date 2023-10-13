@@ -83,6 +83,7 @@ class Endboss extends MovebleObjects {
             if (this.isCharacterCloseToEndboss()) {
                 this.playAnimation(this.IMAGES_ATTACK);
             } else if (this.energy === 0 && !this.deathAnimationInProgress) {
+                this.sound.endboss_dead.play();
                 this.handleDeathAnimation();
             } else if (!this.endbossIsDead && !this.deathAnimationInProgress) {
                 this.playAnimation(this.IMAGES_WALKING);
