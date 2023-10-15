@@ -10,12 +10,12 @@ function init() {
 
 function startGame() {
     init();
-    checkWitchDevice();
+    checkWichDevice();
     initLevel();
     world = new World(canvas, keyboard);
 }
 
-function checkWitchDevice() {
+function checkWichDevice() {
     if (isMobileDevice()) {
         forceLandscapeMode();
         showActionIcons();
@@ -99,9 +99,6 @@ function showActionIcons() {
     document.getElementById('overlay-bottom').classList.remove('d-none');
 }
 
-function changeStylesForMobileDevices() {
-    document.getElementById('canvas').classList.add('height100');
-}
 
 window.addEventListener("keydown", (event) => {
     if (event.keyCode == 39) {
@@ -183,6 +180,11 @@ function forceLandscapeModeAnimationRemoveStyles() {
     document.getElementById('rotate-device-container').classList.add('d-none');
     document.getElementById('control-buttons').classList.remove('d-none');
     document.getElementById('action-buttons').classList.remove('d-none');
+}
+
+function changeStylesForMobileDevices() {
+    document.getElementById('canvas').classList.add('height100');
+    document.getElementById('startScreen').classList.add('height100');
 }
 
 function addStartStyles() {

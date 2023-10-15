@@ -269,7 +269,6 @@ h1 {
     .startScreen {
         border: none;
         box-shadow: none;
-        height: 100dvh;
     }
 
     .startscreen-background {
@@ -294,8 +293,8 @@ h1 {
             opacity: 0;
         }
         100% {
-            width: 720px;
-            height: 100vh;
+            width: 100dvw;
+            height: 100dvh;
             top: 0;
             left: 0;
             transform: translate(0, 0);
