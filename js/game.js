@@ -2,6 +2,8 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let isInFullscreen = false;
+let isGameStarted = false;  
+let shouldToggleFullscreenAfterGameStarts = false;
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -13,6 +15,12 @@ function startGame() {
     checkWichDevice();
     initLevel();
     world = new World(canvas, keyboard);
+    isGameStarted = true;
+
+    if (shouldToggleFullscreenAfterGameStarts) {
+        toggleFullscreen(); 
+        shouldToggleFullscreenAfterGameStarts = false; 
+    }
 }
 
 function checkWichDevice() {
@@ -59,7 +67,10 @@ function toggleBlurOnStartscreen() {
 }
 
 function toggleFullscreen() {
-    const fullscreenButton = document.getElementById('btnFullscreen');
+    if (!isGameStarted) {
+        shouldToggleFullscreenAfterGameStarts = true;  
+        return; 
+    }
     const canvas = document.getElementById('canvas');
     isInFullscreen = !isInFullscreen;
 
