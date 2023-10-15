@@ -251,6 +251,43 @@ h1 {
     height: 100dvh;
 }
 
+.instructionsContainer {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+    border-radius: 5px;
+    position: relative;
+    bottom: -220px;
+    width: 700px;
+    color: white;
+    background-color: transparent;
+}
+
+.desktopControls {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.control {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.control img,
+.control kbd {
+    background-color: transparent;
+}
+
+kbd {
+    padding: 2px 5px;
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    border-radius: 3px;
+}
+
+
 @media only screen and (max-width: 1025px) {
     canvas {
         border: none;
