@@ -1,7 +1,7 @@
 class Bottle extends DrawableObject {
 
-    width = 80;
-    height = 70;
+    width = 60;
+    height = 40;
 
     offset = {
         top: 0,
@@ -11,7 +11,7 @@ class Bottle extends DrawableObject {
     };
 
     IMAGES = [
-        'img/wand.png'
+        'img/icons/arrow.png'
     ];
 
     constructor(x, y) {

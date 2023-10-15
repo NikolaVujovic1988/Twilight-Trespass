@@ -33,9 +33,8 @@ class World {
         this.setWorld();
         this.checkCollisions();
         this.run();
-        this.generateObjects(this.coin, Coin, 120, 350);
-        this.generateObjects(this.bottle, Bottle, 120, 350);
-    }
+        this.generateObjects(this.coin, Coin, 15, 400, 3500, 100, 300);
+        this.generateObjects(this.bottle, Bottle, 10, 400, 3500, 100, 300);    }
 
     setWorld() {
         this.character.world = this;
@@ -48,39 +47,14 @@ class World {
         }, 150);
     }
 
-    // Function to generate a single object (Coin or Bottle)
-    generateObject(objClass, xCenter, yCenter, radius, angle) {
-        const x = xCenter + radius * Math.cos(angle);
-        const y = yCenter - radius * Math.sin(angle);
-        return new objClass(x, y);
-    }
-
-    // Function to generate a semi-circle arc of objects (Coins or Bottles)
-    generateArc(objClass, xCenter, yCenter, radius, objectsPerArc) {
-        const objects = [];
-        for (let i = 0; i < objectsPerArc; i++) {
-            const angle = Math.PI * i / (objectsPerArc - 1);
-            objects.push(this.generateObject(objClass, xCenter, yCenter, radius, angle));
-        }
-        return objects;
-    }
-
-    // Function to generate all the arcs of objects (Coins or Arrows)
-    generateObjects(objectArray, objClass, minYCenter, maxYCenter) {
-        const numArcs = 4;
-        const radius = 100;
-        let xCenter = 400;
-        const xStep = 400;
-
-        for (let i = 0; i < numArcs; i++) {
-            const objectsPerArc = Math.floor(Math.random() * 3) + 3;
-            const yCenter = Math.random() * (maxYCenter - minYCenter) + minYCenter;
-            const arcObjects = this.generateArc(objClass, xCenter, yCenter, radius, objectsPerArc);
-            objectArray.push(...arcObjects);
-            xCenter += xStep;
+    generateObjects(objectArray, objClass, numObjects, minX, maxX, minY, maxY) {
+        for (let i = 0; i < numObjects; i++) {
+            const x = Math.random() * (maxX - minX) + minX;
+            const y = Math.random() * (maxY - minY) + minY;
+            objectArray.push(new objClass(x, y));
         }
     }
-
+    
     // Check collision with regular enemies
     checkEnemyCollisions() {
         for (let i = this.level.enemies.length - 1; i >= 0; i--) {
