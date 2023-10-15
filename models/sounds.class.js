@@ -56,7 +56,7 @@ class Sounds extends MovebleObjects {
         if (this.isMuted) {
             volumeButton.innerHTML = '<img src="img/icons/mute.png" alt="" class="img-settings-buttons">';
         } else {
-            volumeButton.innerHTML = '<img src="img/icons/volume-up.png" alt="" class="img-settings-buttons">';
+            volumeButton.innerHTML = '<img src="img/icons/volume-button.png" alt="" class="img-settings-buttons">';
         }
     }
 

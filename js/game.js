@@ -91,8 +91,8 @@ document.addEventListener('fullscreenchange', function () {
     isInFullscreen = document.fullscreenElement != null;
 
     fullscreenButton.innerHTML = isInFullscreen
-        ? '<img src="img/icons/close-fullscreen.png" alt="" class="img-settings-buttons">'
-        : '<img src="img/icons/open-fullscreen.png" alt="" class="img-settings-buttons">';
+        ? '<img src="img/icons/minimize.png" alt="" class="img-settings-buttons">'
+        : '<img src="img/icons/fullscreen.png" alt="" class="img-settings-buttons">';
 });
 
 function showActionIcons() {
