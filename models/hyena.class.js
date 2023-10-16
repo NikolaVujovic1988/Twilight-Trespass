@@ -53,29 +53,39 @@ generateImagePaths(base, count) {
 }
 
 
-    animate() {
-        setInterval(() => {
-            if (!this.isDead) {
-                this.moveLeft();
+animate() {
+    setInterval(() => {
+        if (!this.isDead) {
+            this.moveLeft();
+            this.updateStateAndAnimate();
+            this.incrementFrame();
+        }
+    }, 1000 / 25);
+}
 
-                if (this.isCharacterClose()) {
-                    if (this.currentState !== 'attacking') {
-                        this.currentState = 'attacking';
-                        this.currentFrame = 0; // Reset frame
-                    }
-                    this.playAnimation(this.IMAGES_ATTACK);
-                } else {
-                    if (this.currentState !== 'walking') {
-                        this.currentState = 'walking';
-                        this.currentFrame = 0; // Reset frame
-                    }
-                    this.playAnimation(this.IMAGES_WALKING);
-                }
-
-                this.currentFrame++;
-            }
-        }, 1000 / 25);
+updateStateAndAnimate() {
+    if (this.isCharacterClose()) {
+        this.updateStateAndPlayAnimation('attacking', this.IMAGES_ATTACK);
+    } else {
+        this.updateStateAndPlayAnimation('walking', this.IMAGES_WALKING);
     }
+}
+
+updateStateAndPlayAnimation(state, animation) {
+    if (this.currentState !== state) {
+        this.currentState = state;
+        this.resetFrame();
+    }
+    this.playAnimation(animation);
+}
+
+resetFrame() {
+    this.currentFrame = 0;
+}
+
+incrementFrame() {
+    this.currentFrame++;
+}
 
     playAnimation(images) {
         if (this.currentFrame >= images.length) this.currentFrame = 0; // Reset if we've passed the end

@@ -110,31 +110,50 @@ class Endboss extends MovebleObjects {
                     
     huntCharacter() {
         setInterval(() => {
-            if (world.character.x >= 3500) {
-                world.characterPassedLimit = true;
-            }
-            if (world.characterPassedLimit && !this.endbossIsDead && !this.deathAnimationInProgress) {
-                if (this.isCharacterCloseToEndboss()) {
-                    this.speed = 20;
-                } else {
-                    this.speed = 15;
-                }
-                if (world.character.x > this.x && this.facingLeft) {
-                    this.facingLeft = false;
-                } else if (world.character.x < this.x && !this.facingLeft) {
-                    this.facingLeft = true;
-                }
-                if (this.facingLeft) {
-                    this.moveLeft();
-                    this.facingLeft = true;
-                } else {
-                    this.moveRight();
-                    this.facingLeft = false;
-                }
+            this.updateCharacterPassLimit();
+            
+            if (this.shouldHunt()) {
+                this.updateSpeed();
+                this.updateFacingDirection();
+                this.moveEndboss();
             }
         }, 150);
     }
-        
+    
+    updateCharacterPassLimit() {
+        if (world.character.x >= 3500) {
+            world.characterPassedLimit = true;
+        }
+    }
+    
+    shouldHunt() {
+        return world.characterPassedLimit && !this.endbossIsDead && !this.deathAnimationInProgress;
+    }
+    
+    updateSpeed() {
+        if (this.isCharacterCloseToEndboss()) {
+            this.speed = 20;
+        } else {
+            this.speed = 15;
+        }
+    }
+    
+    updateFacingDirection() {
+        if (world.character.x > this.x) {
+            this.facingLeft = false;
+        } else if (world.character.x < this.x) {
+            this.facingLeft = true;
+        }
+    }
+    
+    moveEndboss() {
+        if (this.facingLeft) {
+            this.moveLeft();
+        } else {
+            this.moveRight();
+        }
+    }
+            
     gameWon() {
         const youWonScreen = document.getElementById('youWonScreen');
         youWonScreen.classList.remove('d-none');

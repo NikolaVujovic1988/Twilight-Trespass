@@ -69,13 +69,12 @@ class World {
     handleEnemyCollision(enemy) {
         // Check if the bottom of the character is above the top of the enemy
         if (this.character.y + this.character.height / 2 <= enemy.y + enemy.offset.top) {
-            console.warn('enemy is on', enemy.y, 'character is on', this.character.y + this.character.height);
+            // console.warn('enemy is on', enemy.y, 'character is on', this.character.y + this.character.height);
             enemy.isDead = true;
             this.sounds.enemyHurtSounds(enemy);
-
             this.enemiesToAnimateDeath.push(enemy);
         } else {
-            console.log('enemy is on', enemy.y, 'character is on', this.character.y + this.character.height);
+            // console.log('enemy is on', enemy.y, 'character is on', this.character.y + this.character.height);
             this.character.hit();
             this.sounds.character_hurt.play();
             this.statusbar.setPercentage(this.character.energy);
@@ -200,28 +199,33 @@ class World {
         enemy.hit(20);
         this.sounds.enemyHurtSounds(enemy);
         this.endbossStatusbar.setPercentage(enemy.energy);
-        console.warn(enemy.energy);
+        // console.warn(enemy.energy);
     }
 
     animateEnemyDeath(enemy) {
         if (enemy.animationInitialized) return; // ensures animation starts only once
-
+    
         enemy.animationInitialized = true; // flag to mark the animation started
         let currentAnimationFrame = 0;
         const deathAnimationFrames = enemy.IMAGES_DEAD;
-
+        const animationDuration = 200;
+    
         const animationInterval = setInterval(() => {
-            if (currentAnimationFrame >= deathAnimationFrames.length - 1) {
-                enemy.loadImage(deathAnimationFrames[deathAnimationFrames.length - 1]); // Set to the last frame
-                clearInterval(animationInterval);
-                enemy.shouldRemove = true; // flag to mark the enemy to be removed
-            } else {
-                enemy.loadImage(deathAnimationFrames[currentAnimationFrame]);
-                currentAnimationFrame++;
-            }
-        }, 200);
+            this.advanceDeathAnimation(enemy, deathAnimationFrames, currentAnimationFrame, animationInterval);
+            currentAnimationFrame++;
+        }, animationDuration);
     }
-
+    
+    advanceDeathAnimation(enemy, frames, frameIndex, interval) {
+        if (frameIndex >= frames.length - 1) {
+            enemy.loadImage(frames[frames.length - 1]); // Set to the last frame
+            clearInterval(interval);
+            enemy.shouldRemove = true; // flag to mark the enemy to be removed
+        } else {
+            enemy.loadImage(frames[frameIndex]);
+        }
+    }
+    
     checkTrowObjects() {
         if (this.keyboard.D && this.character.hasThrowableObjects()) {
             let bottle = new TrowableObject(this.character.x + 30, this.character.y + 30);
@@ -279,8 +283,7 @@ class World {
             this.flipCharacter(moveble);
         }
         moveble.draw(this.ctx);
-        moveble.drawFrame(this.ctx);
-    
+            
         if (moveble instanceof Bug || moveble.otherDirection || moveble === this.endboss && moveble.direction === 'right' || (moveble instanceof TrowableObject && moveble.direction === 'left')) {
             this.flipCharacterBack(moveble);
         }

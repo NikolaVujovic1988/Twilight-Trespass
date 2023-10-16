@@ -69,63 +69,87 @@ class Character extends MovebleObjects {
         this.animate();
         this.applyGravity();
     }
-    // TO DO!!! Splice animate() function on clean code principe!!!
+
     animate() {
         setInterval(() => {
             this.sounds.rain.play();
-            if (this.characterIsDead || this.deathAnimationInProgress) {
+            if (this.shouldCancelAnimation()) {
                 return;
             }
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.otherDirection = false;
-                this.lastDirection = 'right';            
-                this.sounds.running_sound.play();
-            }
-            if (this.world.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.otherDirection = true;
-                this.sounds.running_sound.play();
-                this.lastDirection = 'left';
-            }
-            if (this.world.keyboard.D && this.hasThrowableObjects()) {
-                this.throwObject();
-            } else if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-                this.jump();
-                this.sounds.jump_sound.play();
-            }
-            this.world.camera_x = -this.x + 100;
+            this.handleMovementAndActions();
         }, 1000 / 60);
     
         setInterval(() => {
-            if (this.characterIsDead || this.deathAnimationInProgress) {
+            if (this.shouldCancelAnimation()) {
                 return;
-            } else if (this.isDead()) {
-                this.handleDeathAnimation();
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (this.world.keyboard.D && this.hasThrowableObjects()) {
-                // Play the shooting animation whether on the ground or above
-                this.playAnimation(this.IMAGES_SHOT);
-            } else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
-            } else if (!this.isAboveGround() && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) {
-                this.playAnimation(this.IMAGES_WALKING);
-            } else if (!this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.isAboveGround() && !this.world.keyboard.SPACE && !this.world.keyboard.D) {
-                this.playAnimation(this.IMAGES_IDLE);
             }
+            this.handleCharacterAnimation();
         }, 100);
+    }
         
+    shouldCancelAnimation() {
+        return this.characterIsDead || this.deathAnimationInProgress;
     }
     
+    handleMovementAndActions() {
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            this.moveRight();
+            this.otherDirection = false;
+            this.lastDirection = 'right';
+            this.sounds.running_sound.play();
+        }
+        if (this.world.keyboard.LEFT && this.x > 0) {
+            this.handleLeftMovement();
+        }
+        if (this.world.keyboard.D && this.hasThrowableObjects()) {
+            this.throwObject();
+        } else if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+            this.jump();
+            this.sounds.jump_sound.play();
+        }
+        this.world.camera_x = -this.x + 100;
+    }
+    
+    handleLeftMovement() {
+        this.moveLeft();
+        this.otherDirection = true;
+        this.sounds.running_sound.play();
+        this.lastDirection = 'left';
+    }
+    
+    handleCharacterAnimation() {
+        if (this.isDead()) {
+            this.handleDeathAnimation();
+        } else if (this.isHurt()) {
+            this.playAnimation(this.IMAGES_HURT);
+        } else {
+            this.handleRegularAnimation();
+        }
+    }
+    
+    handleRegularAnimation() {
+        if (this.world.keyboard.D && this.hasThrowableObjects()) {
+            this.playAnimation(this.IMAGES_SHOT);
+        } else if (this.isAboveGround()) {
+            this.playAnimation(this.IMAGES_JUMPING);
+        } else if (!this.isAboveGround() && (this.world.keyboard.RIGHT || this.world.keyboard.LEFT)) {
+            this.playAnimation(this.IMAGES_WALKING);
+        } else if (!this.isAboveGround() && !this.isAnyKeyPressed()) {
+            this.playAnimation(this.IMAGES_IDLE);
+        }
+    }
+    
+    isAnyKeyPressed() {
+        return !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE && !this.world.keyboard.D;
+    }
+        
 
     throwObject() {
-        // Adjusting x and y to set the position from where the object will be thrown
-        let throwX = this.x + this.width;   // For right direction, starts at the right edge of the character
+        let throwX = this.x + this.width;   
         if (this.lastDirection === 'left') {
-            throwX = this.x;  // For left direction, starts at the left edge of the character
+            throwX = this.x;  
         }
-        let throwY = this.y + (this.height / 5) - 30; // Middle of the character's height
+        let throwY = this.y + (this.height / 5) - 30; 
     
         let throwable = new TrowableObject(throwX, throwY);
         throwable.direction = this.lastDirection;

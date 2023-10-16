@@ -45,11 +45,6 @@ class MovebleObjects extends DrawableObject {
     }
 
     isColliding(mo) {
-        if (!mo || !mo.offset) {
-            console.warn("Undefined object or offset encountered in isColliding method.");
-            return false;
-        }
-    
         return (this.x + this.width - (this.offset?.right || 0)) >= mo.x + (mo.offset.left || 0) &&
                this.x + (this.offset?.left || 0) <= (mo.x + mo.width - (mo.offset.right || 0)) &&
                (this.y + this.height - (this.offset?.bottom || 0)) >= mo.y + (mo.offset.top || 0) &&
