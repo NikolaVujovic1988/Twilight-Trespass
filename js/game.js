@@ -194,6 +194,7 @@ function forceLandscapeModeAnimationRemoveStyles() {
 }
 
 function changeStylesForMobileDevices() {
+    document.getElementById('instructionsContainer').classList.add('d-none');
     document.getElementById('canvas').classList.add('height100');
     document.getElementById('startScreen').classList.add('height100');
 }

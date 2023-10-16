@@ -7,6 +7,7 @@ class Endboss extends MovebleObjects {
     endbossIsDead = false;
     deathAnimationInProgress = false;
     sound = new Sounds();
+    facingLeft = true;
 
     offset = {
         top: 200,
@@ -118,11 +119,22 @@ class Endboss extends MovebleObjects {
                 } else {
                     this.speed = 15;
                 }
-                this.moveLeft();
+                if (world.character.x > this.x && this.facingLeft) {
+                    this.facingLeft = false;
+                } else if (world.character.x < this.x && !this.facingLeft) {
+                    this.facingLeft = true;
+                }
+                if (this.facingLeft) {
+                    this.moveLeft();
+                    this.facingLeft = true;
+                } else {
+                    this.moveRight();
+                    this.facingLeft = false;
+                }
             }
         }, 150);
     }
-    
+        
     gameWon() {
         const youWonScreen = document.getElementById('youWonScreen');
         youWonScreen.classList.remove('d-none');

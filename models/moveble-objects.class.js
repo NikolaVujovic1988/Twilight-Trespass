@@ -34,7 +34,6 @@ class MovebleObjects extends DrawableObject {
 
     moveRight() {
         this.x += this.speed;
-        this.sounds.running_sound.play();
     }
 
     moveLeft() {

@@ -91,7 +91,7 @@ canvas {
 
 .overlay-bottom {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100%;
     z-index: 2;
 }
@@ -265,7 +265,7 @@ h1 {
 
 .desktopControls {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 
 .control {
@@ -275,8 +275,7 @@ h1 {
     align-items: center;
 }
 
-.control img,
-.control kbd {
+.control img, .control kbd {
     background-color: transparent;
 }
 
@@ -312,9 +311,9 @@ kbd {
         height: 100dvh;
     }
 
-    .overlay-bottom {
+    /* .overlay-bottom {
         width: 80%;
-    }
+    } */
 
     h1 {
         font-size: 50px;
@@ -338,10 +337,6 @@ kbd {
             opacity: 1;
         }
     }
-    
-    /* canvas {
-        height: 100dvh;
-    } */
 }
 
 @media only screen and (max-width: 720px) {
