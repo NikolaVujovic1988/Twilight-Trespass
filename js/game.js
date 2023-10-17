@@ -53,7 +53,7 @@ function checkWichDevice() {
         forceLandscapeMode();
         showActionIcons();
         changeStylesForMobileDevices();
-        toggleFullscreen();
+        openFullscreen();
     }
 }
 
