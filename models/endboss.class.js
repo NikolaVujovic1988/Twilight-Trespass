@@ -1,22 +1,65 @@
+/**
+ * Represents the Endboss character in the game, extending the basic MovebleObjects class.
+ */
 class Endboss extends MovebleObjects {
 
+    /**
+     * Height of the Endboss.
+     * @type {number}
+     */
     height = 550;
+
+    /**
+     * Width of the Endboss.
+     * @type {number}
+     */
     width = 430;
+
+    /**
+     * Y-position of the Endboss.
+     * @type {number}
+     */
     y = -60;
 
+    /**
+     * Flag indicating whether the Endboss is dead.
+     * @type {boolean}
+     */
     endbossIsDead = false;
+
+    /**
+     * Flag indicating if the death animation is in progress.
+     * @type {boolean}
+     */
     deathAnimationInProgress = false;
+
+    /**
+     * Instance to handle sounds related to the Endboss.
+     * @type {Sounds}
+     */
     sound = new Sounds();
+
+    /**
+     * Flag indicating whether the Endboss is facing left.
+     * @type {boolean}
+     */
     facingLeft = true;
 
+    /**
+     * The offset positions for the Endboss character.
+     * @type {Object}
+     */
     offset = {
-        top: 200,
-        left: 80,
-        right: 50,
+        top: 3000,
+        left: 250,
+        right: 250,
         bottom: 50
     };
 
-
+    /**
+     * Array of paths to images representing the walking animation of the Endboss.
+     * @type {string[]}
+     */
     IMAGES_WALKING = [
         'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_walk_000.png',
         'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_walk_001.png',
@@ -28,6 +71,10 @@ class Endboss extends MovebleObjects {
         'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_walk_007.png'
     ];
 
+    /**
+     * Array of paths to images representing the attack animation of the Endboss.
+     * @type {string[]}
+     */
     IMAGES_ATTACK = [
         'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_bite_000.png',
         'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_bite_001.png',
@@ -41,6 +88,10 @@ class Endboss extends MovebleObjects {
         'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_bite_009.png'
     ];
 
+    /**
+     * Array of paths to images representing the death animation of the Endboss.
+     * @type {string[]}
+     */
     IMAGES_DEAD = [
         'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_whacked_000.png',
         'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_whacked_001.png',
@@ -66,6 +117,9 @@ class Endboss extends MovebleObjects {
         'img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_die_005.png'
     ];
 
+    /**
+     * Constructs a new Endboss instance.
+     */
     constructor() {
         super();
         this.loadImage('img/gdm-animated-hyena-cartoon-game-sprite/keyframes/grey/__grey_hyena_idle_000.png');
@@ -79,6 +133,9 @@ class Endboss extends MovebleObjects {
         this.huntCharacter();
     }
 
+    /**
+     * Sets up animations for the Endboss.
+     */
     animateEndboss() {
         setInterval(() => {
             if (this.isCharacterCloseToEndboss()) {
@@ -92,10 +149,13 @@ class Endboss extends MovebleObjects {
         }, 200);
     }
 
+    /**
+     * Handles the death animation for the Endboss.
+     */
     handleDeathAnimation() {
         this.deathAnimationInProgress = true;
         let currentFrame = 0;
-    
+
         const deathAnimationInterval = setInterval(() => {
             if (currentFrame >= this.IMAGES_DEAD.length) {
                 clearInterval(deathAnimationInterval);
@@ -107,11 +167,14 @@ class Endboss extends MovebleObjects {
             }
         }, 200);
     }
-                    
+
+    /**
+     * Makes the Endboss hunt the character if character is near.
+     */
     huntCharacter() {
         setInterval(() => {
             this.updateCharacterPassLimit();
-            
+
             if (this.shouldHunt()) {
                 this.updateSpeed();
                 this.updateFacingDirection();
@@ -119,17 +182,27 @@ class Endboss extends MovebleObjects {
             }
         }, 150);
     }
-    
+
+    /**
+     * Updates the character's passing limit when Endboss healthbar should be shown.
+     */
     updateCharacterPassLimit() {
         if (world.character.x >= 3500) {
             world.characterPassedLimit = true;
         }
     }
-    
+
+    /**
+     * Checks whether the Endboss should hunt the character.
+     * @returns {boolean} Returns true if the Endboss should hunt the character.
+     */
     shouldHunt() {
         return world.characterPassedLimit && !this.endbossIsDead && !this.deathAnimationInProgress;
     }
-    
+
+    /**
+     * Updates the speed of the Endboss based on the character's proximity.
+     */
     updateSpeed() {
         if (this.isCharacterCloseToEndboss()) {
             this.speed = 20;
@@ -137,7 +210,10 @@ class Endboss extends MovebleObjects {
             this.speed = 15;
         }
     }
-    
+
+    /**
+     * Updates the direction the Endboss is facing based on the character's position.
+     */
     updateFacingDirection() {
         if (world.character.x > this.x) {
             this.facingLeft = false;
@@ -145,7 +221,10 @@ class Endboss extends MovebleObjects {
             this.facingLeft = true;
         }
     }
-    
+
+    /**
+     * Moves the Endboss in the direction it's facing.
+     */
     moveEndboss() {
         if (this.facingLeft) {
             this.moveLeft();
@@ -153,19 +232,26 @@ class Endboss extends MovebleObjects {
             this.moveRight();
         }
     }
-            
+
+    /**
+     * Shows the "You Won" screen.
+     */
     gameWon() {
         const youWonScreen = document.getElementById('youWonScreen');
         youWonScreen.classList.remove('d-none');
         youWonScreen.innerHTML = this.gameWonScreenHTMLTemplate();
         clearAllIntervals();
         this.sound.game_won.play();
-    
+
         setTimeout(() => {
             youWonScreen.classList.add('EndScreen');
         }, 300);
     }
 
+    /**
+     * Provides the HTML template for the "You Won" screen.
+     * @returns {string} The HTML template.
+     */
     gameWonScreenHTMLTemplate() {
         return `
             <h2 class="h2Endscreen">You Won !!!</h2>
@@ -173,6 +259,10 @@ class Endboss extends MovebleObjects {
         `;
     }
 
+    /**
+     * Checks if the character is close to the Endboss.
+     * @returns {boolean} Returns true if the character is close.
+     */
     isCharacterCloseToEndboss() {
         return Math.abs(this.x - world.character.x) < 200;
     }

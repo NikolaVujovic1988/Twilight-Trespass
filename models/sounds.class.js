@@ -1,10 +1,33 @@
+/**
+ * Manages the game sounds and provides sound-related functionalities.
+ * This class extends the MovebleObjects class.
+ */
 class Sounds extends MovebleObjects {
+
+    /**
+     * Array containing all the game sound objects.
+     * @type {HTMLAudioElement[]}
+     * @default []
+     */
     allSounds = [];
 
+    /**
+     * Indicates if all the sounds are muted or not.
+     * @type {boolean}
+     * @default false
+     */
     isMuted = false;
 
+    /**
+     * Singleton instance of the Sounds class.
+     * @type {Sounds}
+     * @default new Sounds()
+     */
     static instance = new Sounds();
 
+    /**
+     * Constructor initializes the sounds for the game.
+     */
     constructor() {
         super();
         if (Sounds.instance) {
@@ -14,6 +37,9 @@ class Sounds extends MovebleObjects {
         this.initSounds();
     }
 
+    /**
+     * Initializes various game sounds.
+     */
     initSounds() {
         this.rain = this.createSound('audio/rain-drops.mp3', 0.2)
         this.hyena_hurt = this.createSound('audio/hyena-hurt.mp3');
@@ -29,6 +55,12 @@ class Sounds extends MovebleObjects {
         this.game_over = this.createSound('audio/game-over.mp3', 1);
     }
 
+    /**
+     * Creates a new game sound with the given source and volume.
+     * @param {string} src - The path to the sound file.
+     * @param {number} [volume=0.5] - The volume level for the sound. Default is 0.5.
+     * @returns {HTMLAudioElement} - Returns the created sound object.
+     */
     createSound(src, volume = 0.5) {
         let sound = new Audio(src);
         sound.volume = volume;
@@ -36,7 +68,10 @@ class Sounds extends MovebleObjects {
         return sound;
     }
     
-
+    /**
+     * Plays the hurt sound effect based on the type of enemy provided.
+     * @param {Bug|*} enemy - The enemy object.
+     */
     enemyHurtSounds(enemy) {
         if (enemy instanceof Bug) {
             this.bug_hurt.currentTime = 0;
@@ -47,7 +82,9 @@ class Sounds extends MovebleObjects {
         }
     }
 
-
+    /**
+     * Toggles game sound between muted and unmuted and updates the volume button visuals.
+     */
     gameVolume() {
         const volumeButton = document.getElementById('btnVolume');
         this.isMuted = !this.isMuted;
@@ -60,10 +97,13 @@ class Sounds extends MovebleObjects {
         }
     }
 
+    /**
+     * Mutes or unmutes all the game sounds based on the provided flag.
+     * @param {boolean} mute - If true, all sounds are muted, otherwise they are unmuted.
+     */
     muteSounds(mute) {
         this.allSounds.forEach(sound => {
             sound.muted = mute;
         });
     }
-
 }

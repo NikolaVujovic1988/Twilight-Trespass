@@ -3,6 +3,12 @@ class BackgroundObject extends MovebleObjects {
     imageIndex = 0; 
     images = [];
 
+    /**
+     * Constructs a BackgroundObject.
+     * 
+     * @param {string[]} imagesPath - An array of paths to background images.
+     * @param {number} x - The x-position of the background object.
+     */
     constructor(imagesPath, x) {
         super();
         this.images = imagesPath;
@@ -13,6 +19,9 @@ class BackgroundObject extends MovebleObjects {
         this.y = canvas.height - this.height; 
     }
 
+    /**
+     * Animates the background by cycling through the images.
+     */
     animateBackground() {
         setInterval(() => {
             this.imageIndex++;

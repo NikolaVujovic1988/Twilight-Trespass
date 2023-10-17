@@ -1,5 +1,14 @@
+/**
+ * Represents the status bar of a game character or entity, showing visual representation of health or other attributes.
+ * This class extends the DrawableObject class.
+ */
 class Statusbar extends DrawableObject {
 
+    /**
+     * Array of image paths for different health stages on the status bar.
+     * @type {string[]}
+     * @default various stages of health
+     */
     IMAGES = [
         'img/7_statusbars/1_statusbar/2_statusbar_health/green/0.png',
         'img/7_statusbars/1_statusbar/2_statusbar_health/green/20.png',
@@ -9,12 +18,25 @@ class Statusbar extends DrawableObject {
         'img/7_statusbars/1_statusbar/2_statusbar_health/green/100.png'
     ];
 
+    /**
+     * Array containing image paths for a representation of health, e.g., a heart.
+     * @type {string[]}
+     * @default image of a heart
+     */
     HEALTH = [
         'img/progress-bars/hearth-character.png'
     ]
 
+    /**
+     * Represents the current health or status percentage of the entity.
+     * @type {number}
+     * @default 100
+     */
     percentage = 100;
 
+    /**
+     * Constructs a new Statusbar with default properties and loads required images.
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES);

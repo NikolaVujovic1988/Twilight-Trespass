@@ -1,7 +1,18 @@
+/**
+ * Represents a status bar for the Endboss character, extending the basic DrawableObject class.
+ */
 class EndbossStatusbar extends DrawableObject {
 
+    /**
+     * The Endboss character for which the status bar is displayed.
+     * @type {Endboss}
+     */
     endboss = new Endboss();
 
+    /**
+     * Array of paths to images representing the health status of the Endboss.
+     * @type {string[]}
+     */
     IMAGES = [
         'img/7_statusbars/1_statusbar/2_statusbar_health/blue/0.png',
         'img/7_statusbars/1_statusbar/2_statusbar_health/blue/20.png',
@@ -11,12 +22,23 @@ class EndbossStatusbar extends DrawableObject {
         'img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png'
     ];
 
+    /**
+         * Path to the Endboss health icon.
+         * @type {string[]}
+         */
     HEALTH_ENDBOSS = [
         'img/progress-bars/hearth-endboss.png'
     ];
 
+    /**
+     * Percentage of health for the Endboss.
+     * @type {number}
+     */
     percentage = 100;
 
+    /**
+     * Constructs a new EndbossStatusbar instance.
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES);

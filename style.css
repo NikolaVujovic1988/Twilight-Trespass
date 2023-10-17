@@ -177,8 +177,8 @@ h1 {
 
 @keyframes expandAnimation {
     0% {
-        width: 20px;
-        height: 20px;
+        width: 1px;
+        height: 1px;
         top: 50%;
         left: 50%;
         transform: translate(0, 0);
@@ -249,6 +249,10 @@ h1 {
 
 .height100 {
     height: 100dvh;
+}
+
+.width100 {
+    width: 100dvw;
 }
 
 .instructionsContainer {
@@ -352,4 +356,9 @@ kbd {
     .gamaContainer {
         width: 100%;
     }
+}
+
+.height-width100 {
+    height: 100dvh !important;
+    width: 100dvw !important;
 }

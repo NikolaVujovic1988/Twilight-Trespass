@@ -1,15 +1,37 @@
+/**
+ * @description Main game script for handling game logic, interaction, and visual changes.
+ */
+
+// Global Variables
+/** @type {HTMLElement} */
 let canvas;
+
+/** @type {any} */
 let world;
+
+/** @type {Keyboard} */
 let keyboard = new Keyboard();
+
+/** @type {boolean} */
 let isInFullscreen = false;
-let isGameStarted = false;  
+
+/** @type {boolean} */
+let isGameStarted = false;
+
+/** @type {boolean} */
 let shouldToggleFullscreenAfterGameStarts = false;
 
+/**
+ * Initialize game setup, setup styles.
+ */
 function init() {
     canvas = document.getElementById('canvas');
     addStartStyles();
 }
 
+/**
+ * Starts the game.
+ */
 function startGame() {
     init();
     checkWichDevice();
@@ -18,22 +40,34 @@ function startGame() {
     isGameStarted = true;
 
     if (shouldToggleFullscreenAfterGameStarts) {
-        toggleFullscreen(); 
-        shouldToggleFullscreenAfterGameStarts = false; 
+        toggleFullscreen();
+        shouldToggleFullscreenAfterGameStarts = false;
     }
 }
 
+/**
+ * Checks the device and applies specific functionalities based on device type.
+ */
 function checkWichDevice() {
     if (isMobileDevice()) {
         forceLandscapeMode();
         showActionIcons();
         changeStylesForMobileDevices();
+        toggleFullscreen();
     }
 }
 
+/**
+ * Determines if the user's device is a mobile device.
+ * @returns {boolean} True if it's a mobile device, otherwise false.
+ */
 function isMobileDevice() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(window.navigator.userAgent);
 }
+
+/**
+ * Forces the game view to be in landscape mode on mobile devices.
+ */
 
 function forceLandscapeMode() {
     window.addEventListener("orientationchange", function () {
@@ -50,14 +84,15 @@ function forceLandscapeMode() {
     }
 }
 
+// ... [Other forceLandscapeMode helper functions]
 function forceLandscapeModeAnimation() {
     toggleBlurOnStartscreen();
     forceLandscapeModeAnimationAddStyles();
 }
 
 function toggleBlurOnStartscreen() {
-    const canvas = document.getElementById('canvas'); 
-    if (canvas && canvas.style) {   
+    const canvas = document.getElementById('canvas');
+    if (canvas && canvas.style) {
         if (canvas.style.filter.includes('blur')) {
             canvas.style.filter = '';
         } else {
@@ -66,37 +101,71 @@ function toggleBlurOnStartscreen() {
     }
 }
 
+/**
+ * Toggles the fullscreen mode.
+ */
 function toggleFullscreen() {
     if (!isGameStarted) {
-        shouldToggleFullscreenAfterGameStarts = true;  
-        return; 
+        shouldToggleFullscreenAfterGameStarts = true;
+        return;
     }
-    const canvas = document.getElementById('canvas');
+
     isInFullscreen = !isInFullscreen;
 
     if (isInFullscreen) {
-        if (canvas.requestFullscreen) {
-            canvas.requestFullscreen();
-        } else if (canvas.mozRequestFullScreen) { // Firefox
-            canvas.mozRequestFullScreen();
-        } else if (canvas.webkitRequestFullscreen) { // Chrome, Safari and Opera
-            canvas.webkitRequestFullscreen();
-        } else if (canvas.msRequestFullscreen) { // IE/Edge
-            canvas.msRequestFullscreen();
-        }
+        openFullscreen();
     } else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.mozCancelFullScreen) { // Firefox
-            document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { // IE/Edge
-            document.msExitFullscreen();
-        }
+        closeFullscreen();
     }
 }
 
+/**
+ * Enables fullscreen mode.
+ */
+function openFullscreen() {
+    const canvas = document.getElementById('gamaContainer');
+
+    if (canvas.requestFullscreen) {
+        canvas.requestFullscreen();
+    } else if (canvas.mozRequestFullScreen) { // Firefox
+        canvas.mozRequestFullScreen();
+    } else if (canvas.webkitRequestFullscreen) { // Chrome, Safari and Opera
+        canvas.webkitRequestFullscreen();
+    } else if (canvas.msRequestFullscreen) { // IE/Edge
+        canvas.msRequestFullscreen();
+    }
+    addFullscreenStyles();
+}
+
+/**
+ * Exits fullscreen mode.
+ */
+function closeFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) { // Firefox
+        document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+        document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { // IE/Edge
+        document.msExitFullscreen();
+    }
+    removeFullscreenStyles();
+    closeFullscreenOnMobile();
+}
+
+/**
+ * Handles exiting fullscreen mode on mobile devices.
+ */
+function closeFullscreenOnMobile() {
+    if (isMobileDevice()) {
+        changeStylesForMobileDevices();
+    }
+}
+
+/**
+ * Listens to fullscreen changes and updates fullscreen button accordingly.
+ */
 document.addEventListener('fullscreenchange', function () {
     const fullscreenButton = document.getElementById('btnFullscreen');
     isInFullscreen = document.fullscreenElement != null;
@@ -106,11 +175,16 @@ document.addEventListener('fullscreenchange', function () {
         : '<img src="img/icons/fullscreen.png" alt="" class="img-settings-buttons">';
 });
 
+/**
+ * Displays action icons on screen on mobile devices.
+ */
 function showActionIcons() {
     document.getElementById('overlay-bottom').classList.remove('d-none');
 }
 
-
+/**
+ * Keyboard Event listeners
+ */
 window.addEventListener("keydown", (event) => {
     if (event.keyCode == 39) {
         keyboard.RIGHT = true;
@@ -141,6 +215,9 @@ window.addEventListener("keyup", (event) => {
     }
 });
 
+/**
+ * Loads and initializes controls for mobile devices.
+ */
 function loadMobileControlEvents() {
     document.getElementById('btnRight').addEventListener('touchstart', (e) => {
         e.preventDefault();
@@ -177,10 +254,16 @@ function loadMobileControlEvents() {
 
 }
 
+/**
+ * Clears all running intervals. Used for cleanup.
+ */
 function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
+/**
+ * Other UI-related helper functions...
+ */
 function forceLandscapeModeAnimationAddStyles() {
     document.getElementById('control-buttons').classList.add('d-none');
     document.getElementById('action-buttons').classList.add('d-none');
@@ -195,8 +278,8 @@ function forceLandscapeModeAnimationRemoveStyles() {
 
 function changeStylesForMobileDevices() {
     document.getElementById('instructionsContainer').classList.add('d-none');
-    document.getElementById('canvas').classList.add('height100');
-    document.getElementById('startScreen').classList.add('height100');
+    document.getElementById('canvas').classList.add('height-width100');
+    document.getElementById('startScreen').classList.add('height-width100');
 }
 
 function addStartStyles() {
@@ -208,3 +291,18 @@ function addStartStyles() {
     document.getElementById('overlay').classList.add('overlay');
     document.getElementById('overlay').classList.remove('overlay-center');
 }
+
+function addFullscreenStyles() {
+    document.getElementById('canvas').classList.add('height-width100');
+    document.getElementById('startScreen').classList.add('height-width100');
+    document.getElementById('youLostScreen').classList.add('height-width100');
+    document.getElementById('youWonScreen').classList.add('height-width100');
+}
+
+function removeFullscreenStyles() {
+    document.getElementById('canvas').classList.remove('height-width100');
+    document.getElementById('startScreen').classList.remove('height-width100');
+    document.getElementById('youLostScreen').classList.remove('height-width100');
+    document.getElementById('youWonScreen').classList.remove('height-width100');
+}
+
