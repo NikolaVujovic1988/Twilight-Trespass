@@ -41,7 +41,7 @@ class Sounds extends MovebleObjects {
      * Initializes various game sounds.
      */
     initSounds() {
-        this.rain = this.createSound('audio/rain-drops.mp3', 0.2)
+        this.rain = this.createSound('audio/rain-drops.mp3', 0.05);
         this.hyena_hurt = this.createSound('audio/hyena-hurt.mp3');
         this.bug_hurt = this.createSound('audio/bug-hurt.mp3');
         this.coin_collected = this.createSound('audio/coin.mp3');

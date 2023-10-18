@@ -232,7 +232,7 @@ class Endboss extends MovebleObjects {
             this.moveRight();
         }
     }
-
+    
     /**
      * Shows the "You Won" screen.
      */

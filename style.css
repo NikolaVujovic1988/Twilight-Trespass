@@ -318,6 +318,10 @@ kbd {
     h1 {
         font-size: 50px;
     }
+
+    .instructionsContainer {
+        display: none;
+    }
     
     @keyframes expandAnimation {
         0% {

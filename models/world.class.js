@@ -4,7 +4,7 @@
 class World {
     character = new Character();
     statusbar = new Statusbar();
-    coins = new Coinsbar();
+    coinbar = new Coinsbar();
     hyena = new Hyena();
     bottlesBar = new BottleStatusbar();
     endboss = new Endboss();
@@ -99,7 +99,7 @@ class World {
      */
     handleEnemyCollision(enemy) {
         // Check if the bottom of the character is above the top of the enemy
-        if (this.character.y + this.character.height / 2 <= enemy.y + enemy.offset.top) {
+        if (this.character.y + this.character.height / 1.3 <= enemy.y + enemy.offset.top) {
             enemy.isDead = true;
             this.sounds.enemyHurtSounds(enemy);
             this.enemiesToAnimateDeath.push(enemy);
@@ -219,7 +219,7 @@ class World {
             }
             if (this.coin[i] && this.character.isColliding(this.coin[i])) {
                 this.character.collectCoin();
-                this.coins.setPercentage(percentage);
+                this.coinbar.setPercentage(percentage);
                 this.coin.splice(i, 1);
             }
         }
@@ -307,7 +307,7 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
         // ------ space for fixed objects -------------
         this.addToMap(this.statusbar);
-        this.addToMap(this.coins);
+        this.addToMap(this.coinbar);
         this.addToMap(this.bottlesBar);
         if (this.characterPassedLimit) {
             this.addToMap(this.endbossStatusbar);
