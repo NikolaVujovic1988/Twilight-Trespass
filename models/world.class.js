@@ -348,16 +348,16 @@ class World {
      * @param {Object} moveble - The object to be added to the map.
      */
     addToMap(moveble) {
-        if (moveble instanceof Bug || moveble.otherDirection || moveble === this.endboss && moveble.direction === 'right' || (moveble instanceof TrowableObject && moveble.direction === 'left')) {
+        if (moveble instanceof Bug || moveble.otherDirection || (moveble instanceof Endboss && !moveble.facingLeft) || (moveble instanceof TrowableObject && moveble.direction === 'left')) {
             this.flipCharacter(moveble);
         }
         moveble.draw(this.ctx);
-
-        if (moveble instanceof Bug || moveble.otherDirection || moveble === this.endboss && moveble.direction === 'right' || (moveble instanceof TrowableObject && moveble.direction === 'left')) {
+    
+        if (moveble instanceof Bug || moveble.otherDirection || (moveble instanceof Endboss && !moveble.facingLeft) || (moveble instanceof TrowableObject && moveble.direction === 'left')) {
             this.flipCharacterBack(moveble);
         }
     }
-
+    
     /**
      * Flips an object's orientation in the game world.
      *
