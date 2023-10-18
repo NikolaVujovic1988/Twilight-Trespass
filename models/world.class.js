@@ -248,6 +248,7 @@ class World {
     handleEndbossDamage(enemy) {
         enemy.hit(20);
         this.sounds.enemyHurtSounds(enemy);
+        enemy.baseSpeed += 5;
         this.endbossStatusbar.setPercentage(enemy.energy);
     }
 

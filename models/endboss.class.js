@@ -127,7 +127,7 @@ class Endboss extends MovebleObjects {
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_DEAD);
         this.x = 4650;
-        this.speed = 15;
+        this.baseSpeed = 15;
         this.world = world;
         this.animateEndboss();
         this.huntCharacter();
@@ -205,12 +205,11 @@ class Endboss extends MovebleObjects {
      */
     updateSpeed() {
         if (this.isCharacterCloseToEndboss()) {
-            this.speed = 20;
+            this.speed = this.baseSpeed + 5;
         } else {
-            this.speed = 15;
+            this.speed = this.baseSpeed;
         }
     }
-
     /**
      * Updates the direction the Endboss is facing based on the character's position.
      */
