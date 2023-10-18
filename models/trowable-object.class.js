@@ -46,17 +46,4 @@ class TrowableObject extends MovebleObjects {
     flipArrow() {
         this.otherDirection = true;
     }
-
-    /**
-     * Checks if the current throwable object is colliding with another specified object.
-     *
-     * @param {Object} object - The other object to check for a collision against.
-     * @returns {boolean} - True if there is a collision, otherwise false.
-     */
-    isColliding(object) {
-        return this.x < object.x + object.width &&
-               this.x + this.width > object.x &&
-               this.y < object.y + object.height &&
-               this.y + this.height > object.y;
-    }
 }

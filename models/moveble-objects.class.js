@@ -54,6 +54,21 @@ class MovebleObjects extends DrawableObject {
     CharacterPreviousY = 291;
 
     /**
+    * Represents the offset values for the objects.
+    * @property {number} top - The top offset value. Default is 0.
+    * @property {number} left - The left offset value. Default is 0.
+    * @property {number} right - The right offset value. Default is 0.
+    * @property {number} bottom - The bottom offset value. Default is 0.
+    */
+    offset = {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+    };
+
+
+    /**
      * Applies gravity effect to the object.
      */
     applyGravity() {
@@ -117,11 +132,11 @@ class MovebleObjects extends DrawableObject {
      */
     isColliding(mo) {
         return (this.x + this.width - (this.offset?.right || 0)) >= mo.x + (mo.offset.left || 0) &&
-               this.x + (this.offset?.left || 0) <= (mo.x + mo.width - (mo.offset.right || 0)) &&
-               (this.y + this.height - (this.offset?.bottom || 0)) >= mo.y + (mo.offset.top || 0) &&
-               this.y + (this.offset?.top || 0) <= (mo.y + mo.height - (mo.offset.bottom || 0));
+            this.x + (this.offset.left || 0) <= (mo.x + mo.width - (mo.offset.right || 0)) &&
+            (this.y + this.height - (this.offset?.bottom || 0)) >= mo.y + (mo.offset.top || 0) &&
+            this.y + (this.offset.top || 0) <= (mo.y + mo.height - (mo.offset.bottom || 0));
     }
-    
+
     /**
      * Reduces the object's energy by a specified damage amount.
      * @param {number} [damage=5] - The amount of damage to apply. Default is 5.
