@@ -82,6 +82,16 @@ class DrawableObject {
         ctx.drawImage(img, x, y, width, height);
     }
 
+    drawFrame(ctx) {
+        if (this instanceof Character || this instanceof Endboss || this instanceof Hyena || this instanceof Bug) {
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = 'blue';
+            ctx.rect(this.x + this.offset.left, this.y + this.offset.top, this.width - this.offset.right, this.height - this.offset.bottom);
+            ctx.stroke();
+        }
+    }
+
     /**
      * Draws an image on the given canvas context if the image is loaded.
      * @param {CanvasRenderingContext2D} ctx - The canvas context to draw on.

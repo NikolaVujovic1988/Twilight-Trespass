@@ -352,7 +352,8 @@ class World {
             this.flipCharacter(moveble);
         }
         moveble.draw(this.ctx);
-    
+        moveble.drawFrame(this.ctx);
+            
         if (moveble instanceof Bug || moveble.otherDirection || (moveble instanceof Endboss && !moveble.facingLeft) || (moveble instanceof TrowableObject && moveble.direction === 'left')) {
             this.flipCharacterBack(moveble);
         }

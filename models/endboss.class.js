@@ -50,10 +50,10 @@ class Endboss extends MovebleObjects {
      * @type {Object}
      */
     offset = {
-        top: 3000,
-        left: 250,
-        right: 250,
-        bottom: 50
+        top: 200,
+        left: 50,
+        right: 50,
+        bottom: 0
     };
 
     /**
