@@ -131,10 +131,10 @@ class MovebleObjects extends DrawableObject {
      * @returns {boolean} - Returns true if the objects are colliding, otherwise false.
      */
     isColliding(mo) {
-        return (this.x + this.width - (this.offset?.right || 0)) >= mo.x + (mo.offset.left || 0) &&
-            this.x + (this.offset.left || 0) <= (mo.x + mo.width - (mo.offset.right || 0)) &&
-            (this.y + this.height - (this.offset?.bottom || 0)) >= mo.y + (mo.offset.top || 0) &&
-            this.y + (this.offset.top || 0) <= (mo.y + mo.height - (mo.offset.bottom || 0));
+        return (this.x + this.width - (this.offset.right || 0)) > mo.x + (mo.offset.left || 0) &&
+            this.x + (this.offset.left || 0) < (mo.x + mo.width - (mo.offset.right || 0)) &&
+            (this.y + this.height - (this.offset.bottom || 0)) > mo.y + (mo.offset.top || 0) &&
+            this.y + (this.offset.top || 0) < (mo.y + mo.height - (mo.offset.bottom || 0));
     }
 
     /**

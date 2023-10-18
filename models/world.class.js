@@ -86,30 +86,29 @@ class World {
     * Checks collisions between the character and regular enemies.
     */
     checkEnemyCollisions() {
-        for (let i = this.level.enemies.length - 1; i >= 0; i--) {
-            let enemy = this.level.enemies[i];
+        for (let enemy of this.level.enemies) {
             if (enemy && !enemy.isDead && this.character.isColliding(enemy)) {
                 this.handleEnemyCollision(enemy);
             }
         }
     }
-
     /**
      * Handle actions after colliding with an enemy
      */
     handleEnemyCollision(enemy) {
-        // Check if the bottom of the character is above the top of the enemy
-        if (this.character.y + this.character.height / 1.3 <= enemy.y + enemy.offset.top) {
-            enemy.isDead = true;
-            this.sounds.enemyHurtSounds(enemy);
-            this.enemiesToAnimateDeath.push(enemy);
+        // Check if the bottom of the character is descending on the enemy
+        if (this.character.isColliding(enemy) && this.character.y + this.character.height - this.character.offset.bottom - 30 < enemy.y + enemy.offset.top) {
+                enemy.isDead = true;
+                this.sounds.enemyHurtSounds(enemy);
+                this.enemiesToAnimateDeath.push(enemy);
         } else {
             this.character.hit();
             this.sounds.character_hurt.play();
             this.statusbar.setPercentage(this.character.energy);
         }
+        console.warn('character is on:', this.character.y + this.character.height - this.character.offset.bottom);
+        console.log('enemy is on:', enemy.y + enemy.offset.top);
     }
-
     /**
      * Check collision with endboss
      */
@@ -353,12 +352,12 @@ class World {
         }
         moveble.draw(this.ctx);
         moveble.drawFrame(this.ctx);
-            
+
         if (moveble instanceof Bug || moveble.otherDirection || (moveble instanceof Endboss && !moveble.facingLeft) || (moveble instanceof TrowableObject && moveble.direction === 'left')) {
             this.flipCharacterBack(moveble);
         }
     }
-    
+
     /**
      * Flips an object's orientation in the game world.
      *

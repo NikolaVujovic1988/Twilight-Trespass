@@ -215,7 +215,7 @@ class Endboss extends MovebleObjects {
      * Updates the direction the Endboss is facing based on the character's position.
      */
     updateFacingDirection() {
-        if (world.character.x > this.x) {
+        if (world.character.x > this.x + 300) {
             this.facingLeft = false;
         } else if (world.character.x < this.x) {
             this.facingLeft = true;

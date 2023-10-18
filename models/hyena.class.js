@@ -5,9 +5,10 @@
  */
 class Hyena extends MovebleObjects {
 
-    height = 140;
-    width = 140;
-    y = 315;
+    // height and width 140 & 140 original - y 315
+    height = 200;
+    width = 200;
+    y = 265;
     isDead = false;
     currentFrame = 0; // To store the current frame
     currentState = 'walking'; // To store the current animation state
@@ -19,7 +20,7 @@ class Hyena extends MovebleObjects {
     IMAGES_ATTACK = this.generateImagePaths('__brown_hyena_bite_', 10);
 
     offset = {
-        top: 30,
+        top: 40,
         left: 20,
         right: 20,
         bottom: 40

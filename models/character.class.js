@@ -34,7 +34,7 @@ class Character extends MovebleObjects {
         top: 20,
         left: 75,
         right: 75,
-        bottom: 30
+        bottom: 40
     };
 
     /**
