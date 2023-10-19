@@ -88,7 +88,11 @@ class World {
     checkEnemyCollisions() {
         for (let enemy of this.level.enemies) {
             if (enemy && !enemy.isDead && this.character.isColliding(enemy)) {
-                this.handleEnemyCollision(enemy);
+                if (enemy instanceof Bug) {
+                    this.handleBugCollision(enemy);
+                } else {
+                    this.handleEnemyCollision(enemy);
+                }
             }
         }
     }
@@ -97,18 +101,42 @@ class World {
      */
     handleEnemyCollision(enemy) {
         // Check if the bottom of the character is descending on the enemy
-        if (this.character.isColliding(enemy) && this.character.y + this.character.height - this.character.offset.bottom - 30 < enemy.y + enemy.offset.top) {
-                enemy.isDead = true;
-                this.sounds.enemyHurtSounds(enemy);
-                this.enemiesToAnimateDeath.push(enemy);
+        if (this.character.isColliding(enemy) && this.character.speedY < 0 && this.character.isAboveGround()) {
+            this.handleEnemyHurt(enemy);
         } else {
-            this.character.hit();
-            this.sounds.character_hurt.play();
-            this.statusbar.setPercentage(this.character.energy);
+            this.handleCharacterHurt();
         }
-        console.warn('character is on:', this.character.y + this.character.height - this.character.offset.bottom);
-        console.log('enemy is on:', enemy.y + enemy.offset.top);
     }
+
+    /**
+     * Handle actions after colliding with a Bug
+     */
+    handleBugCollision(enemy) {
+        if (this.character.y + 60 < enemy.y && this.character.speedY < 0) {
+            this.handleEnemyHurt(enemy);
+        } else {
+            this.handleCharacterHurt();
+        }
+    }
+
+    /**
+     * Handle actions to Character after colliding with an enemy
+     */
+    handleCharacterHurt() {
+        this.character.hit();
+        this.sounds.character_hurt.play();
+        this.statusbar.setPercentage(this.character.energy);
+    }
+
+    /**
+     * Handle actions after an Enemy get a hit
+     */
+    handleEnemyHurt(enemy) {
+        enemy.isDead = true;
+        this.sounds.enemyHurtSounds(enemy);
+        this.enemiesToAnimateDeath.push(enemy);
+    }
+
     /**
      * Check collision with endboss
      */
@@ -304,7 +332,7 @@ class World {
         this.addFixedObjectsToMap()
         this.ctx.translate(this.camera_x, 0);
         this.addMovebleObjectsToMap();
-        
+
         this.ctx.translate(-this.camera_x, 0);
         this.bottlesBar.setPercentage(this.character.bottles * 20);
 
@@ -335,7 +363,7 @@ class World {
             this.flipCharacter(moveble);
         }
         moveble.draw(this.ctx);
-        moveble.drawFrame(this.ctx);
+        // moveble.drawFrame(this.ctx);
 
         if (moveble instanceof Bug || moveble.otherDirection || (moveble instanceof Endboss && !moveble.facingLeft) || (moveble instanceof TrowableObject && moveble.direction === 'left')) {
             this.flipCharacterBack(moveble);

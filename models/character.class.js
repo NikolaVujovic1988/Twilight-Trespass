@@ -242,15 +242,8 @@ class Character extends MovebleObjects {
     handleJumpAction() {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.jump();
-            this.playJumpSound();
+            this.sounds.jump_sound.play();
         }
-    }
-
-    /**
-     * Plays the sound associated with the character jumping.
-     */
-    playJumpSound() {
-        this.sounds.jump_sound.play();
     }
 
     /**

@@ -20,7 +20,7 @@ class Hyena extends MovebleObjects {
     IMAGES_ATTACK = this.generateImagePaths('__brown_hyena_bite_', 10);
 
     offset = {
-        top: 40,
+        top: 50,
         left: 20,
         right: 20,
         bottom: 40
@@ -34,7 +34,7 @@ class Hyena extends MovebleObjects {
         super().loadImage(this.BASE_PATH + '__brown_hyena_idle_000.png');
 
         this.x = 700 + Math.random() * 5000;
-        this.speed = 2 + Math.random();
+        this.speed = 5 + Math.random();
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_ATTACK);
@@ -75,7 +75,7 @@ class Hyena extends MovebleObjects {
                 this.updateStateAndAnimate();
                 this.incrementFrame();
             }
-        }, 1000 / 25);
+        }, 100);
     }
 
     /**
