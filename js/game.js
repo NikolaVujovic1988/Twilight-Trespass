@@ -27,6 +27,7 @@ let shouldToggleFullscreenAfterGameStarts = false;
 function init() {
     canvas = document.getElementById('canvas');
     addStartStyles();
+    activateActionButtons();
 }
 
 /**
@@ -34,7 +35,7 @@ function init() {
  */
 function startGame() {
     init();
-    checkWichDevice();
+    // checkWichDevice();
     initLevel();
     world = new World(canvas, keyboard);
     isGameStarted = true;
@@ -53,7 +54,7 @@ function checkWichDevice() {
         forceLandscapeMode();
         showActionIcons();
         changeStylesForMobileDevices();
-        openFullscreen();
+        // openFullscreen();
     }
 }
 
@@ -86,17 +87,21 @@ function forceLandscapeMode() {
 
 // ... [Other forceLandscapeMode helper functions]
 function forceLandscapeModeAnimation() {
-    toggleBlurOnStartscreen();
     forceLandscapeModeAnimationAddStyles();
+    toggleBlurOnStartscreen();
 }
 
 function toggleBlurOnStartscreen() {
     const canvas = document.getElementById('canvas');
-    if (canvas && canvas.style) {
-        if (canvas.style.filter.includes('blur')) {
+    const startscreen = document.getElementById('startScreen');
+
+    if (canvas && canvas.style || startscreen && startscreen.style) {
+        if (canvas.style.filter.includes('blur') || startscreen.style.filter.includes('blur') ) {
             canvas.style.filter = '';
+            startscreen.style.filter = '';
         } else {
             canvas.style.filter = 'blur(5px)';
+            startscreen.style.filter = 'blur(5px)';
         }
     }
 }
@@ -259,50 +264,5 @@ function loadMobileControlEvents() {
  */
 function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
-}
-
-/**
- * Other UI-related helper functions...
- */
-function forceLandscapeModeAnimationAddStyles() {
-    document.getElementById('control-buttons').classList.add('d-none');
-    document.getElementById('action-buttons').classList.add('d-none');
-    document.getElementById('rotate-device-container').classList.remove('d-none');
-}
-
-function forceLandscapeModeAnimationRemoveStyles() {
-    document.getElementById('rotate-device-container').classList.add('d-none');
-    document.getElementById('control-buttons').classList.remove('d-none');
-    document.getElementById('action-buttons').classList.remove('d-none');
-}
-
-function changeStylesForMobileDevices() {
-    document.getElementById('instructionsContainer').classList.add('d-none');
-    document.getElementById('canvas').classList.add('height-width100');
-    document.getElementById('startScreen').classList.add('height-width100');
-}
-
-function addStartStyles() {
-    document.getElementById('youLostScreen').classList.add('d-none');
-    document.getElementById('youWonScreen').classList.add('d-none');
-    document.getElementById('startButton').style.display = 'none';
-    document.getElementById('startscreen-background').style.display = 'none';
-    document.getElementById('startScreen').style.backgroundImage = 'none';
-    document.getElementById('overlay').classList.add('overlay');
-    document.getElementById('overlay').classList.remove('overlay-center');
-}
-
-function addFullscreenStyles() {
-    document.getElementById('canvas').classList.add('height-width100');
-    document.getElementById('startScreen').classList.add('height-width100');
-    document.getElementById('youLostScreen').classList.add('height-width100');
-    document.getElementById('youWonScreen').classList.add('height-width100');
-}
-
-function removeFullscreenStyles() {
-    document.getElementById('canvas').classList.remove('height-width100');
-    document.getElementById('startScreen').classList.remove('height-width100');
-    document.getElementById('youLostScreen').classList.remove('height-width100');
-    document.getElementById('youWonScreen').classList.remove('height-width100');
 }
 
