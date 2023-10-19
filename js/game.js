@@ -16,9 +16,6 @@ let keyboard = new Keyboard();
 let isInFullscreen = false;
 
 /** @type {boolean} */
-let isGameStarted = false;
-
-/** @type {boolean} */
 let shouldToggleFullscreenAfterGameStarts = false;
 
 /**
@@ -54,7 +51,6 @@ function checkWichDevice() {
         forceLandscapeMode();
         showActionIcons();
         changeStylesForMobileDevices();
-        // openFullscreen();
     }
 }
 
@@ -110,11 +106,6 @@ function toggleBlurOnStartscreen() {
  * Toggles the fullscreen mode.
  */
 function toggleFullscreen() {
-    if (!isGameStarted) {
-        shouldToggleFullscreenAfterGameStarts = true;
-        return;
-    }
-
     isInFullscreen = !isInFullscreen;
 
     if (isInFullscreen) {
