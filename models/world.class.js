@@ -297,32 +297,15 @@ class World {
      */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
         this.ctx.translate(this.camera_x, 0);
 
-        this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.coin);
-        this.addObjectsToMap(this.bottle);
-
+        this.addMultipleSameObjectsToMap();
         this.ctx.translate(-this.camera_x, 0);
-        // ------ space for fixed objects -------------
-        this.addToMap(this.statusbar);
-        this.addToMap(this.coinbar);
-        this.addToMap(this.bottlesBar);
-        if (this.characterPassedLimit) {
-            this.addToMap(this.endbossStatusbar);
-        }
-
-        // ------ space for fixed objects -------------
-
+        this.addFixedObjectsToMap()
         this.ctx.translate(this.camera_x, 0);
-
-        this.addObjectsToMap(this.trowableObjects);
-        this.addObjectsToMap(this.level.enemies);
-        this.addToMap(this.character);
-
+        this.addMovebleObjectsToMap();
+        
         this.ctx.translate(-this.camera_x, 0);
-
         this.bottlesBar.setPercentage(this.character.bottles * 20);
 
         let self = this;
@@ -357,6 +340,36 @@ class World {
         if (moveble instanceof Bug || moveble.otherDirection || (moveble instanceof Endboss && !moveble.facingLeft) || (moveble instanceof TrowableObject && moveble.direction === 'left')) {
             this.flipCharacterBack(moveble);
         }
+    }
+
+    /**
+     * Adds a fixed objects to the map.
+     */
+    addFixedObjectsToMap() {
+        this.addToMap(this.statusbar);
+        this.addToMap(this.coinbar);
+        this.addToMap(this.bottlesBar);
+        if (this.characterPassedLimit) {
+            this.addToMap(this.endbossStatusbar);
+        }
+    }
+
+    /**
+     * Adds a moveble objects to the map.
+     */
+    addMovebleObjectsToMap() {
+        this.addObjectsToMap(this.trowableObjects);
+        this.addObjectsToMap(this.level.enemies);
+        this.addToMap(this.character);
+    }
+
+    /**
+     * Adds a multiple but same objects to the map (background, coins and arrows).
+     */
+    addMultipleSameObjectsToMap() {
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.coin);
+        this.addObjectsToMap(this.bottle);
     }
 
     /**
