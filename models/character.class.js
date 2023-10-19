@@ -222,7 +222,9 @@ class Character extends MovebleObjects {
      * Plays the sound associated with the character running.
      */
     playRunningSound() {
-        this.sounds.running_sound.play();
+        if (this.y > 310) {
+            this.sounds.running_sound.play();
+        }
     }
 
     /**
