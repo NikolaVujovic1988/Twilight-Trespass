@@ -126,7 +126,7 @@ class Hyena extends MovebleObjects {
      */
     playAnimation(images) {
         if (this.currentFrame >= images.length) this.currentFrame = 0; // Reset if we've passed the end
-        super.loadImage(images[this.currentFrame]);
+        super.playAnimation(images);
     }
 
     /**
