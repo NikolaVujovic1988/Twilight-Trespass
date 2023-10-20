@@ -60,7 +60,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkTrowObjects();
-        }, 50);
+        }, 80);
     }
 
     /**

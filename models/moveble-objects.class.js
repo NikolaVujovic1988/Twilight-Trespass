@@ -78,7 +78,7 @@ class MovebleObjects extends DrawableObject {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
-        }, 1000 / 25);
+        }, 1000/25);
     }
 
     /**

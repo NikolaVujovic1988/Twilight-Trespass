@@ -21,8 +21,8 @@ class Hyena extends MovebleObjects {
 
     offset = {
         top: 50,
-        left: 20,
-        right: 20,
+        left: 30,
+        right: 30,
         bottom: 40
     };
 

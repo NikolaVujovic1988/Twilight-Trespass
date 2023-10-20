@@ -128,6 +128,8 @@ class Character extends MovebleObjects {
      */
     coinCount = 0;
 
+    lastThrowTime = 0;
+
     /**
      * Indicates if the character is dead.
      * @type {boolean}
@@ -228,11 +230,18 @@ class Character extends MovebleObjects {
     }
 
     /**
-     * Handles the throw action based on keyboard input.
+     * Handles the throw action based on keyboard input, allowed only once in sec.
      */
     handleThrowAction() {
         if (this.world.keyboard.D && this.hasThrowableObjects()) {
+            let date = Date.now();
+            if (date - this.lastThrowTime < 1000) {
+                return;
+            }
+            console.log('last trow time is:', this.lastThrowTime);
             this.throwObject();
+            this.lastThrowTime = date;
+            console.warn('time now is:', date);
         }
     }
 
