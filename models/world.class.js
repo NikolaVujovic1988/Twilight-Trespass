@@ -21,8 +21,11 @@ class World {
     isFullScreen = false;
     trowableObjects = [];
     coin = [];
-    bottle = [];
+    bottles = [];
     enemiesToAnimateDeath = [];
+    bottleCount = 0;
+    lastThrowTime = 0;
+
 
 
     /**
@@ -43,7 +46,7 @@ class World {
         this.checkCollisions();
         this.run();
         this.generateObjects(this.coin, Coin, 15, 400, 3500, 100, 300);
-        this.generateObjects(this.bottle, Bottle, 10, 400, 3500, 100, 300);
+        this.generateObjects(this.bottles, Bottle, 10, 400, 3500, 100, 300);
     }
 
     /**
@@ -223,13 +226,15 @@ class World {
      * Check collision with bottles
      */
     checkBottleCollisions() {
-        for (let i = 0; i < this.bottle.length; i++) {
-            if (this.bottle[i] && this.character.isColliding(this.bottle[i])) {
-                this.character.bottles++;
+        console.log("Checking bottle collisions...");
+        for (let i = 0; i < this.bottles.length; i++) {
+            if (this.bottles[i] && this.character.isColliding(this.bottles[i])) {
+                this.bottleCount++;
+                console.log(this.bottleCount);
                 this.sounds.arrow_collected.currentTime = 0;
                 this.sounds.arrow_collected.play();
-                this.bottlesBar.setPercentage(this.character.bottles * 20);
-                this.bottle.splice(i, 1);
+                this.bottlesBar.setPercentage(this.bottleCount * 20);
+                this.bottles.splice(i, 1);
                 i--;
             }
         }
@@ -311,13 +316,56 @@ class World {
      * Checks for throwable object actions.
      */
     checkTrowObjects() {
-        if (this.keyboard.D && this.character.hasThrowableObjects()) {
+        if (this.keyboard.D && this.hasThrowableObjects()) {
             let bottle = new TrowableObject(this.character.x + 30, this.character.y + 30);
             bottle.direction = this.character.lastDirection;
-            this.trowableObjects.push(bottle);
-            this.character.bottles--;
-            this.bottlesBar.setPercentage(this.character.bottles * 20);
+            this.trowableObjects.push(bottles);
+            this.bottleCount--;
+            this.bottlesBar.setPercentage(this.bottleCount * 20);
         }
+    }
+    /**
+    * Checks if character has thrown an object recently.
+    */
+    hasRecentlyThrown() {
+        return Date.now() - this.lastThrowTime < 1000;
+    }
+
+    /**
+    * Handles the throw action based on keyboard input, allowed only once in sec.
+    */
+    handleThrowAction() {
+        if (this.keyboard.D && this.hasThrowableObjects()) {
+            if (this.hasRecentlyThrown()) {
+                return;
+            }
+            this.throwObject();
+            this.lastThrowTime = Date.now();
+        }
+    }
+
+    /**
+    * Enables the character to throw an Arrow.
+    */
+    throwObject() {
+        let throwX = this.character.x + this.character.width;
+        if (this.character.lastDirection === 'left') {
+            throwX = this.character.x;
+        }
+        let throwY = this.character.y + (this.character.height / 5) - 30;
+
+        let throwable = new TrowableObject(throwX, throwY);
+        throwable.direction = this.character.lastDirection;
+        this.sounds.trown_arrow.currentTime = 0;
+        this.sounds.trown_arrow.play();
+    }
+
+    /**
+    * Determines if the character has throwable objects.
+    * @returns {boolean} - True if character has throwable objects, otherwise false.
+    */
+    hasThrowableObjects() {
+        return this.bottleCount > 0;
     }
 
     /**
@@ -397,7 +445,7 @@ class World {
     addMultipleSameObjectsToMap() {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.coin);
-        this.addObjectsToMap(this.bottle);
+        this.addObjectsToMap(this.bottles);
     }
 
     /**

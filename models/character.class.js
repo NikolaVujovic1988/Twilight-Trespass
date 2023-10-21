@@ -117,18 +117,10 @@ class Character extends MovebleObjects {
     speed = 5;
 
     /**
-     * Number of bottles the character possesses.
-     * @type {number}
-     */
-    bottles = 0;
-
-    /**
      * Count of coins the character has collected.
      * @type {number}
      */
     coinCount = 0;
-
-    lastThrowTime = 0;
 
     /**
      * Indicates if the character is dead.
@@ -191,7 +183,7 @@ class Character extends MovebleObjects {
     handleMovementAndActions() {
         this.handleRightMovement();
         this.handleLeftMovement();
-        this.handleThrowAction();
+        this.world.handleThrowAction();
         this.handleJumpAction();
         this.updateCameraPosition();
     }
@@ -230,22 +222,6 @@ class Character extends MovebleObjects {
     }
 
     /**
-     * Handles the throw action based on keyboard input, allowed only once in sec.
-     */
-    handleThrowAction() {
-        if (this.world.keyboard.D && this.hasThrowableObjects()) {
-            let date = Date.now();
-            if (date - this.lastThrowTime < 1000) {
-                return;
-            }
-            console.log('last trow time is:', this.lastThrowTime);
-            this.throwObject();
-            this.lastThrowTime = date;
-            console.warn('time now is:', date);
-        }
-    }
-
-    /**
      * Handles the jump action of the character based on keyboard input and ground check.
      */
     handleJumpAction() {
@@ -279,7 +255,7 @@ class Character extends MovebleObjects {
      * Handles the regular animations of the character based on movement or idle state.
      */
     handleRegularAnimation() {
-        if (this.world.keyboard.D && this.hasThrowableObjects()) {
+        if (this.world.keyboard.D && this.world.hasThrowableObjects()) {
             this.playAnimation(this.IMAGES_SHOT);
         } else if (this.isAboveGround()) {
             this.playAnimation(this.IMAGES_JUMPING);
@@ -296,30 +272,6 @@ class Character extends MovebleObjects {
      */
     isAnyKeyPressed() {
         return !this.world.keyboard.RIGHT && !this.world.keyboard.LEFT && !this.world.keyboard.SPACE && !this.world.keyboard.D;
-    }
-
-    /**
-     * Enables the character to throw an Arrow.
-     */
-    throwObject() {
-        let throwX = this.x + this.width;
-        if (this.lastDirection === 'left') {
-            throwX = this.x;
-        }
-        let throwY = this.y + (this.height / 5) - 30;
-
-        let throwable = new TrowableObject(throwX, throwY);
-        throwable.direction = this.lastDirection;
-        this.sounds.trown_arrow.currentTime = 0;
-        this.sounds.trown_arrow.play();
-    }
-
-    /**
-     * Determines if the character has throwable objects.
-     * @returns {boolean} - True if character has throwable objects, otherwise false.
-     */
-    hasThrowableObjects() {
-        return this.bottles > 0;
     }
 
     /**
