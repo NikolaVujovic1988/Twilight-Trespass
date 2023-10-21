@@ -62,7 +62,7 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-            this.checkTrowObjects();
+            this.handleThrowAction();
         }, 80);
     }
 
@@ -226,11 +226,9 @@ class World {
      * Check collision with bottles
      */
     checkBottleCollisions() {
-        console.log("Checking bottle collisions...");
         for (let i = 0; i < this.bottles.length; i++) {
             if (this.bottles[i] && this.character.isColliding(this.bottles[i])) {
                 this.bottleCount++;
-                console.log(this.bottleCount);
                 this.sounds.arrow_collected.currentTime = 0;
                 this.sounds.arrow_collected.play();
                 this.bottlesBar.setPercentage(this.bottleCount * 20);
@@ -265,7 +263,7 @@ class World {
         this.checkEndbossCollisions();
         this.checkArrowEnemyCollisions();
         this.checkAnimateAndRemoveEnemies();
-        if (this.bottle) { // Adding a check for bottle array existence before calling its collision check
+        if (this.bottles) { // Adding a check for bottles array existence before calling its collision check
             this.checkBottleCollisions();
         }
         if (this.coin) { // Adding a check for coin array existence before calling its collision check
@@ -312,21 +310,6 @@ class World {
         }
     }
 
-    /**
-     * Checks for throwable object actions.
-     */
-    checkTrowObjects() {
-        if (this.keyboard.D && this.hasThrowableObjects()) {
-            let bottle = new TrowableObject(this.character.x + 30, this.character.y + 30);
-            bottle.direction = this.character.lastDirection;
-            this.trowableObjects.push(bottles);
-            this.bottleCount--;
-            this.bottlesBar.setPercentage(this.bottleCount * 20);
-        }
-    }
-    /**
-    * Checks if character has thrown an object recently.
-    */
     hasRecentlyThrown() {
         return Date.now() - this.lastThrowTime < 1000;
     }
@@ -340,7 +323,6 @@ class World {
                 return;
             }
             this.throwObject();
-            this.lastThrowTime = Date.now();
         }
     }
 
@@ -348,16 +330,19 @@ class World {
     * Enables the character to throw an Arrow.
     */
     throwObject() {
-        let throwX = this.character.x + this.character.width;
-        if (this.character.lastDirection === 'left') {
-            throwX = this.character.x;
-        }
-        let throwY = this.character.y + (this.character.height / 5) - 30;
-
+        let throwX = this.character.x + 40;
+        let throwY = this.character.y + 40;
+    
         let throwable = new TrowableObject(throwX, throwY);
         throwable.direction = this.character.lastDirection;
+        this.trowableObjects.push(throwable);
+        
         this.sounds.trown_arrow.currentTime = 0;
         this.sounds.trown_arrow.play();
+    
+        this.bottleCount--;
+        this.bottlesBar.setPercentage(this.bottleCount * 20);
+        this.lastThrowTime = Date.now();
     }
 
     /**
@@ -382,7 +367,7 @@ class World {
         this.addMovebleObjectsToMap();
 
         this.ctx.translate(-this.camera_x, 0);
-        this.bottlesBar.setPercentage(this.character.bottles * 20);
+        this.bottlesBar.setPercentage(this.bottleCount * 20);
 
         let self = this;
         requestAnimationFrame(function () {
