@@ -25,6 +25,9 @@ function init() {
     canvas = document.getElementById('canvas');
     addStartStyles();
     activateActionButtons();
+    if (isMobileDevice()) {
+        openFullscreen();
+    }
 }
 
 /**

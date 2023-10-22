@@ -234,6 +234,9 @@ h1 {
     }
 }
 
+.fill {
+    object-fit: fill;
+}
 
 .pointer:hover {
     scale: 1.2;

@@ -40,9 +40,13 @@ function addFullscreenStyles() {
     document.getElementById('startScreen').classList.add('height-width100');
     document.getElementById('youLostScreen').classList.add('height-width100');
     document.getElementById('youWonScreen').classList.add('height-width100');
+    if (isMobileDevice) {
+        document.getElementById('canvas').classList.add('fill');
+    }
 }
 
 function removeFullscreenStyles() {
+    document.getElementById('canvas').classList.remove('fill');
     document.getElementById('canvas').classList.remove('height-width100');
     document.getElementById('startScreen').classList.remove('height-width100');
     document.getElementById('youLostScreen').classList.remove('height-width100');
