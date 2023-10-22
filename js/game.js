@@ -32,7 +32,6 @@ function init() {
  */
 function startGame() {
     init();
-    // checkWichDevice();
     initLevel();
     world = new World(canvas, keyboard);
     isGameStarted = true;
@@ -169,6 +168,8 @@ document.addEventListener('fullscreenchange', function () {
     fullscreenButton.innerHTML = isInFullscreen
         ? '<img src="img/icons/minimize.png" alt="" class="img-settings-buttons">'
         : '<img src="img/icons/fullscreen.png" alt="" class="img-settings-buttons">';
+
+        document.getElementById("btnFullscreen").blur();
 });
 
 /**
@@ -218,34 +219,45 @@ function loadMobileControlEvents() {
     document.getElementById('btnRight').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.RIGHT = true;
+        document.getElementById("btnRight").blur();
     });
     document.getElementById('btnRight').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.RIGHT = false;
+        document.getElementById("btnRight").blur();
     });
     document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.LEFT = true;
+        document.getElementById("btnLeft").blur();
     });
     document.getElementById('btnLeft').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.LEFT = false;
+        document.getElementById("btnLeft").blur();
+
     });
     document.getElementById('btnUp').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.SPACE = true;
+        document.getElementById("btnUp").blur();
+
     });
     document.getElementById('btnUp').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.SPACE = false;
+        document.getElementById("btnUp").blur();
+
     });
     document.getElementById('btnThrow').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.D = true;
+        document.getElementById("btnThrow").blur();
     });
     document.getElementById('btnThrow').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.D = false;
+        document.getElementById("btnThrow").blur();
     });
 
 }

@@ -95,6 +95,7 @@ class Sounds extends MovebleObjects {
         } else {
             volumeButton.innerHTML = '<img src="img/icons/volume-button.png" alt="" class="img-settings-buttons">';
         }
+        document.getElementById("btnVolume").blur();
     }
 
     /**
